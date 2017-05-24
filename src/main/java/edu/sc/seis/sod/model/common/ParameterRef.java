@@ -12,7 +12,7 @@
 
 // Version: 4.0.5
 
-package edu.sc.seis.sod.model.seismogram;
+package edu.sc.seis.sod.model.common;
 
 //
 // IDL:iris.edu/Fissures/IfParameterMgr/ParameterRef:1.0

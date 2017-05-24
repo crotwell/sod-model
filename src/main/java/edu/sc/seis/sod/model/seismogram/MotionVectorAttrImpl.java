@@ -1,5 +1,6 @@
 package edu.sc.seis.sod.model.seismogram;
 
+import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.QuantityImpl;
 import edu.sc.seis.sod.model.common.SamplingImpl;
 import edu.sc.seis.sod.model.common.Time;

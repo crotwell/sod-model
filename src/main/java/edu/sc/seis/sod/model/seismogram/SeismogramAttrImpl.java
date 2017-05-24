@@ -4,6 +4,7 @@ package edu.sc.seis.sod.model.seismogram;
 import java.io.Serializable;
 
 import edu.sc.seis.sod.model.common.MicroSecondDate;
+import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.QuantityImpl;
 import edu.sc.seis.sod.model.common.SamplingImpl;
 import edu.sc.seis.sod.model.common.Time;
