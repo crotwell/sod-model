@@ -1,0 +1,15 @@
+
+group = 'edu.sc.seis'
+version = '4.0.0-SNAPSHOT'
+
+apply plugin: 'eclipse'
+apply plugin: 'java-library'
+
+dependencies {
+  api 'edu.sc.seis:seisFile:1.7.4'
+  implementation 'org.json:json:20140107'
+}
+
+repositories {
+  mavenCentral()
+}
