@@ -1,7 +1,7 @@
 package edu.sc.seis.sod.model.common;
 
-import edu.iris.Fissures.IfSeismogramDC.RequestFilter;
-import edu.iris.Fissures.seismogramDC.LocalSeismogramImpl;
+import edu.sc.seis.sod.model.seismogram.LocalSeismogramImpl;
+import edu.sc.seis.sod.model.seismogram.RequestFilter;
 
 /**
  * MicroSecondTimeRanges are objects to set the time range for a seismogram and
@@ -22,7 +22,7 @@ public class MicroSecondTimeRange {
     }
 
     public MicroSecondTimeRange(TimeRange timeRange) {
-        this(timeRange.start_time, timeRange.end_time);
+        this(timeRange.getBeginTime(), timeRange.getEndTime());
     }
 
     public MicroSecondTimeRange(Time time, Time anotherTime) {
@@ -135,11 +135,6 @@ public class MicroSecondTimeRange {
      */
     public TimeInterval getInterval() {
         return interval;
-    }
-
-    public TimeRange getFissuresTimeRange() {
-        return new TimeRange(getBeginTime().getFissuresTime(),
-                             getEndTime().getFissuresTime());
     }
 
     public UnitRangeImpl getMillis() {
