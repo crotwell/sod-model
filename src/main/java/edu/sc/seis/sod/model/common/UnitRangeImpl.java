@@ -1,10 +1,8 @@
 
-package edu.iris.Fissures.model;
+package edu.sc.seis.sod.model.common;
 
 import java.io.Serializable;
 
-import edu.iris.Fissures.Unit;
-import edu.iris.Fissures.UnitRange;
 
 /**
  * UnitRangeImpl.java
@@ -16,13 +14,19 @@ import edu.iris.Fissures.UnitRange;
  * @version
  */
 
-public class UnitRangeImpl extends edu.iris.Fissures.UnitRange {
+public class UnitRangeImpl implements Serializable {
 
+    public UnitImpl the_units;
+
+    public double min_value;
+
+    public double max_value;
+    
     protected UnitRangeImpl() {}
 
     public static Serializable createEmpty() { return new UnitRangeImpl(); }
 
-    public UnitRangeImpl(double min, double max, Unit the_units) {
+    public UnitRangeImpl(double min, double max, UnitImpl the_units) {
         if (the_units==null) {
             throw new IllegalArgumentException("Unit must not be null.");
         }
@@ -73,7 +77,7 @@ public class UnitRangeImpl extends edu.iris.Fissures.UnitRange {
     public boolean equals(Object o){
         if(o == this){ return true; }
         if(o instanceof UnitRangeImpl){
-            UnitRange oRange = (UnitRange)o;
+            UnitRangeImpl oRange = (UnitRangeImpl)o;
             return oRange.min_value == min_value && oRange.max_value == max_value &&
                 the_units.equals(oRange.the_units);
         }

@@ -1,4 +1,4 @@
-package edu.iris.Fissures.model;
+package edu.sc.seis.sod.model.common;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -17,6 +17,17 @@ import java.util.TimeZone;
  */
 public class ISOTime {
 
+    public static final String TIME_UNKNOWN = "TIME_UNKNOWN";
+
+    public static final MicroSecondDate future = 
+        (new ISOTime("2499001J00:00:00.000Z")).getDate();
+
+    /** future plus one day so that is is after(future)
+     */
+    public static final MicroSecondDate futurePlusOne = 
+        (new ISOTime("2499002J00:00:00.000Z")).getDate();
+
+    
     /**
      * parses a ISO8601 string into its component parts. Currently we only
      * support the 4 month based, full formats, <br>
@@ -29,9 +40,9 @@ public class ISOTime {
     public ISOTime(String s) throws UnsupportedFormat {
         orig = s;
         // check for TIME_UNKNOWN and default DMC 2599 values
-        if(s.equals(edu.iris.Fissures.TIME_UNKNOWN.value)
+        if(s.equals(TIME_UNKNOWN)
                 || s.equals("2599-12-31T23:59:59.0000GMT")) {
-            date = TimeUtils.future;
+            date = future;
         } else {
             String clean = cleanDate(s);
             Date d = null;

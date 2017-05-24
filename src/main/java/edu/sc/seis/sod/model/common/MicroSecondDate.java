@@ -1,13 +1,9 @@
-package edu.iris.Fissures.model;
+package edu.sc.seis.sod.model.common;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
-import edu.iris.Fissures.Time;
-import edu.iris.Fissures.network.TimeFormatter;
 
 /**
  * subclass of the java.util.Date class to extend the precision to microseconds
@@ -19,14 +15,8 @@ public class MicroSecondDate extends Date implements Serializable {
 
     protected long microseconds;
 
-    protected int leapSecondVersion;
-
-    protected LeapSecondHistory leapHistory;
-
     public MicroSecondDate() {
         super();
-        this.leapSecondVersion = 0;
-        this.microseconds = 0;
     }
 
     public MicroSecondDate(long microseconds) {
@@ -36,7 +26,6 @@ public class MicroSecondDate extends Date implements Serializable {
     public MicroSecondDate(long microseconds, int leapSeconds) {
         super(microseconds / 1000);
         this.microseconds = microseconds % 1000;
-        this.leapSecondVersion = leapSeconds;
     }
 
     public MicroSecondDate(Date d) {
@@ -75,11 +64,6 @@ public class MicroSecondDate extends Date implements Serializable {
         this(ts, 0);
     }
 
-    public MicroSecondDate(Time t) {
-        this(new ISOTime(t.date_time).getDate().getMicroSecondTime(),
-             t.leap_seconds_version);
-    }
-
     public MicroSecondDate(String isoTimeString) {
         this(new ISOTime(isoTimeString).getDate().getMicroSecondTime());
     }
@@ -106,14 +90,10 @@ public class MicroSecondDate extends Date implements Serializable {
         return t;
     }
 
-    public edu.iris.Fissures.Time getFissuresTime() {
-        return new Time(ISOTime.getISOString(this), this.leapSecondVersion);
+    public String getISOString() {
+        return ISOTime.getISOString(this);
     }
     
-    public int getLeapSecondVersion() {
-        return this.leapSecondVersion;
-    }
-
     public MicroSecondDate add(TimeInterval interval) {
         if(interval == null) { throw new IllegalArgumentException("Cannot add() a null TimeInterval"); }
         return new MicroSecondDate(getMicroSecondTime()
@@ -156,9 +136,7 @@ public class MicroSecondDate extends Date implements Serializable {
             //If MicroSecondDate, compare microseconds
             if(otherDate instanceof MicroSecondDate) {
                 MicroSecondDate oMSD = (MicroSecondDate)otherDate;
-                return getMicroSecondTime() == oMSD.getMicroSecondTime()
-                        && (leapSecondVersion == oMSD.leapSecondVersion 
-                                || (leapSecondVersion <=0 && oMSD.leapSecondVersion <= 0));
+                return getMicroSecondTime() == oMSD.getMicroSecondTime();
             }
             //otherwise, just return true since it's just a date and we need to
             // be symmetric
@@ -194,4 +172,5 @@ public class MicroSecondDate extends Date implements Serializable {
     public String toString() {
         return TimeFormatter.format(this);
     }
+    
 }

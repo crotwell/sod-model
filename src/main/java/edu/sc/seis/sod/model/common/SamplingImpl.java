@@ -1,9 +1,8 @@
 
-package edu.iris.Fissures.model;
+package edu.sc.seis.sod.model.common;
 
 import java.io.Serializable;
 
-import edu.iris.Fissures.Sampling;
 
 /**
  * SamplingImpl.java
@@ -15,13 +14,18 @@ import edu.iris.Fissures.Sampling;
  * @version
  */
 
-public class SamplingImpl extends Sampling {
+public class SamplingImpl implements Serializable {
+    
+    public int numPoints;
+
+    public QuantityImpl interval;
+    
     protected SamplingImpl() {}
 
     public static Serializable createEmpty() { return new SamplingImpl(); }
 
     public SamplingImpl(int numPoints, TimeInterval interval) {
-        if (interval.value == Double.POSITIVE_INFINITY && numPoints == 1) {
+        if (interval.getValue() == Double.POSITIVE_INFINITY && numPoints == 1) {
             // in this case, the DMC database likely had 0 sps, and converted
             // it to 1 sample in inifinity seconds. So we change to
             // 0 samples in 1 second, which is probably more correct
@@ -32,7 +36,7 @@ public class SamplingImpl extends Sampling {
         this.numPoints = numPoints;
     }
 
-    public static SamplingImpl createSamplingImpl(Sampling samp) {
+    public static SamplingImpl createSamplingImpl(SamplingImpl samp) {
         if (samp instanceof SamplingImpl)  return (SamplingImpl)samp;
 
         return new SamplingImpl(samp.numPoints,

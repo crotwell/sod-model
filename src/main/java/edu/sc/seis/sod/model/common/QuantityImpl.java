@@ -1,13 +1,10 @@
 
-package edu.iris.Fissures.model;
+package edu.sc.seis.sod.model.common;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import edu.iris.Fissures.Quantity;
-import edu.iris.Fissures.Unit;
-import edu.iris.Fissures.UnitBase;
 
 /**
  * QuantityImpl.java
@@ -18,20 +15,23 @@ import edu.iris.Fissures.UnitBase;
  * @author Philip Crotwell
  * @version
  */
-
-public class QuantityImpl extends Quantity {
+public class QuantityImpl implements Serializable {
+    
+    private double value;
+    private UnitImpl the_units;
+    
     protected QuantityImpl() {}
 
     public static Serializable createEmpty() {
         return new QuantityImpl();
     }
 
-    public QuantityImpl(double f, Unit the_unit ) {
+    public QuantityImpl(double f, UnitImpl the_unit ) {
         value = f;
         the_units =  the_unit;
     }
 
-    public static QuantityImpl createQuantityImpl(Quantity q) {
+    public static QuantityImpl createQuantityImpl(QuantityImpl q) {
         if (q instanceof QuantityImpl) {
             return (QuantityImpl)q;
         }

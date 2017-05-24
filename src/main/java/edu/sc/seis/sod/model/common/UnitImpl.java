@@ -1,11 +1,10 @@
 
-package edu.iris.Fissures.model;
+package edu.sc.seis.sod.model.common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.iris.Fissures.Unit;
-import edu.iris.Fissures.UnitBase;
 
 
 /** encapsulates the meaning of a unit. All units are products of SI
@@ -23,8 +22,31 @@ import edu.iris.Fissures.UnitBase;
  *  The -1 takes care of the <em>per</em> part.
  *
  */
-public class UnitImpl extends edu.iris.Fissures.Unit {
+public class UnitImpl implements Serializable {
 
+    /** The base, if a base unit, or COMPOSITE in not. */
+    public UnitBase the_unit_base;
+
+    /** The subunits if COMPOSITE, zero length array if not. */
+
+    public UnitImpl[] elements;
+
+    /** The power of ten to prefix. */
+
+    public int power;
+
+    /** A name for the unit, may be empty if the name should be
+     *automatically generated. */
+    public String name;
+
+    /** A constant multiplier. */
+    public double multi_factor;
+
+    /** An exponent for the entire unit, ie Hertz would be SECOND with
+     *an exponent of -1. */
+
+    public int exponent;
+    
     /** The CORBA struct that contains the unit data. It is composed of
      <p>
      the_unit_base - the base unit, if this is of type BASE, or COMPOSITE if not
@@ -57,10 +79,10 @@ public class UnitImpl extends edu.iris.Fissures.Unit {
     public UnitImpl(UnitBase baseUnit, int exponent, int power) {
         this(power, "", 1.0f, exponent);
         the_unit_base = baseUnit;
-        elements = new edu.iris.Fissures.Unit[0];
+        elements = new UnitImpl[0];
     }
 
-    public UnitImpl(Unit[] subunits, int power, String name, double multi,
+    public UnitImpl(UnitImpl[] subunits, int power, String name, double multi,
                     int exponent) {
         this(power, name, multi, exponent);
         if (subunits == null) {
@@ -83,7 +105,7 @@ public class UnitImpl extends edu.iris.Fissures.Unit {
             throw new IllegalArgumentException("Cannot create base Unit with null UnitBase.");
         }
         this.the_unit_base = base;
-        elements = new edu.iris.Fissures.Unit[0];
+        elements = new UnitImpl[0];
     }
 
     /** A factory method to make sure that the input edu.iris.Fissures.unit
@@ -91,7 +113,7 @@ public class UnitImpl extends edu.iris.Fissures.Unit {
      errors. The implementation will only create a new object if the
      inUnit is not an instance of UnitImpl.
      */
-    public static UnitImpl createUnitImpl(Unit inUnit) {
+    public static UnitImpl createUnitImpl(UnitImpl inUnit) {
         if (inUnit instanceof UnitImpl) {
             return (UnitImpl)inUnit;
         } else {
@@ -187,7 +209,7 @@ public class UnitImpl extends edu.iris.Fissures.Unit {
         // through the loop
         UnitImpl unitTemp = new UnitImpl(UnitBase.from_int(0), getTotalPower(),
                                          "", getTotalMultiFactor(), 1);
-        UnitImpl unitTotal = new UnitImpl(new Unit[primitiveExponent.length],
+        UnitImpl unitTotal = new UnitImpl(new UnitImpl[primitiveExponent.length],
                                           getTotalPower(), "",
                                           getTotalMultiFactor(), 1);
 
@@ -495,7 +517,7 @@ public class UnitImpl extends edu.iris.Fissures.Unit {
     /** creates a new unit that is the product of a float multiplicative
      factor and a unit with a name. */
     public static UnitImpl multiply(double f, UnitImpl u, String name) {
-        Unit[] elements = new Unit[1];
+        UnitImpl[] elements = new UnitImpl[1];
         elements[0] = u;
         return new UnitImpl( elements,
                             0,
