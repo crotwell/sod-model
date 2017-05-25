@@ -185,19 +185,8 @@ public class PlottableChunk {
         return cal.get(Calendar.YEAR);
     }
 
-    /* maybe not needed???
-     * 
-
-    public static int getPixel(MicroSecondDate time, int pixelsPerDay) {
-        MicroSecondDate day = new MicroSecondDate(stripToDay(time));
-        MicroSecondTimeRange tr = new MicroSecondTimeRange(day, ONE_DAY);
-        double pixel = SimplePlotUtil.getPixel(pixelsPerDay, tr, time);
-        return (int)Math.floor(pixel);
-    }
-*/
-    
     public static MicroSecondDate stripToDay(Date d) {
-        Calendar cal = makeCal();
+        Calendar cal = PlottableChunk.makeCal();
         cal.setTime(d);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -205,7 +194,7 @@ public class PlottableChunk {
         cal.set(Calendar.MILLISECOND, 0);
         return new MicroSecondDate(cal.getTime());
     }
-
+    
     private static final int MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 
     public static final TimeInterval ONE_DAY = new TimeInterval(1, UnitImpl.DAY);
