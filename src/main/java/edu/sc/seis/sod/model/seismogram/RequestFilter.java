@@ -14,6 +14,7 @@
 
 package edu.sc.seis.sod.model.seismogram;
 
+import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.Time;
 import edu.sc.seis.sod.model.station.ChannelId;
 
@@ -31,8 +32,8 @@ final public class RequestFilter implements org.omg.CORBA.portable.IDLEntity
 
     public
     RequestFilter(ChannelId channel_id,
-                  Time start_time,
-                  Time end_time)
+                  MicroSecondDate start_time,
+                  MicroSecondDate end_time)
     {
         this.channel_id = channel_id;
         this.start_time = start_time;
@@ -40,6 +41,6 @@ final public class RequestFilter implements org.omg.CORBA.portable.IDLEntity
     }
 
     public ChannelId channel_id;
-    public Time start_time;
-    public Time end_time;
+    public MicroSecondDate start_time;
+    public MicroSecondDate end_time;
 }

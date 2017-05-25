@@ -16,17 +16,6 @@ import java.util.TimeZone;
  * @author Philip Crotwell
  */
 public class ISOTime {
-
-    public static final String TIME_UNKNOWN = "TIME_UNKNOWN";
-
-    public static final MicroSecondDate future = 
-        (new ISOTime("2499001J00:00:00.000Z")).getDate();
-
-    /** future plus one day so that is is after(future)
-     */
-    public static final MicroSecondDate futurePlusOne = 
-        (new ISOTime("2499002J00:00:00.000Z")).getDate();
-
     
     /**
      * parses a ISO8601 string into its component parts. Currently we only
@@ -82,8 +71,6 @@ public class ISOTime {
     
     public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
-    private static final DateFormat[] dateFormats;
-
     public static final String[] patterns = {"yyyy-MM-dd'T'HH:mm:ss.SSSz",
                                              "yyyyDDD'J'HHmmss.SSSz",
                                              "yyyyMMddHHmmss.SSSz",
@@ -107,7 +94,10 @@ public class ISOTime {
                                              "yyyy-MM-dd HHmmssz",
                                              "yyyyMMddHHmmssz"};
 
+    private static DateFormat[] dateFormats;
+    
     static int[] matches = new int[patterns.length];
+    
     static {
         dateFormats = new DateFormat[patterns.length];
         for(int i = 0; i < patterns.length; i++) {
@@ -258,6 +248,19 @@ public class ISOTime {
         //  return getYear()+" "+getMonth()+" "+getDay()+" "+getHour()+" "+
         //    getMinute()+" "+getSecond();
     }
+    
+
+
+    public static final String TIME_UNKNOWN = "TIME_UNKNOWN";
+
+    public static final MicroSecondDate future = 
+        (new ISOTime("2499001J00:00:00.000Z")).getDate();
+
+    /** future plus one day so that is is after(future)
+     */
+    public static final MicroSecondDate futurePlusOne = 
+        (new ISOTime("2499002J00:00:00.000Z")).getDate();
+
 
     /**
      * just for testing, parses and outputs a few ISO8601 strings.
