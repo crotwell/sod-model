@@ -44,6 +44,11 @@ public class Time extends MicroSecondDate {
         super(isoTimeString);
         // TODO Auto-generated constructor stub
     }
+    @Deprecated
+    public Time(String isoTimeString, int leap) {
+        this(isoTimeString);
+        // TODO Auto-generated constructor stub
+    }
 
     // temp hack...
     @Deprecated

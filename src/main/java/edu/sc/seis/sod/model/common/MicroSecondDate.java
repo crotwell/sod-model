@@ -172,5 +172,10 @@ public class MicroSecondDate extends Date implements Serializable {
     public String toString() {
         return TimeFormatter.format(this);
     }
+
+    @Deprecated
+    public String getISOTime() {
+        return getISOString();
+    }
     
 }

@@ -30,7 +30,7 @@ public class CacheEvent  {
         this.preferred = preferred;
     }
 
-    CacheEvent event;
+    protected CacheEvent event;
     @Deprecated
     public CacheEvent(CacheEvent event) {
         if(event == null) { throw new IllegalArgumentException("EventAccess cannot be null"); }
@@ -131,6 +131,23 @@ public class CacheEvent  {
         dbid = id;
     }
 
+    /**
+     * This gets around the NoPreferredOrigin exception
+     */
+    @Deprecated
+    public OriginImpl extractOrigin() {
+        try {
+            return (OriginImpl)get_preferred_origin();
+        } catch(NoPreferredOrigin e) {
+            logger.info("No preferred origin in event.  Trying get_origins instead");
+            OriginImpl[] oArray = get_origins();
+            if(oArray.length > 0) {
+                return (OriginImpl)oArray[0];
+            }
+            throw new RuntimeException("No preferred origin", e);
+        }
+    }
+    
     private int dbid;
 
     protected EventAttrImpl attr;
@@ -140,4 +157,9 @@ public class CacheEvent  {
     protected OriginImpl preferred;
 
     private static final Logger logger = LoggerFactory.getLogger(CacheEvent.class);
+    
+    @Deprecated
+    public OriginImpl getOrigin() {
+        return extractOrigin();
+    }
 } // CacheEvent

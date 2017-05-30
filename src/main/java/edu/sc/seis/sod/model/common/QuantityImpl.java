@@ -75,6 +75,17 @@ public class QuantityImpl implements Serializable {
     public UnitImpl get_unit() {
         return getUnit();
     }
+    
+    /** replaces current unit with new one that should be equals(). Used to 
+     * prevent many copies of effectively the same units from wasting memory. 
+     * Should be called like:<br/>
+        QuantityImpl.internUnit(q, intern(q.getUnit()));
+     * @param q
+     * @param internedUnit
+     */
+    public static void internUnit(QuantityImpl q, UnitImpl internedUnit) {
+        q.the_units = internedUnit;
+    }
 
     /** converts this Quantity into the given units.
      *  @return a new quantity with the given units and its value
