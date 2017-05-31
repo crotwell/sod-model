@@ -1,9 +1,9 @@
 package edu.sc.seis.sod.model.seismogram;
 
+import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.QuantityImpl;
 import edu.sc.seis.sod.model.common.SamplingImpl;
-import edu.sc.seis.sod.model.common.Time;
 import edu.sc.seis.sod.model.common.TimeInterval;
 import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.station.ChannelId;
@@ -36,7 +36,7 @@ public class MotionVectorAttrImpl implements java.io.Serializable {
     //
     /***/
 
-    public Time begin_time;
+    public MicroSecondDate begin_time;
 
     //
     // IDL:iris.edu/Fissures/IfSeismogramDC/MotionVectorAttr/num_points:1.0
@@ -95,7 +95,7 @@ public class MotionVectorAttrImpl implements java.io.Serializable {
 
     public MotionVectorAttrImpl(String id,
 			    Property[] properties,
-			    Time begin_time,
+			    MicroSecondDate begin_time,
 			    int num_points,
 			    SamplingImpl sampling_info,
 			    UnitImpl y_unit,

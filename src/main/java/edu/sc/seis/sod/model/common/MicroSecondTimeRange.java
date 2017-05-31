@@ -25,10 +25,6 @@ public class MicroSecondTimeRange {
         this(timeRange.getBeginTime(), timeRange.getEndTime());
     }
 
-    public MicroSecondTimeRange(Time time, Time anotherTime) {
-        this(new MicroSecondDate(time), new MicroSecondDate(anotherTime));
-    }
-
     /**
      * Creates a new MicroSecondTimeRange. The order of the times passed in
      * doesn't matter

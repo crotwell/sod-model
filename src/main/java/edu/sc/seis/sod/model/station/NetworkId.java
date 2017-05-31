@@ -14,7 +14,7 @@
 
 package edu.sc.seis.sod.model.station;
 
-import edu.sc.seis.sod.model.common.Time;
+import edu.sc.seis.sod.model.common.MicroSecondDate;
 
 //
 // IDL:iris.edu/Fissures/IfNetwork/NetworkId:1.0
@@ -33,12 +33,12 @@ final public class NetworkId implements org.omg.CORBA.portable.IDLEntity
 
     public
     NetworkId(String network_code,
-              Time begin_time)
+              MicroSecondDate begin_time)
     {
         this.network_code = network_code;
         this.begin_time = begin_time;
     }
 
     public String network_code;
-    public Time begin_time;
+    public MicroSecondDate begin_time;
 }

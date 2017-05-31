@@ -11,6 +11,7 @@ import edu.iris.dmc.seedcodec.CodecException;
 import edu.iris.dmc.seedcodec.DecompressedData;
 import edu.iris.dmc.seedcodec.UnsupportedCompressionType;
 import edu.sc.seis.sod.model.common.FissuresException;
+import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.QuantityImpl;
 import edu.sc.seis.sod.model.common.SamplingImpl;
@@ -72,7 +73,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -110,7 +111,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -149,7 +150,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -188,7 +189,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -227,7 +228,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -278,7 +279,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -336,7 +337,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -389,7 +390,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -442,7 +443,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -495,7 +496,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               Time begin_time,
+                               MicroSecondDate begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,

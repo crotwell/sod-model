@@ -17,9 +17,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.sc.seis.sod.model.common.FissuresException;
+import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.SamplingImpl;
-import edu.sc.seis.sod.model.common.Time;
 import edu.sc.seis.sod.model.common.TimeInterval;
 import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.station.ChannelId;
@@ -61,8 +61,8 @@ public class LocalSeismogramImplTest
         bits.encoded_values(edata);
 
 
-        Time time =
-        new Time("19991231T235959.000Z");
+        MicroSecondDate time =
+        new MicroSecondDate("19991231T235959.000Z");
         String id = "Nowhere: "+name;
     TimeInterval timeInterval = new TimeInterval(1, UnitImpl.SECOND);
         SamplingImpl sampling =

@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.sc.seis.sod.model.common.MicroSecondDate;
-import edu.sc.seis.sod.model.common.Time;
 import edu.sc.seis.sod.model.common.TimeRange;
 
 //
@@ -119,7 +118,7 @@ public class NetworkAttrImpl  {
     /** Updates the network begintime in the networkId and effective time. Usually this is
      * because of a change in a remote database causing a local update to be needed.
      */
-    public void updateBeginTime(Time t) {
+    public void updateBeginTime(MicroSecondDate t) {
         getId().begin_time = t;
         setBeginTime(t);
     }
@@ -210,11 +209,11 @@ public class NetworkAttrImpl  {
         this.description = description;
     }
 
-    public Time getBeginTime() {
+    public MicroSecondDate getBeginTime() {
         return get_id().begin_time;
     }
     
-    public void setBeginTime(Time beginTime) {
+    public void setBeginTime(MicroSecondDate beginTime) {
         if (getEffectiveTime() == null) {
             setEffectiveTime(new TimeRange(beginTime, (MicroSecondDate)null));
         } else {
@@ -229,7 +228,7 @@ public class NetworkAttrImpl  {
         return getEffectiveTime().getEndTime();
     }
     
-    public void setEndTime(Time endTime) {
+    public void setEndTime(MicroSecondDate endTime) {
         if (getEffectiveTime() == null) {
             setEffectiveTime(new TimeRange(null, endTime));
         } else {
@@ -275,20 +274,16 @@ public class NetworkAttrImpl  {
         return new TimeRange(intern(effective_time.getBeginTime()), 
                              intern(effective_time.getEndTime()));
     }
-
-    public static Time intern(MicroSecondDate unknownTime) {
-        return intern(new Time(unknownTime));
-    }
     
-    public static Time intern(Time unknownTime) {
+    public static MicroSecondDate intern(MicroSecondDate unknownTime) {
         synchronized(knownTimes) {
             long key = unknownTime.getMicroSecondTime();
-            Time interned = null;
+            MicroSecondDate interned = null;
             if (knownTimes.containsKey(key)) {
                 interned = knownTimes.get(key).get();
             }
             if(interned == null) {
-                knownTimes.put(key, new WeakReference<Time>(unknownTime));
+                knownTimes.put(key, new WeakReference<MicroSecondDate>(unknownTime));
                 return unknownTime;
             }
             return interned;
@@ -299,7 +294,7 @@ public class NetworkAttrImpl  {
         this.effective_time = effective_time;
     }
 
-    private static Map<Long, WeakReference<Time>> knownTimes = Collections.synchronizedMap(new HashMap<Long, WeakReference<Time>>());
+    private static Map<Long, WeakReference<MicroSecondDate>> knownTimes = Collections.synchronizedMap(new HashMap<Long, WeakReference<MicroSecondDate>>());
     
     private static Map<String, WeakReference<NetworkAttrImpl>> knownNetworks = Collections.synchronizedMap(new HashMap<String, WeakReference<NetworkAttrImpl>>());
 

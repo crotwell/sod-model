@@ -7,7 +7,6 @@ import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.QuantityImpl;
 import edu.sc.seis.sod.model.common.SamplingImpl;
-import edu.sc.seis.sod.model.common.Time;
 import edu.sc.seis.sod.model.common.TimeInterval;
 import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.common.UnsupportedFormat;
@@ -42,7 +41,7 @@ public class SeismogramAttrImpl implements Serializable {
     //
     /***/
 
-    public Time begin_time;
+    public MicroSecondDate begin_time;
 
     //
     // IDL:iris.edu/Fissures/IfSeismogramDC/SeismogramAttr/num_points:1.0
@@ -111,7 +110,7 @@ public class SeismogramAttrImpl implements Serializable {
     }
 
     public SeismogramAttrImpl(String id,
-                              Time begin_time,
+                              MicroSecondDate begin_time,
                               int num_points,
                               SamplingImpl sample_info,
                               UnitImpl y_unit,
@@ -145,7 +144,7 @@ public class SeismogramAttrImpl implements Serializable {
      */
     public SeismogramAttrImpl(String id,
                               Property[] properties,
-                              Time begin_time,
+                              MicroSecondDate begin_time,
                               int num_points,
                               SamplingImpl sample_info,
                               UnitImpl y_unit,

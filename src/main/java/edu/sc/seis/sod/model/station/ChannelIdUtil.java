@@ -59,7 +59,7 @@ public class ChannelIdUtil {
                 + NetworkIdUtil.DOT
                 + id.channel_code
                 + NetworkIdUtil.DOT
-                + id.begin_time.getFissuresTime();
+                + id.begin_time;
     }
 
     public static ChannelId fromString(String s) {
@@ -69,7 +69,7 @@ public class ChannelIdUtil {
                              st.nextToken(),
                              st.nextToken(),
                              st.nextToken(),
-                             new Time(new ISOTime(st.nextToken()).getDate()));
+                             new ISOTime(st.nextToken()).getDate());
     }
 
     public static String toStringFormatDates(ChannelId id) {

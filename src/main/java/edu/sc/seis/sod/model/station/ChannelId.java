@@ -40,7 +40,7 @@ final public class ChannelId
               String station_code,
               String site_code,
               String channel_code,
-              Time begin_time)
+              MicroSecondDate begin_time)
     {
         this.network_id = network_id;
         this.station_code = station_code;
@@ -53,5 +53,5 @@ final public class ChannelId
     public String station_code;
     public String site_code;
     public String channel_code;
-    public Time begin_time;
+    public MicroSecondDate begin_time;
 }

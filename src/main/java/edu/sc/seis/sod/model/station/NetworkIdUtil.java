@@ -4,7 +4,6 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import edu.sc.seis.sod.model.common.ISOTime;
-import edu.sc.seis.sod.model.common.Time;
 import edu.sc.seis.sod.model.common.TimeFormatter;
 
 /**
@@ -51,7 +50,7 @@ public class NetworkIdUtil {
     public static NetworkId fromString(String s) {
         StringTokenizer st = new StringTokenizer(s, DOT);
         return new NetworkId(st.nextToken(),
-                             new Time(new ISOTime(st.nextToken()).getDate()));
+                             new ISOTime(st.nextToken()).getDate());
     }
 
     public static StringTokenizer getTokenizerAfterNetworkId(String s) {

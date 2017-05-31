@@ -55,7 +55,7 @@ public class OriginImpl  {
     //
     /** The estimate of when the event happened. */
 
-    protected Time origin_time;
+    protected MicroSecondDate origin_time;
 
     //
     // IDL:iris.edu/Fissures/IfEvent/Origin/my_location:1.0
@@ -101,7 +101,7 @@ public class OriginImpl  {
     }
 
     public OriginImpl(String id, String catalog, String contributor,
-            Time origin_time, Location my_location, Magnitude[] magnitudes,
+                      MicroSecondDate origin_time, Location my_location, Magnitude[] magnitudes,
             ParameterRef[] parm_ids) {
         this.id = id;
         this.setCatalog(catalog);
@@ -160,7 +160,8 @@ public class OriginImpl  {
         return result;
     }
 
-    public Time getFissuresTime() {
+    @Deprecated
+    public MicroSecondDate getFissuresTime() {
         return getOriginTime();
     }
 
@@ -221,11 +222,11 @@ public class OriginImpl  {
         return contributor;
     }
 
-    public void setOriginTime(Time origin_time) {
+    public void setOriginTime(MicroSecondDate origin_time) {
         this.origin_time = origin_time;
     }
 
-    public Time getOriginTime() {
+    public MicroSecondDate getOriginTime() {
         return origin_time;
     }
 

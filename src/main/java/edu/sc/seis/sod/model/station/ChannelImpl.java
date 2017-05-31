@@ -259,7 +259,7 @@ public class ChannelImpl {
         }
         this.id = id;
         if (id.begin_time == null && getEffectiveTime() != null) {
-            id.begin_time = new Time(getEffectiveTime().getBeginTime());
+            id.begin_time = getEffectiveTime().getBeginTime();
         }
     }
     public void setName(String name) {
@@ -276,11 +276,11 @@ public class ChannelImpl {
         this.effective_time = effectiveTime;
     }
 
-    public Time getBeginTime() {
+    public MicroSecondDate getBeginTime() {
         return get_id().begin_time;
     }
     
-    public void setBeginTime(Time beginTime) {
+    public void setBeginTime(MicroSecondDate beginTime) {
         if (getEffectiveTime() == null) {
             setEffectiveTime(new TimeRange(beginTime, (MicroSecondDate)null));
         } else {
@@ -295,7 +295,7 @@ public class ChannelImpl {
         return getEffectiveTime().getEndTime();
     }
     
-    public void setEndTime(Time endTime) {
+    public void setEndTime(MicroSecondDate endTime) {
         if (getEffectiveTime() == null) {
             setEffectiveTime(new TimeRange(null, endTime));
         } else {

@@ -22,7 +22,6 @@ import java.util.Map;
 
 import edu.sc.seis.sod.model.common.Location;
 import edu.sc.seis.sod.model.common.MicroSecondDate;
-import edu.sc.seis.sod.model.common.Time;
 import edu.sc.seis.sod.model.common.TimeRange;
 
 //
@@ -308,11 +307,11 @@ public class StationImpl implements Serializable
         }
     }
 
-    public Time getBeginTime() {
+    public MicroSecondDate getBeginTime() {
         return get_id().begin_time;
     }
     
-    public void setBeginTime(Time beginTime) {
+    public void setBeginTime(MicroSecondDate beginTime) {
         if (getEffectiveTime() == null) {
             setEffectiveTime(new TimeRange(beginTime, (MicroSecondDate)null));
         } else {
@@ -327,7 +326,7 @@ public class StationImpl implements Serializable
         return getEffectiveTime().getEndTime();
     }
     
-    public void setEndTime(Time endTime) {
+    public void setEndTime(MicroSecondDate endTime) {
         if (getEffectiveTime() == null) {
             setEffectiveTime(new TimeRange(null, endTime));
         } else {
