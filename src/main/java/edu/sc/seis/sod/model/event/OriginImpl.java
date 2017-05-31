@@ -188,17 +188,17 @@ public class OriginImpl  {
         }
     }
     
-    public List getMagnitudeList() {
+    public List<Magnitude> getMagnitudeList() {
         // hibernate needs same collection returned from get as it put in via set for dirty checking
         if(hibernateMagList != null) {return hibernateMagList;}
-        ArrayList out = new ArrayList();
+        ArrayList<Magnitude> out = new ArrayList<Magnitude>();
         for(int i = 0; i < getMagnitudes().length; i++) {
             out.add(getMagnitudes()[i]);
         }
         return out;
     }
     
-    protected void setMagnitudeList(List list) {
+    protected void setMagnitudeList(List<Magnitude> list) {
         hibernateMagList = list;
         setMagnitudes(new Magnitude[list.size()]);
         setMagnitudes((Magnitude[])list.toArray(getMagnitudes()));
@@ -253,5 +253,5 @@ public class OriginImpl  {
         return parm_ids;
     }
     
-    protected List hibernateMagList = null;
+    protected List<Magnitude> hibernateMagList = null;
 }
