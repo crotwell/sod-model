@@ -21,7 +21,7 @@ public class ChannelGroup {
 
     protected int dbid;
     
-    protected void setDbid(int i) {
+    public void setDbid(int i) {
         dbid = i;
     }
     
