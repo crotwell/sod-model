@@ -15,7 +15,6 @@
 package edu.sc.seis.sod.model.station;
 
 import edu.sc.seis.sod.model.common.MicroSecondDate;
-import edu.sc.seis.sod.model.common.Time;
 
 //
 // IDL:iris.edu/Fissures/IfNetwork/ChannelId:1.0

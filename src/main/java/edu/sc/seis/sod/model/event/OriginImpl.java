@@ -24,7 +24,6 @@ import edu.sc.seis.sod.model.common.LocationUtil;
 import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.ParameterRefUtil;
-import edu.sc.seis.sod.model.common.Time;
 import edu.sc.seis.sod.model.common.UnitImpl;
 
 

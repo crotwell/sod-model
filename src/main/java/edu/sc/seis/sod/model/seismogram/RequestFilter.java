@@ -15,7 +15,6 @@
 package edu.sc.seis.sod.model.seismogram;
 
 import edu.sc.seis.sod.model.common.MicroSecondDate;
-import edu.sc.seis.sod.model.common.Time;
 import edu.sc.seis.sod.model.station.ChannelId;
 
 //
