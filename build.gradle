@@ -11,6 +11,13 @@ dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute module("edu.sc.seis:seisFile") with project(":seisFile")
+    }
+}
+
 repositories {
   mavenCentral()
 }
