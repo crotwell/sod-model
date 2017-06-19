@@ -5,6 +5,7 @@ package edu.sc.seis.sod.model.station;
  * @author crotwell
  * Created on Jul 22, 2005
  */
+@Deprecated
 public class InvalidResponse extends Exception {
 
     /**
