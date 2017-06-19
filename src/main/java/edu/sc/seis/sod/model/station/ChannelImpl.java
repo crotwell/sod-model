@@ -15,6 +15,7 @@
 package edu.sc.seis.sod.model.station;
 
 import edu.sc.seis.sod.model.common.MicroSecondDate;
+import edu.sc.seis.sod.model.common.MicroSecondTimeRange;
 import edu.sc.seis.sod.model.common.Orientation;
 import edu.sc.seis.sod.model.common.SamplingImpl;
 import edu.sc.seis.sod.model.common.TimeRange;
@@ -70,6 +71,11 @@ public class ChannelImpl {
 
     private TimeRange effective_time;
 
+    /** Data availability from the same data center that returned the channel. Maybe be null
+     * if the service does not include availability in the Channel.
+     */
+    private MicroSecondTimeRange availabilityExtent;
+    
     //
     // IDL:iris.edu/Fissures/IfNetwork/Channel/my_site:1.0
     //
@@ -210,6 +216,8 @@ public class ChannelImpl {
     public SamplingImpl getSamplingInfo() {return sampling_info;}
 
     public TimeRange getEffectiveTime() { return effective_time; }
+    
+    public MicroSecondTimeRange getAvailabilityExtent() { return availabilityExtent; }
 
     public SiteImpl getSite() {return my_site; }
 
@@ -272,6 +280,10 @@ public class ChannelImpl {
     
     public void setEffectiveTime(TimeRange effectiveTime) {
         this.effective_time = effectiveTime;
+    }
+
+    public void setAvailabilityExtent(MicroSecondTimeRange range) {
+        this.availabilityExtent = range;
     }
 
     public MicroSecondDate getBeginTime() {
