@@ -50,8 +50,7 @@ public class Instrumentation {
     }
     
     public static boolean isValid(Sensitivity sens) {
-        return sens != null && sens.frequency >= 0 && sens.sensitivity_factor != -
-1;
+        return sens != null && sens.frequency >= 0 && sens.sensitivity_factor != -1;
     }
 
     public static boolean isValid(Instrumentation inst) {
