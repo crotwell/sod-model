@@ -16,10 +16,13 @@ package edu.sc.seis.sod.model.station;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import edu.sc.seis.seisFile.fdsnws.stationxml.Equipment;
 import edu.sc.seis.sod.model.common.Location;
 import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.TimeRange;
@@ -94,6 +97,8 @@ public class StationImpl implements Serializable
     //
     /** The network attributes of the network that this station belongs. */
     private NetworkAttrImpl my_network;
+
+    private List<Equipment> equipmentList = new ArrayList<Equipment>();
     
     protected StationImpl() {
     }
@@ -334,4 +339,16 @@ public class StationImpl implements Serializable
         }
     }
 
+    public List<Equipment> getEquipment() {
+        return equipmentList;
+    }
+
+
+    public void setEquipment(List<Equipment> equipment) {
+        this.equipmentList = equipment;
+    }
+    
+    public void addEquipment(Equipment equipment) {
+        this.equipmentList.add(equipment);
+    }
 }

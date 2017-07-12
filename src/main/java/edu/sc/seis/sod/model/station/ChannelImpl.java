@@ -14,6 +14,14 @@
 
 package edu.sc.seis.sod.model.station;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.sc.seis.seisFile.fdsnws.stationxml.DataLogger;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Equipment;
+import edu.sc.seis.seisFile.fdsnws.stationxml.PreAmplifier;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Response;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Sensor;
 import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.MicroSecondTimeRange;
 import edu.sc.seis.sod.model.common.Orientation;
@@ -82,6 +90,18 @@ public class ChannelImpl {
     /** The site that this channel belongs to.*/
 
     private SiteImpl my_site;
+    
+    //staionxml equipment stuff
+    private Sensor sensor;
+
+    private PreAmplifier preAmplifier;
+
+    private DataLogger dataLogger;
+
+    private List<Equipment> equipmentList = new ArrayList<Equipment>();
+
+    private Response response;
+    
     
     public ChannelImpl(ChannelId id,
                        String name,
@@ -312,4 +332,59 @@ public class ChannelImpl {
             setEffectiveTime(new TimeRange(getEffectiveTime().getBeginTime(), endTime));
         }
     }
+
+    
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
+    
+    public PreAmplifier getPreAmplifier() {
+        return preAmplifier;
+    }
+
+    
+    public void setPreAmplifier(PreAmplifier preAmplifier) {
+        this.preAmplifier = preAmplifier;
+    }
+
+    
+    public DataLogger getDataLogger() {
+        return dataLogger;
+    }
+
+    
+    public void setDataLogger(DataLogger dataLogger) {
+        this.dataLogger = dataLogger;
+    }
+
+    public List<Equipment> getEquipment() {
+        return equipmentList;
+    }
+
+
+    public void setEquipment(List<Equipment> equipment) {
+        this.equipmentList = equipment;
+    }
+    
+    public void addEquipment(Equipment equipment) {
+        this.equipmentList.add(equipment);
+    }
+
+    
+    public Response getResponse() {
+        return response;
+    }
+
+    
+    public void setResponse(Response response) {
+        this.response = response;
+    }
+    
+    
 }
