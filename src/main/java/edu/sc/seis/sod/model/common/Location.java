@@ -19,11 +19,19 @@ package edu.sc.seis.sod.model.common;
 //
 /** A location on or in the earth. */
 
-final public class Location implements org.omg.CORBA.portable.IDLEntity
+public class Location
 {
     public
     Location()
     {
+    }
+
+    public
+    Location(float latitude,
+             float longitude,
+             QuantityImpl elevation,
+             QuantityImpl depth) {
+        this(latitude, longitude, elevation, depth, LocationType.GEOGRAPHIC);
     }
 
     public
@@ -45,4 +53,6 @@ final public class Location implements org.omg.CORBA.portable.IDLEntity
     public QuantityImpl elevation;
     public QuantityImpl depth;
     public LocationType type;
+    
+    
 }
