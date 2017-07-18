@@ -24,7 +24,7 @@ import edu.sc.seis.sod.model.common.MicroSecondDate;
  *  effective time of the network, which is also in the NetworkAttributes. 
  **/
 
-final public class NetworkId implements org.omg.CORBA.portable.IDLEntity
+public class NetworkId 
 {
     public
     NetworkId()
@@ -41,4 +41,5 @@ final public class NetworkId implements org.omg.CORBA.portable.IDLEntity
 
     public String network_code;
     public MicroSecondDate begin_time;
+    
 }
