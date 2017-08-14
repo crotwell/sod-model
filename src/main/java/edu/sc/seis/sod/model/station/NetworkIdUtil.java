@@ -3,6 +3,7 @@ package edu.sc.seis.sod.model.station;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
+import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
 import edu.sc.seis.sod.model.common.ISOTime;
 import edu.sc.seis.sod.model.common.TimeFormatter;
 
@@ -15,7 +16,7 @@ import edu.sc.seis.sod.model.common.TimeFormatter;
 public class NetworkIdUtil {
 
     public static boolean isTemporary(NetworkId id) {
-        return isTemporary(id.network_code);
+        return isTemporary(id.networkCode);
     }
 
     public static boolean isTemporary(String code) {
@@ -28,7 +29,7 @@ public class NetworkIdUtil {
      * Compares two networkIds. Dates are only checked for temporary networks.
      */
     public static boolean areEqual(NetworkId a, NetworkId b) {
-        if(!a.network_code.equals(b.network_code)) {
+        if(!a.networkCode.equals(b.networkCode)) {
             return false;
         }
         // only compare dates if temp network, ie network code starts with X, Y,
@@ -37,16 +38,18 @@ public class NetworkIdUtil {
                 || a.begin_time.equals(b.begin_time);
     }
 
-    public static String toString(NetworkAttrImpl net) {
-        return toString(net.get_id());
+    @Deprecated
+    public static String toString(Network net) {
+        return net.getNetworkId();
     }
 
     public static String toString(NetworkId id) {
-        return id.network_code
+        return id.networkCode
                 + DOT
                 + id.begin_time.getISOString();
     }
 
+    @Deprecated
     public static NetworkId fromString(String s) {
         StringTokenizer st = new StringTokenizer(s, DOT);
         return new NetworkId(st.nextToken(),
@@ -60,25 +63,25 @@ public class NetworkIdUtil {
         return st;
     }
 
-    public static String toStringFormatDates(NetworkAttrImpl net) {
-        return toStringFormatDates(net.get_id());
+    public static String toStringFormatDates(Network net) {
+        return net.getNetworkId();
     }
 
     public static String toStringFormatDates(NetworkId id) {
-        return id.network_code + DOT + TimeFormatter.format(id.begin_time);
+        return id.networkCode + DOT + TimeFormatter.format(id.begin_time);
     }
 
-    public static String toStringNoDates(NetworkAttrImpl net) {
-        return toStringNoDates(net.get_id());
+    public static String toStringNoDates(Network net) {
+        return net.getNetworkId();
     }
 
     public static String toStringNoDates(NetworkId id) {
         // passcal networks need year
-        if(id.network_code.startsWith("X") || id.network_code.startsWith("Y")
-                || id.network_code.startsWith("Z")) {
-            return id.network_code + getTwoCharYear(id);
+        if(id.networkCode.startsWith("X") || id.networkCode.startsWith("Y")
+                || id.networkCode.startsWith("Z")) {
+            return id.networkCode + getTwoCharYear(id);
         }
-        return id.network_code;
+        return id.networkCode;
     }
 
     public static String getTwoCharYear(NetworkId id) {

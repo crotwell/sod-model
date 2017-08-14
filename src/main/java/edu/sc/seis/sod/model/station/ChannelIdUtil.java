@@ -1,7 +1,12 @@
 package edu.sc.seis.sod.model.station;
 
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import edu.sc.seis.seisFile.SeisFileException;
+import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
 import edu.sc.seis.sod.model.common.ISOTime;
 import edu.sc.seis.sod.model.common.TimeFormatter;
 
@@ -15,79 +20,127 @@ import edu.sc.seis.sod.model.common.TimeFormatter;
 public class ChannelIdUtil {
 
     public static boolean areEqual(ChannelId a, ChannelId b) {
-        return a.station_code.equals(b.station_code)
-                && a.site_code.equals(b.site_code)
-                && a.channel_code.equals(b.channel_code)
-                && NetworkIdUtil.areEqual(a.network_id, b.network_id)
-                && a.begin_time.equals(b.begin_time);
+        return a.getStationCode().equals(b.getStationCode())
+                && a.getLocCode().equals(b.getLocCode())
+                && a.getChannelCode().equals(b.getChannelCode())
+                && a.getNetworkId().equals(b.getNetworkId())
+                && a.getStartTime().equals(b.getStartTime());
     }
     
     public static boolean areEqualExceptForBeginTime(ChannelId a, ChannelId b) {
-        return a.station_code.equals(b.station_code)
-        && a.site_code.equals(b.site_code)
-        && a.channel_code.equals(b.channel_code)
-        && NetworkIdUtil.areEqual(a.network_id, b.network_id);
+        return a.getStationCode().equals(b.getStationCode())
+        && a.getLocCode().equals(b.getLocCode())
+        && a.getChannelCode().equals(b.getChannelCode())
+        && a.getNetworkId().equals(b.getNetworkId());
     }
     
-    public static boolean areEqual(ChannelImpl a, ChannelImpl b) {
-        return areEqual(a.getId(), b.getId()) &&
-        a.getName() == b.getName() &&
-        a.getOrientation().azimuth == b.getOrientation().azimuth &&
-        a.getOrientation().dip == b.getOrientation().dip &&
-        a.getSamplingInfo().numPoints == b.getSamplingInfo().numPoints &&
-        a.getSamplingInfo().interval.getUnit().equals(b.getSamplingInfo().interval.getUnit()) &&
-        a.getSamplingInfo().interval.getValue() == b.getSamplingInfo().interval.getValue();
+    public static boolean areEqual(Channel a, Channel b) {
+        return areEqual(new ChannelId(a), new ChannelId(b)) &&
+        a.getAzimuth().getValue() == b.getAzimuth().getValue() &&
+        a.getDip().getValue() == b.getDip().getValue() &&
+        a.getSampleRate().getValue() == b.getSampleRate().getValue();
     }
 
     public static String toStringNoDates(ChannelId id) {
-        return NetworkIdUtil.toStringNoDates(id.network_id) + NetworkIdUtil.DOT
-                + id.station_code + NetworkIdUtil.DOT + id.site_code + NetworkIdUtil.DOT + id.channel_code;
+        return id.getNetworkId() + NetworkIdUtil.DOT
+                + id.getStationCode() + NetworkIdUtil.DOT + id.getLocCode() + NetworkIdUtil.DOT + id.getChannelCode();
     }
 
-    public static String toStringNoDates(ChannelImpl chan) {
-        return toStringNoDates(chan.get_id());
+    public static String toStringNoDates(Channel chan) {
+        return toStringNoDates(new ChannelId(chan));
+    }
+
+    public static String toString(Channel chan) {
+        return chan.getNetwork().getNetworkId()
+                + NetworkIdUtil.DOT
+                + chan.getStationCode()
+                + NetworkIdUtil.DOT
+                + chan.getLocCode()
+                + NetworkIdUtil.DOT
+                + chan.getChannelCode()
+                + NetworkIdUtil.DOT
+                + chan.getStartDate();
     }
 
     public static String toString(ChannelId id) {
-        return NetworkIdUtil.toString(id.network_id)
+        return id.getNetworkId()
                 + NetworkIdUtil.DOT
-                + id.station_code
+                + id.getStationCode()
                 + NetworkIdUtil.DOT
-                + id.site_code
+                + id.getLocCode()
                 + NetworkIdUtil.DOT
-                + id.channel_code
+                + id.getChannelCode()
                 + NetworkIdUtil.DOT
-                + id.begin_time;
+                + id.getStartTime();
     }
 
     public static ChannelId fromString(String s) {
-        NetworkId netId = NetworkIdUtil.fromString(s);
-        StringTokenizer st = NetworkIdUtil.getTokenizerAfterNetworkId(s);
-        return new ChannelId(netId,
-                             st.nextToken(),
-                             st.nextToken(),
-                             st.nextToken(),
-                             new ISOTime(st.nextToken()).getDate());
+        Pattern fdsnPattern = Pattern.compile("FDSN:([0-9A-Z]{1-8})\\.([0-9A-Z]{1,8})\\.([0-9A-Z]{1-8}:)+([0-9A-Z]{3,4})_(\\d{8}T\\d{6}\\.\\d{1-9}Z)");
+        Matcher matcher = fdsnPattern.matcher(s);
+        if (matcher.matches()) {
+        return new ChannelId(matcher.group(1),
+                             matcher.group(2),
+                             matcher.group(3),
+                             matcher.group(4),
+                             BaseNodeType.parseISOString( matcher.group(5)));
+        }
+        throw new RuntimeException("Doesn't match a channel id pattern: ");
     }
 
     public static String toStringFormatDates(ChannelId id) {
-        return NetworkIdUtil.toStringFormatDates(id.network_id) + NetworkIdUtil.DOT
-                + id.station_code + NetworkIdUtil.DOT + id.site_code + NetworkIdUtil.DOT + id.channel_code
-                + NetworkIdUtil.DOT + TimeFormatter.format(id.begin_time);
+        return id.getNetworkId() + NetworkIdUtil.DOT
+                + id.getStationCode() + NetworkIdUtil.DOT + id.getLocCode() + NetworkIdUtil.DOT + id.getChannelCode()
+                + NetworkIdUtil.DOT + TimeFormatter.format(id.getStartTime());
+    }
+    
+    public static String toStringFormatDates(Channel chan) {
+        return chan.getNetworkId() + NetworkIdUtil.DOT
+                + chan.getStationCode() + NetworkIdUtil.DOT + chan.getLocCode() + NetworkIdUtil.DOT + chan.getChannelCode()
+                + NetworkIdUtil.DOT + TimeFormatter.format(chan.getStartDateTime());
     }
     
     public static String getBandCode(ChannelId id) {
-        return ""+id.channel_code.charAt(0);
+        return ""+id.getChannelCode().charAt(0);
     }
     
     public static String getGainCode(ChannelId id) {
-        return ""+id.channel_code.charAt(1);
+        return ""+id.getChannelCode().charAt(1);
     }
     
     public static String getOrientationCode(ChannelId id) {
-        return ""+id.channel_code.charAt(2);
+        return ""+id.getChannelCode().charAt(2);
     }
 
+    /**
+     * Calculates a default azimuth based on the orientation code,
+     * 0 for Z and N, 90 for E, -1 otherwise
+     * @param orientationCode
+     * @return
+     */
+    public static int getDefaultAzimuth(String chanCode) {
+        if (chanCode.endsWith("Z") || chanCode.endsWith("N")) {
+            return 0;
+        } else if (chanCode.endsWith("E")) {
+            return 90;
+        }
+        return -1;
+    }
+    
+    /**
+     * Calculates a default dip based on the orientation code,
+     * -90 for Z, 0 for N and E, -1 otherwise
+     * @param orientationCode
+     * @return
+     */
+    public static int getDefaultDip(String chanCode) {
+        if (chanCode.endsWith("E") || chanCode.endsWith("N")) {
+            return 0;
+        } else if (chanCode.endsWith("Z")) {
+            return -90;
+        }
+        return -1;
+    }
+    
     public static float minSPSForBandCode(String bandCode) {
         return minSPSForBandCode(bandCode.charAt(0));
     }

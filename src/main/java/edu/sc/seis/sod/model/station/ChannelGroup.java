@@ -4,14 +4,19 @@ package edu.sc.seis.sod.model.station;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
+import edu.sc.seis.seisFile.fdsnws.stationxml.FloatType;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
 import edu.sc.seis.sod.model.common.DistAz;
 import edu.sc.seis.sod.model.common.Location;
 import edu.sc.seis.sod.model.common.Orientation;
+import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.event.CacheEvent;
 
 public class ChannelGroup {
 
-    public ChannelGroup(ChannelImpl[] channels) {
+    public ChannelGroup(Channel[] channels) {
         assert channels.length == 3;
         this.channels = channels;
     }
@@ -29,11 +34,11 @@ public class ChannelGroup {
         return dbid;
     }
     
-    public ChannelImpl[] getChannels() {
+    public Channel[] getChannels() {
         return channels;
     }
 
-    public boolean contains(ChannelImpl c) {
+    public boolean contains(Channel c) {
         return getIndex(c) != -1;
     }
 
@@ -41,12 +46,12 @@ public class ChannelGroup {
      * Finds the vertical channel. If no channel has a dip of -90 then null is
      * returned.
      */
-    public ChannelImpl getVertical() {
+    public Channel getVertical() {
         for(int i = 0; i < channels.length; i++) {
-            if(channels[i].getOrientation().dip == -90) {
+            if(channels[i].getDip().getValue() == -90) {
                 return channels[i];
             }
-            if(channels[i].getOrientation().dip == 90) {
+            if(channels[i].getDip().getValue() == 90) {
                 // flipped Z, often happens in seed as people think of channel up having positive value
                 // even though convention is 90 dip is down
                 return channels[i];
@@ -58,9 +63,9 @@ public class ChannelGroup {
     /**
      * Finds the 2 horizontal channels.
      */
-    public ChannelImpl[] getHorizontal() {
+    public Channel[] getHorizontal() {
         int[] indices = getHorizontalIndices();
-        ChannelImpl[] out = new ChannelImpl[indices.length];
+        Channel[] out = new Channel[indices.length];
         for(int i = 0; i < indices.length; i++) {
             out[i] = channels[indices[i]];
         }
@@ -70,7 +75,7 @@ public class ChannelGroup {
     private int[] getHorizontalIndices() {
         int first = -1;
         for(int i = 0; i < channels.length; i++) {
-            if(channels[i].getOrientation().dip == 0) {
+            if(channels[i].getDip().getValue() == 0) {
                 if(first == -1) {
                     first = i;
                 } else {
@@ -90,7 +95,7 @@ public class ChannelGroup {
      * the seconds + 90 degrees, ie x -> east (90) and y -> north (0). If this is not possible, within 2 degrees,
      *  then a zero length array is returned.
      */
-    public ChannelImpl[] getHorizontalXY() {
+    public Channel[] getHorizontalXY() {
         return getHorizontalXY(2);
     }
 
@@ -100,18 +105,18 @@ public class ChannelGroup {
      * If this is not possible, within tolerance degrees,
      *  then a zero length array is returned.
      */
-    public ChannelImpl[] getHorizontalXY(float toleranceDegrees) {
-        ChannelImpl[] out = getHorizontal();
+    public Channel[] getHorizontalXY(float toleranceDegrees) {
+        Channel[] out = getHorizontal();
         if(out.length != 2) {
-            out = new ChannelImpl[0];
-        } else if(Math.abs(((360+out[0].getOrientation().azimuth - out[1].getOrientation().azimuth) % 360) - 90) < toleranceDegrees ) {
+            out = new Channel[0];
+        } else if(Math.abs(((360+out[0].getAzimuth().getValue() - out[1].getAzimuth().getValue()) % 360) - 90) < toleranceDegrees ) {
             // in right order
-        } else if(Math.abs(((360+out[1].getOrientation().azimuth - out[0].getOrientation().azimuth) % 360) - 90) < toleranceDegrees ) {
-            ChannelImpl tmp = out[0];
+        } else if(Math.abs(((360+out[1].getAzimuth().getValue() - out[0].getAzimuth().getValue()) % 360) - 90) < toleranceDegrees ) {
+            Channel tmp = out[0];
             out[0] = out[1];
             out[1] = tmp;
         } else {
-            out = new ChannelImpl[0];
+            out = new Channel[0];
         }
         return out;
     }
@@ -122,18 +127,18 @@ public class ChannelGroup {
      * seismogram that has been rotated to GCP, ie it has R or T as its
      * orientation code.
      */
-    public ChannelImpl getChannel(ChannelId chanId, CacheEvent event) {
+    public Channel getChannel(ChannelId chanId, CacheEvent event) {
         for(int i = 0; i < channels.length; i++) {
-            if(ChannelIdUtil.areEqual(chanId, channels[i].get_id())) {
+            if(ChannelIdUtil.areEqual(chanId, new ChannelId(channels[i]))) {
                 return channels[i];
             }
         }
-        if(SiteIdUtil.areSameSite(chanId, channels[0].get_id())
-                && chanId.channel_code.substring(0, 2)
-                        .equals(channels[0].get_code().substring(0, 2))) {
-            if(chanId.channel_code.endsWith("R")) {
+        if(SiteIdUtil.areSameSite(chanId, new ChannelId(channels[0]))
+                && chanId.getChannelCode().substring(0, 2)
+                        .equals(channels[0].getCode().substring(0, 2))) {
+            if(chanId.getChannelCode().endsWith("R")) {
                 return getRadial(event);
-            } else if(chanId.channel_code.endsWith("T")) {
+            } else if(chanId.getChannelCode().endsWith("T")) {
                 return getTransverse(event);
             }
         }
@@ -153,74 +158,79 @@ public class ChannelGroup {
         channels[transverseIndex] = getTransverse(event);
     }
 
-    public ChannelImpl getRadial(CacheEvent event) {
+    public Channel getRadial(CacheEvent event) {
         return getRadial(event.extractOrigin().getLocation());
     }
 
-    public ChannelImpl getRadial(Location eventLoc) {
-        DistAz distAz = new DistAz(channels[0].getSite().getLocation(), eventLoc);
-        return new ChannelImpl(replaceChannelOrientation(channels[0].get_id(),
-                                                                "R"),
-                               channels[0].getName() + "Radial",
-                               new Orientation((float)distAz.getRadialAzimuth(),
-                                               0),
-                               channels[0].getSamplingInfo(),
-                               channels[0].getEffectiveTime(),
-                               channels[0].getSite());
+    public Channel getRadial(Location eventLoc) {
+        DistAz distAz = new DistAz(channels[0], eventLoc);
+        return ofAzimuth(channels[0], (float)distAz.getRadialAzimuth(), 'R');
     }
 
-    public ChannelImpl getTransverse(CacheEvent event) {
+    public Channel getTransverse(CacheEvent event) {
         return getTransverse(event.extractOrigin().getLocation());
     }
 
-    public ChannelImpl getTransverse(Location eventLoc) {
-        DistAz distAz = new DistAz(channels[0].getSite().getLocation(), eventLoc);
-        return new ChannelImpl(replaceChannelOrientation(channels[0].get_id(),
-                                                                "T"),
-                               channels[0].getName() + "Transverse",
-                               new Orientation((float)distAz.getTransverseAzimuth(),
-                                               0),
-                               channels[0].getSamplingInfo(),
-                               channels[0].getEffectiveTime(),
-                               channels[0].getSite());
+    public Channel getTransverse(Location eventLoc) {
+        DistAz distAz = new DistAz(channels[0], eventLoc);
+        return ofAzimuth(channels[0], (float)distAz.getTransverseAzimuth(), 'T');
     }
 
-    private int getIndex(ChannelImpl chan) {
+    public static Channel ofAzimuth(Channel orig, float azimuth, Character orientationCode) {
+        Channel out = new Channel(orig.getStation(),
+        		orig.getLocCode(), 
+        		replaceChannelOrientationCode(orig.getChannelCode(), orientationCode));
+        out.setAzimuth(new FloatType(azimuth, UnitImpl.DEGREE.toString()));
+        out.setDepth(orig.getDepth());
+        out.setDescription(orig.getDescription());
+        out.setDip(orig.getDip());
+        out.setElevation(orig.getElevation());
+        out.setEndDateTime(orig.getEndDateTime());
+        out.setLatitude(orig.getLatitude());
+        out.setLongitude(orig.getLongitude());
+        out.setResponse(orig.getResponse());
+        out.setSampleRate(orig.getSampleRate());
+        out.setStartDateTime(orig.getStartDateTime());
+        return out;
+    }
+    
+    private int getIndex(Channel chan) {
         for(int i = 0; i < channels.length; i++) {
             if(channels[i].equals(chan))
                 return i;
         }
         // didn't find by object equals, check for ids
+        ChannelId chanId = new ChannelId(chan);
         for(int i = 0; i < channels.length; i++) {
-            if(ChannelIdUtil.areEqual(channels[i].get_id(), chan.get_id())) {
+            if(ChannelIdUtil.areEqual(new ChannelId(channels[i]), chanId )) {
                 return i;
             }
         }
         return -1;
     }
     
-    public ChannelImpl getChannel1() {
+    public Channel getChannel1() {
         return getChannels()[0];
     }
     
-    public ChannelImpl getChannel2() {
+    public Channel getChannel2() {
         return getChannels()[1];
     }
     
-    public ChannelImpl getChannel3() {
+    public Channel getChannel3() {
         return getChannels()[2];
     }
     
-    public StationImpl getStation() {
-        return getChannel1().getStationImpl();
+    public Station getStation() {
+        return getChannel1().getStation();
     }
     
-    public NetworkAttrImpl getNetworkAttr() {
-        return getStation().getNetworkAttrImpl();
+    public Network getNetworkAttr() {
+        return getStation().getNetwork();
     }
     
     public boolean areEqual(ChannelGroup other) {
-        ChannelImpl[] otherChans = other.getChannels();
+        Channel[] otherChans = other.getChannels();
         for (int i = 0; i < otherChans.length; i++) {
             if (ChannelIdUtil.areEqual(getChannel1(), otherChans[i])) {
                 for (int j = 0; j < otherChans.length; j++) {
@@ -239,35 +249,45 @@ public class ChannelGroup {
         return false;
     }
     
-    private void setChannel(int index, ChannelImpl chan) {
+    private void setChannel(int index, Channel chan) {
         if (channels == null) {
-         channels = new ChannelImpl[3];   
+         channels = new Channel[3];   
         }
         channels[index] = chan;
     }
     
-    protected void setChannel1(ChannelImpl chan) {
+    protected void setChannel1(Channel chan) {
         setChannel(0, chan);
     }
     
-    protected void setChannel2(ChannelImpl chan) {
+    protected void setChannel2(Channel chan) {
         setChannel(1, chan);
     }
     
-    protected void setChannel3(ChannelImpl chan) {
+    protected void setChannel3(Channel chan) {
         setChannel(2, chan);
     }
 
+    /** Replace oricatation code (last letter) of channel code.
+     * 
+     * @param chanCode
+     * @param orientation
+     * @return
+     */
+    public static String replaceChannelOrientationCode(String chanCode, Character orientation) {
+    	    return chanCode.substring(0, chanCode.length()-1) + orientation;
+    }
+
     public static ChannelId replaceChannelOrientation(ChannelId chanId, String orientation) {
-        return new ChannelId(chanId.network_id,
-                             chanId.station_code,
-                             chanId.site_code,
-                             chanId.channel_code.substring(0, 2)
+        return new ChannelId(chanId.getNetworkId(),
+                             chanId.getStationCode(),
+                             chanId.getLocCode(),
+                             chanId.getChannelCode().substring(0, 2)
                                      + orientation,
-                                     chanId.begin_time);
+                                     chanId.getStartTime());
     }
     
-    private ChannelImpl[] channels;
+    private Channel[] channels;
 
     private static final Logger logger = LoggerFactory.getLogger(ChannelGroup.class);
 }

@@ -1,5 +1,6 @@
 package edu.sc.seis.sod.model.station;
 
+import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
 import edu.sc.seis.sod.model.common.TimeFormatter;
 
 /**
@@ -14,39 +15,39 @@ public class StationIdUtil {
         if(a == b) {
             return true;
         }
-        return a.station_code.equals(b.station_code)
-                && NetworkIdUtil.areEqual(a.network_id, b.network_id)
+        return a.getStationCode().equals(b.getStationCode())
+                && a.getNetworkId().equals(b.getNetworkId())
                 && a.begin_time.equals(b.begin_time);
     }
 
-    public static String toString(StationImpl sta) {
-        return toString(sta.get_id());
+    public static String toString(Station sta) {
+        return toString(new StationId(sta));
     }
 
     public static String toString(StationId id) {
-        return NetworkIdUtil.toString(id.network_id) + NetworkIdUtil.DOT + id.station_code
+        return id.getNetworkId() + NetworkIdUtil.DOT + id.getStationCode()
                 + NetworkIdUtil.DOT + id.begin_time.getISOString();
     }
 
-    public static String toStringFormatDates(StationImpl sta) {
-        return toStringFormatDates(sta.get_id());
+    public static String toStringFormatDates(Station sta) {
+        return toStringFormatDates(new StationId(sta));
     }
 
     public static String toStringFormatDates(StationId id) {
-        return NetworkIdUtil.toStringFormatDates(id.network_id) + NetworkIdUtil.DOT
-                + id.station_code + NetworkIdUtil.DOT + TimeFormatter.format(id.begin_time);
+        return id.getNetworkId() + NetworkIdUtil.DOT
+                + id.getStationCode() + NetworkIdUtil.DOT + TimeFormatter.format(id.begin_time);
     }
 
-    public static String toStringNoDates(StationImpl sta) {
-        return toStringNoDates(sta.get_id());
+    public static String toStringNoDates(Station sta) {
+        return toStringNoDates(new StationId(sta));
     }
 
     public static String toStringNoDates(StationId id) {
-        return NetworkIdUtil.toStringNoDates(id.network_id) + NetworkIdUtil.DOT
-                + id.station_code;
+        return id.getNetworkId() + NetworkIdUtil.DOT
+                + id.getStationCode();
     }
 
-    public static boolean areEqual(StationImpl a, StationImpl b) {
-        return areEqual(a.get_id(), b.get_id());
+    public static boolean areEqual(Station a, Station b) {
+        return areEqual(new StationId(a), new StationId(b));
     }
 } // StationIdUtil

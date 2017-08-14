@@ -23,10 +23,10 @@ public class RequestFilterUtil {
     }
 
     public static boolean containsWildcard(RequestFilter rf) {
-        return rf.channel_id.network_id.network_code.equals("*") ||
-        rf.channel_id.station_code.equals("*") ||
-        rf.channel_id.site_code.equals("*") ||
-        rf.channel_id.channel_code.equals("*");
+        return rf.channel_id.getNetworkId().equals("*") ||
+        rf.channel_id.getStationCode().equals("*") ||
+        rf.channel_id.getLocCode().equals("*") ||
+        rf.channel_id.getChannelCode().equals("*");
     }
 
     public static boolean containsWildcard(List<RequestFilter> rfList) {

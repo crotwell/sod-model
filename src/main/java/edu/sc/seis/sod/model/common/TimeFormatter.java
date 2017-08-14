@@ -2,7 +2,10 @@ package edu.sc.seis.sod.model.common;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.TimeZone;
+
+import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
 
 /**
  * @author groves Created on Oct 28, 2004
@@ -10,6 +13,10 @@ import java.util.TimeZone;
 public class TimeFormatter {
 
 
+    @Deprecated
+    public static synchronized String format(ZonedDateTime t) {
+        return BaseNodeType.toISOString(t);
+    }
 
     public static synchronized String format(MicroSecondDate t) {
         return formatter.format(t);

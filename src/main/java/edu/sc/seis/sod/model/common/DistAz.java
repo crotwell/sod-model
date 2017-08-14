@@ -1,46 +1,35 @@
 package edu.sc.seis.sod.model.common;
 
+import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
 import edu.sc.seis.sod.model.event.CacheEvent;
 import edu.sc.seis.sod.model.event.OriginImpl;
-import edu.sc.seis.sod.model.station.ChannelImpl;
-import edu.sc.seis.sod.model.station.SiteImpl;
-import edu.sc.seis.sod.model.station.StationImpl;
 
 public class DistAz {
     /**
-     c getDelta() => Great Circle Arc distance in degrees
-     c getAz()    => Azimuth from station to event in degrees
-     c getBaz()   => Back Azimuth from event to station in degrees
-     */
-    public DistAz(StationImpl sta, CacheEvent ev){
-        this(sta.getLocation(), getLoc(ev));
-    }
+    c getDelta() => Great Circle Arc distance in degrees
+    c getAz()    => Azimuth from station to event in degrees
+    c getBaz()   => Back Azimuth from event to station in degrees
+    */
+   public DistAz(Station sta, CacheEvent ev){
+       this(sta.getLatitude().getValue(), sta.getLongitude().getValue(), getLoc(ev));
+   }
+   /**
+   c getDelta() => Great Circle Arc distance in degrees
+   c getAz()    => Azimuth from station to event in degrees
+   c getBaz()   => Back Azimuth from event to station in degrees
+   */
+  public DistAz(double staLatitude, double staLongitude, Location evLoc){
+      this(staLatitude, staLongitude, evLoc.latitude, evLoc.longitude);
+  }
 
     /**
      c getDelta() => Great Circle Arc distance in degrees
      c getAz()    => Azimuth from station to origin in degrees
      c getBaz()   => Back Azimuth from origin to station in degrees
      */
-    public DistAz(StationImpl sta, OriginImpl origin){
-        this(sta.getLocation(), getLoc(origin));
-    }
-
-    /**
-     c getDelta() => Great Circle Arc distance in degrees
-     c getAz()    => Azimuth from site to event in degrees
-     c getBaz()   => Back Azimuth from event to site in degrees
-     */
-    public DistAz(SiteImpl site, CacheEvent ev){
-        this(site.getLocation(), getLoc(ev));
-    }
-
-    /**
-     c getDelta() => Great Circle Arc distance in degrees
-     c getAz()    => Azimuth from site to origin in degrees
-     c getBaz()   => Back Azimuth from origin to site in degrees
-     */
-    public DistAz(SiteImpl site, OriginImpl origin){
-        this(site.getLocation(), getLoc(origin));
+    public DistAz(Station sta, OriginImpl origin){
+        this(sta.getLatitude().getValue(), sta.getLongitude().getValue(), getLoc(origin));
     }
 
     /**
@@ -48,8 +37,8 @@ public class DistAz {
      c getAz()    => Azimuth from channel to event in degrees
      c getBaz()   => Back Azimuth from event to channel in degrees
      */
-    public DistAz(ChannelImpl chan, CacheEvent ev){
-        this(chan.getSite(), ev);
+    public DistAz(Channel chan, CacheEvent ev){
+        this(chan.getLatitude().getValue(), chan.getLongitude().getValue(), getLoc(ev));
     }
 
     /**
@@ -57,8 +46,17 @@ public class DistAz {
      c getAz()    => Azimuth from channel to origin in degrees
      c getBaz()   => Back Azimuth from origin to channel in degrees
      */
-    public DistAz(ChannelImpl chan, OriginImpl origin){
-        this(chan.getSite().getLocation(), getLoc(origin));
+    public DistAz(Channel chan, OriginImpl origin){
+        this(chan.getLatitude().getValue(), chan.getLongitude().getValue(), getLoc(origin));
+    }
+
+    /**
+     c getDelta() => Great Circle Arc distance in degrees
+     c getAz()    => Azimuth from channel to origin in degrees
+     c getBaz()   => Back Azimuth from origin to channel in degrees
+     */
+    public DistAz(Channel chan, Location eventLoc){
+        this(chan.getLatitude().getValue(), chan.getLongitude().getValue(), eventLoc);
     }
 
     /**

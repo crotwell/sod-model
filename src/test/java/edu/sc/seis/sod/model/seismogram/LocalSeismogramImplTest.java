@@ -12,10 +12,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.ZonedDateTime;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
 import edu.sc.seis.sod.model.common.FissuresException;
 import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.ParameterRef;
@@ -61,15 +63,14 @@ public class LocalSeismogramImplTest
         bits.encoded_values(edata);
 
 
-        MicroSecondDate time =
-        new MicroSecondDate("19991231T235959.000Z");
+        ZonedDateTime time =
+        BaseNodeType.parseISOString("19991231T235959.000Z");
         String id = "Nowhere: "+name;
     TimeInterval timeInterval = new TimeInterval(1, UnitImpl.SECOND);
         SamplingImpl sampling =
             new SamplingImpl(20,
                  timeInterval);
-        ChannelId channelID = new ChannelId(new NetworkId("XX",
-                              time),
+        ChannelId channelID = new ChannelId("XX",
                         "FAKE",
                         "00",
                         "BHZ",
@@ -83,7 +84,7 @@ public class LocalSeismogramImplTest
         LocalSeismogramImpl seis =
         new LocalSeismogramImpl(id,
                     props,
-                    time,
+                    new MicroSecondDate(time.toEpochSecond()*1000000+time.getNano()/1000),
                     dataBits.length / bytesPerSample,
                     sampling,
                     UnitImpl.COUNT,

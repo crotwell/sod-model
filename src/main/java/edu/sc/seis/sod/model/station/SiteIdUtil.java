@@ -8,6 +8,7 @@ import edu.sc.seis.sod.model.common.TimeFormatter;
  * @author Philip Crotwell
  * @version
  */
+@Deprecated
 public class SiteIdUtil {
 
     public static boolean areEqual(SiteId a, SiteId b) {
@@ -36,8 +37,8 @@ public class SiteIdUtil {
     
     public static boolean areSameSite(ChannelId a, ChannelId b) {
         if(a == b) { return true; }
-        return a.station_code.equals(b.station_code)
-                && a.site_code.equals(b.site_code)
-                && NetworkIdUtil.areEqual(a.network_id, b.network_id);
+        return a.getStationCode().equals(b.getStationCode())
+                && a.getLocCode().equals(b.getLocCode())
+                && a.getNetworkId().equals( b.getNetworkId());
     }
 } // SiteIdUtil
