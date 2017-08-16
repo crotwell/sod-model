@@ -2,6 +2,7 @@ package edu.sc.seis.sod.model.common;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 
@@ -11,6 +12,7 @@ import java.util.Date;
  * 
  * @author H. Philip Crotwell
  */
+@Deprecated
 public class MicroSecondDate extends Date implements Serializable {
 
     protected long microseconds;
@@ -30,6 +32,10 @@ public class MicroSecondDate extends Date implements Serializable {
 
     public MicroSecondDate(Date d) {
         this(d.getTime() * 1000, 0);
+    }
+    
+    public MicroSecondDate(ZonedDateTime d) {
+    		this(d.toEpochSecond()*1000000+d.getNano()/1000);
     }
 
     public MicroSecondDate(MicroSecondDate d) {
