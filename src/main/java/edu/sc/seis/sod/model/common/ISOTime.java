@@ -259,6 +259,9 @@ public class ISOTime {
 
     public static final String TIME_UNKNOWN = "TIME_UNKNOWN";
 
+    public static final ZonedDateTime wayPast = 
+        BaseNodeType.parseISOString("00990101T000000.000000Z");
+
     public static final ZonedDateTime future = 
         BaseNodeType.parseISOString("24990101T000000.000000Z");
 
