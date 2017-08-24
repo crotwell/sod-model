@@ -1,10 +1,12 @@
 package edu.sc.seis.sod.model.station;
 
+import java.time.ZonedDateTime;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
 import edu.sc.seis.sod.model.common.ISOTime;
+import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.TimeFormatter;
 
 /**
@@ -97,5 +99,22 @@ public class NetworkIdUtil {
     }
     
     public static final String DOT = ".";
+
+    public static String formId(String netCode, ZonedDateTime time) {
+        String out = netCode;
+        if (isTemporary(netCode)) {
+            out += time.getYear();
+        }
+        return out;
+    }
+
+    @Deprecated
+    public static String formId(String netCode, MicroSecondDate time) {
+        String out = netCode;
+        if (isTemporary(netCode)) {
+            out += time.toZonedDateTime().getYear();
+        }
+        return out;
+    }
     
 } // NetworkIdUtil

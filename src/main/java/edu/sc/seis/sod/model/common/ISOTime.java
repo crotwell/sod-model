@@ -20,6 +20,8 @@ import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
  */
 public class ISOTime {
     
+	public static final int NANOS_PER_SECOND = 1000000000;
+	
     /**
      * parses a ISO8601 string into its component parts. Currently we only
      * support the 4 month based, full formats, <br>
@@ -258,12 +260,12 @@ public class ISOTime {
     public static final String TIME_UNKNOWN = "TIME_UNKNOWN";
 
     public static final ZonedDateTime future = 
-        BaseNodeType.parseISOString("2499001J00:00:00.000Z");
+        BaseNodeType.parseISOString("24990101T000000.000000Z");
 
     /** future plus one day so that is is after(future)
      */
     public static final ZonedDateTime futurePlusOne = 
-        BaseNodeType.parseISOString("2499002J00:00:00.000Z");
+        BaseNodeType.parseISOString("24990102T000000.000000Z");
 
 
     /**

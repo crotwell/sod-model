@@ -2,6 +2,7 @@
 package edu.sc.seis.sod.model.common;
 
 import java.io.Serializable;
+import java.time.Duration;
 
 
 /**
@@ -24,6 +25,11 @@ public class SamplingImpl implements Serializable {
 
     public static Serializable createEmpty() { return new SamplingImpl(); }
 
+    public SamplingImpl(int numPoints, Duration interval) {
+        this(numPoints, new TimeInterval(interval.toNanos(), UnitImpl.NANOSECOND));
+    }
+
+    @Deprecated
     public SamplingImpl(int numPoints, TimeInterval interval) {
         if (interval.getValue() == Double.POSITIVE_INFINITY && numPoints == 1) {
             // in this case, the DMC database likely had 0 sps, and converted

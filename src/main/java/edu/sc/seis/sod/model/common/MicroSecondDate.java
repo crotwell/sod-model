@@ -2,8 +2,11 @@ package edu.sc.seis.sod.model.common;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Date;
+
+import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
 
 
 /**
@@ -182,6 +185,10 @@ public class MicroSecondDate extends Date implements Serializable {
     @Deprecated
     public String getISOTime() {
         return getISOString();
+    }
+
+    public ZonedDateTime toZonedDateTime() {
+        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(getTime()/1000, getMicroSeconds()*1000), BaseNodeType.TZ_UTC);
     }
     
 }

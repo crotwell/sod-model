@@ -1,5 +1,7 @@
 package edu.sc.seis.sod.model.common;
 
+import java.time.Duration;
+
 import edu.sc.seis.sod.model.seismogram.LocalSeismogramImpl;
 import edu.sc.seis.sod.model.seismogram.RequestFilter;
 
@@ -14,7 +16,7 @@ import edu.sc.seis.sod.model.seismogram.RequestFilter;
 public class MicroSecondTimeRange {
 
     public MicroSecondTimeRange(LocalSeismogramImpl ls) {
-        this(ls.getBeginTime(), ls.getEndTime());
+        this(new MicroSecondDate(ls.getBeginTime()), new MicroSecondDate(ls.getEndTime()));
     }
 
     public MicroSecondTimeRange(RequestFilter rf) {
@@ -162,6 +164,7 @@ public class MicroSecondTimeRange {
     public String toString() {
         return beginTime + " to " + endTime;
     }
+    
 
     private final MicroSecondDate beginTime;
 

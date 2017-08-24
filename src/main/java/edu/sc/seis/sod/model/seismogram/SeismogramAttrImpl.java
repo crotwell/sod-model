@@ -2,12 +2,13 @@
 package edu.sc.seis.sod.model.seismogram;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAmount;
 
-import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.QuantityImpl;
 import edu.sc.seis.sod.model.common.SamplingImpl;
-import edu.sc.seis.sod.model.common.TimeInterval;
 import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.common.UnsupportedFormat;
 import edu.sc.seis.sod.model.station.ChannelId;
@@ -41,7 +42,7 @@ public class SeismogramAttrImpl implements Serializable {
     //
     /***/
 
-    public MicroSecondDate begin_time;
+    public ZonedDateTime begin_time;
 
     //
     // IDL:iris.edu/Fissures/IfSeismogramDC/SeismogramAttr/num_points:1.0
@@ -110,7 +111,7 @@ public class SeismogramAttrImpl implements Serializable {
     }
 
     public SeismogramAttrImpl(String id,
-                              MicroSecondDate begin_time,
+                              ZonedDateTime begin_time,
                               int num_points,
                               SamplingImpl sample_info,
                               UnitImpl y_unit,
@@ -144,7 +145,7 @@ public class SeismogramAttrImpl implements Serializable {
      */
     public SeismogramAttrImpl(String id,
                               Property[] properties,
-                              MicroSecondDate begin_time,
+                              ZonedDateTime begin_time,
                               int num_points,
                               SamplingImpl sample_info,
                               UnitImpl y_unit,
@@ -227,26 +228,25 @@ public class SeismogramAttrImpl implements Serializable {
 
        @throws UnsupportedFormat if the time string is not recognized.
     */
-    public MicroSecondDate getBeginTime() throws UnsupportedFormat {
+    public ZonedDateTime getBeginTime() throws UnsupportedFormat {
         return begin_time;
     }
 
     /**@return the amount of time that this seismogram covers.
      */
-    public TimeInterval getTimeInterval() {
-    QuantityImpl q = getSampling().getPeriod();
+    public TemporalAmount getTimeInterval() {
+        QuantityImpl q = getSampling().getPeriod().convertTo(UnitImpl.NANOSECOND);
 
-    return new TimeInterval(q.getValue() *
-                                (num_points -1),
-                                q.getUnit());
+        return Duration.ofNanos(((long)q.getValue()) *
+                                (num_points -1));
     }
 
 
     /**
        @return the time of the last sample of this seismogram.
     */
-    public MicroSecondDate getEndTime() {
-    return getBeginTime().add(getTimeInterval());
+    public ZonedDateTime getEndTime() {
+    return getBeginTime().plus(getTimeInterval());
     }
 
     /**

@@ -84,7 +84,7 @@ public class LocalSeismogramImplTest
         LocalSeismogramImpl seis =
         new LocalSeismogramImpl(id,
                     props,
-                    new MicroSecondDate(time.toEpochSecond()*1000000+time.getNano()/1000),
+                    time,
                     dataBits.length / bytesPerSample,
                     sampling,
                     UnitImpl.COUNT,
