@@ -5,6 +5,8 @@
  */
 package edu.sc.seis.sod.model.common;
 
+import edu.sc.seis.seisFile.fdsnws.quakeml.Origin;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
 
 public class LocationUtil {
 
@@ -15,6 +17,14 @@ public class LocationUtil {
         result = 37 * result + Float.floatToIntBits(l.latitude);
         result = 37 * result + Float.floatToIntBits(l.longitude);
         return result;
+    }
+    
+    public static boolean areSameLocation(Origin origin, Location loc) {
+        return areEqual(new Location(origin), loc);
+    }
+    
+    public static boolean areSameLocation(Channel channel, Location loc) {
+        return areEqual(new Location(channel), loc);
     }
 
     public static boolean areEqual(Location a, Location b) {

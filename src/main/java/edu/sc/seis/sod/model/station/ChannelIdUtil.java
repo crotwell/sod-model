@@ -100,15 +100,27 @@ public class ChannelIdUtil {
     }
     
     public static String getBandCode(ChannelId id) {
-        return ""+id.getChannelCode().charAt(0);
+        return getBandCode(id.getChannelCode());
+    }
+    
+    public static String getBandCode(String channelCode) {
+        return ""+channelCode.charAt(0);
     }
     
     public static String getGainCode(ChannelId id) {
-        return ""+id.getChannelCode().charAt(1);
+        return getGainCode(id.getChannelCode());
+    }
+    
+    public static String getGainCode(String channelCode) {
+        return ""+channelCode.charAt(1);
     }
     
     public static String getOrientationCode(ChannelId id) {
-        return ""+id.getChannelCode().charAt(2);
+        return getOrientationCode(id.getChannelCode());
+    }
+    
+    public static String getOrientationCode(String channelCode) {
+        return ""+channelCode.charAt(2);
     }
 
     /**

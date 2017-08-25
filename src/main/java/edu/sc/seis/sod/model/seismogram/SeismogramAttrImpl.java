@@ -304,8 +304,7 @@ public class SeismogramAttrImpl implements Serializable {
     sampling ajusting time correction has been applied.
     */
     public SamplingImpl getSampling() {
-        //cast to edu.iris.Fissures.model.Sampling
-    return (SamplingImpl)sampling_info;
+        return sampling_info;
     }
 
 } // SeismogramAttrImpl

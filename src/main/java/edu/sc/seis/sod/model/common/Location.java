@@ -14,6 +14,10 @@
 
 package edu.sc.seis.sod.model.common;
 
+import edu.sc.seis.seisFile.fdsnws.quakeml.Origin;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
+
 //
 // IDL:iris.edu/Fissures/Location:1.0
 //
@@ -25,7 +29,34 @@ public class Location
     Location()
     {
     }
+    
+    public Location(Origin origin) {
+        this(origin.getLatitude().getValue(),
+             origin.getLongitude().getValue(),
+             new QuantityImpl(0, UnitImpl.METER),
+             new QuantityImpl(origin.getDepth().getValue(), UnitImpl.METER));
+    }
 
+    public Location(Channel channel) {
+        this(channel.getLatitude().getValue(),
+             channel.getLongitude().getValue(),
+             new QuantityImpl(channel.getElevation().getValue(), UnitImpl.METER),
+             new QuantityImpl(channel.getDepth().getValue(), UnitImpl.METER));
+        if( ! channel.getElevation().getUnit().equalsIgnoreCase("meter")) {
+            throw new IllegalArgumentException("Units of elevation should be meter");
+        }
+        if( ! channel.getDepth().getUnit().equalsIgnoreCase("meter")) {
+            throw new IllegalArgumentException("Units of depth should be meter");
+        }
+    }
+
+    public Location(Station sta) {
+        this(sta.getLatitude().getValue(),
+             sta.getLongitude().getValue(),
+             new QuantityImpl(sta.getElevation().getValue(), UnitImpl.METER),
+             new QuantityImpl(0, UnitImpl.METER));
+    }
+    
     public
     Location(float latitude,
              float longitude,

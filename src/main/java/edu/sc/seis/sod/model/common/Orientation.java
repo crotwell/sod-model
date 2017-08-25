@@ -1,6 +1,8 @@
 
 package edu.sc.seis.sod.model.common;
 
+import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
+
 /** represents the orientation of a single component of a seismometer.
  **/
 
@@ -9,6 +11,10 @@ public class Orientation {
     public
     Orientation()
     {
+    }
+    
+    public Orientation(Channel chan) {
+        this(chan.getAzimuth().getValue(), chan.getDip().getValue());
     }
 
     public
