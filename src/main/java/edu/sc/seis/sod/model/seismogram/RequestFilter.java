@@ -59,7 +59,7 @@ final public class RequestFilter implements org.omg.CORBA.portable.IDLEntity
     }
     
     public ChannelTimeWindow asChannelTimeWindow() {
-        return new ChannelTimeWindow(channel_id.getNetworkId().getCode(),
+        return new ChannelTimeWindow(channel_id.getNetworkId(),
                                      channel_id.getStationCode(),
                                      channel_id.getLocCode(),
                                      channel_id.getChannelCode(),
