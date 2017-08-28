@@ -14,6 +14,8 @@
 
 package edu.sc.seis.sod.model.seismogram;
 
+import edu.sc.seis.seisFile.ChannelTimeWindow;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
 import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.station.ChannelId;
 
@@ -24,9 +26,26 @@ import edu.sc.seis.sod.model.station.ChannelId;
 
 final public class RequestFilter implements org.omg.CORBA.portable.IDLEntity
 {
-    public
+    
     RequestFilter()
     {
+    }
+    
+    public static RequestFilter of(LocalSeismogramImpl seismogram) {
+        return new RequestFilter(seismogram.getChannelID(),
+                          new MicroSecondDate(seismogram.begin_time),
+                          new MicroSecondDate(seismogram.getEndTime()));
+    }
+
+
+    public
+    RequestFilter(Channel channel,
+                  MicroSecondDate start_time,
+                  MicroSecondDate end_time)
+    {
+        this.channel_id = new ChannelId(channel);
+        this.start_time = start_time;
+        this.end_time = end_time;
     }
 
     public
@@ -37,6 +56,15 @@ final public class RequestFilter implements org.omg.CORBA.portable.IDLEntity
         this.channel_id = channel_id;
         this.start_time = start_time;
         this.end_time = end_time;
+    }
+    
+    public ChannelTimeWindow asChannelTimeWindow() {
+        return new ChannelTimeWindow(channel_id.getNetworkId().getCode(),
+                                     channel_id.getStationCode(),
+                                     channel_id.getLocCode(),
+                                     channel_id.getChannelCode(),
+                                     start_time,
+                                     end_time);
     }
 
     public ChannelId channel_id;

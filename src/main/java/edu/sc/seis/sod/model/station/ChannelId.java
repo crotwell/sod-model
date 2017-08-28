@@ -4,6 +4,7 @@ package edu.sc.seis.sod.model.station;
 import java.time.ZonedDateTime;
 
 import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
 
 /** Identifies a Channel. The additional startTime is needed 
  *  as channel
@@ -17,9 +18,22 @@ public class ChannelId {
     
     ChannelId() {
     }
+
+    public static ChannelId of(Channel chan) {
+        return new ChannelId(chan.getNetwork().getNetworkId(), chan.getStationCode(), chan.getLocCode(), chan.getChannelCode(), chan.getStartDateTime());
+    }
     
+    @Deprecated
     public ChannelId(Channel chan) {
         this(chan.getNetwork().getNetworkId(), chan.getStationCode(), chan.getLocCode(), chan.getChannelCode(), chan.getStartDateTime());
+    }
+    
+    public ChannelId(Station station, String locationCode, String channelCode, ZonedDateTime startTime) {
+        this(station.getNetworkId(),
+             station.getStationCode(),
+             locationCode,
+             channelCode,
+             startTime);
     }
 
     public

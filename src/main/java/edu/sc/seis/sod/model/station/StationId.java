@@ -16,6 +16,11 @@ public class StationId  {
     public StationId() {
     }
 
+    public static StationId of(Station station) {
+        return new StationId(station.getNetworkId(), station.getStationCode(), station.getStartDateTime());
+    }
+    
+    @Deprecated
     public StationId(Station station) {
         this(station.getNetworkId(), station.getStationCode(), station.getStartDateTime());
     }

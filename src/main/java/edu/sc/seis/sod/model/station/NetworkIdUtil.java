@@ -17,6 +17,10 @@ import edu.sc.seis.sod.model.common.TimeFormatter;
  */
 public class NetworkIdUtil {
 
+    public static boolean isTemporary(Network net) {
+        return isTemporary(net.getNetworkCode());
+    }
+
     public static boolean isTemporary(NetworkId id) {
         return isTemporary(id.networkCode);
     }
@@ -30,6 +34,17 @@ public class NetworkIdUtil {
     /**
      * Compares two networkIds. Dates are only checked for temporary networks.
      */
+    @Deprecated
+    public static boolean areEqual(String a, String b) {
+        if(a.equals(b)) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Compares two networkIds. Dates are only checked for temporary networks.
+     */
     public static boolean areEqual(NetworkId a, NetworkId b) {
         if(!a.networkCode.equals(b.networkCode)) {
             return false;
@@ -38,6 +53,20 @@ public class NetworkIdUtil {
         // Z or number
         return !isTemporary(a)
                 || a.begin_time.equals(b.begin_time);
+    }
+    
+
+    /**
+     * Compares two networkIds. Dates are only checked for temporary networks.
+     */
+    public static boolean areEqual(Network a, Network b) {
+        if(!a.getNetworkCode().equals(b.getNetworkCode())) {
+            return false;
+        }
+        // only compare dates if temp network, ie network code starts with X, Y,
+        // Z or number
+        return !isTemporary(a.getNetworkCode())
+                || a.getStartDateTime().equals(b.getStartDateTime());
     }
 
     @Deprecated
@@ -88,6 +117,19 @@ public class NetworkIdUtil {
 
     public static String getTwoCharYear(NetworkId id) {
         return id.begin_time.getISOString().substring(2, 4);
+    }
+
+    public static String getTwoCharYear(Network net) {
+        int yy = net.getStartDateTime().getYear();
+        if (yy > 2000) {
+            return ""+(yy-2000);
+        } else {
+            return ""+(yy-1900);
+        }
+    }
+
+    public static String getYear(Network net) {
+        return ""+net.getStartDateTime().getYear();
     }
 
     public static String getYear(NetworkId id) {

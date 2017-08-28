@@ -4,6 +4,8 @@ package edu.sc.seis.sod.model.common;
 import java.io.Serializable;
 import java.time.Duration;
 
+import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
+
 
 /**
  * SamplingImpl.java
@@ -15,6 +17,7 @@ import java.time.Duration;
  * @version
  */
 
+@Deprecated
 public class SamplingImpl implements Serializable {
     
     public int numPoints;
@@ -29,6 +32,10 @@ public class SamplingImpl implements Serializable {
         this(numPoints, new TimeInterval(interval.toNanos(), UnitImpl.NANOSECOND));
     }
 
+    public static SamplingImpl of(Channel chan) {
+        return new SamplingImpl(1, new TimeInterval(1/chan.getSampleRate().getValue(), UnitImpl.SECOND));
+    }
+    
     @Deprecated
     public SamplingImpl(int numPoints, TimeInterval interval) {
         if (interval.getValue() == Double.POSITIVE_INFINITY && numPoints == 1) {

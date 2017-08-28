@@ -8,13 +8,13 @@ import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
 
 public class Orientation {
     
-    public
+    
     Orientation()
     {
     }
     
-    public Orientation(Channel chan) {
-        this(chan.getAzimuth().getValue(), chan.getDip().getValue());
+    public static Orientation of(Channel chan) {
+        return new Orientation(chan.getAzimuth().getValue(), chan.getDip().getValue());
     }
 
     public
