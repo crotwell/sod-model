@@ -1,6 +1,8 @@
 
 package edu.sc.seis.sod.model.station;
 
+import java.time.temporal.ChronoField;
+
 import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
 import edu.sc.seis.sod.model.common.MicroSecondDate;
 
@@ -21,7 +23,7 @@ public class NetworkId
     }
     
     public NetworkId(Network net) {
-        this(net.getCode(), net.getStartDateTime().getYear());
+        this(net.getCode(), net.getStartDateTime().get(ChronoField.YEAR));
     }
 
     public NetworkId(String network_code,
