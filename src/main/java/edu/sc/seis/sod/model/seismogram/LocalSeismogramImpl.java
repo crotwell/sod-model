@@ -2,7 +2,7 @@
 package edu.sc.seis.sod.model.seismogram;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +72,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -110,7 +110,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -149,7 +149,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -188,7 +188,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -227,7 +227,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *     data.
      */
     public LocalSeismogramImpl(String id,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -278,7 +278,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -336,7 +336,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -389,7 +389,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -442,7 +442,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,
@@ -495,7 +495,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      */
     public LocalSeismogramImpl(String id,
                                Property[] properties,
-                               ZonedDateTime begin_time,
+                               Instant begin_time,
                                int num_points,
                                SamplingImpl sampling,
                                UnitImpl y_unit,

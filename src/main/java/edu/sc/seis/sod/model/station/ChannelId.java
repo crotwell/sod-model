@@ -1,7 +1,7 @@
 
 package edu.sc.seis.sod.model.station;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
@@ -28,7 +28,7 @@ public class ChannelId {
         this(chan.getNetwork().getNetworkId(), chan.getStationCode(), chan.getLocCode(), chan.getChannelCode(), chan.getStartDateTime());
     }
     
-    public ChannelId(Station station, String locationCode, String channelCode, ZonedDateTime startTime) {
+    public ChannelId(Station station, String locationCode, String channelCode, Instant startTime) {
         this(station.getNetworkId(),
              station.getStationCode(),
              locationCode,
@@ -41,7 +41,7 @@ public class ChannelId {
               String stationCode,
               String locCode,
               String channelCode,
-              ZonedDateTime startTime)
+              Instant startTime)
     {
         this.setNetworkId(networkId);
         this.setStationCode(stationCode);
@@ -82,11 +82,11 @@ public class ChannelId {
         this.channelCode = channelCode;
     }
 
-    public ZonedDateTime getStartTime() {
+    public Instant getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(ZonedDateTime startTime) {
+    public void setStartTime(Instant startTime) {
         this.startTime = startTime;
     }
 
@@ -94,5 +94,5 @@ public class ChannelId {
     private String stationCode;
     private String locCode;
     private String channelCode;
-    private ZonedDateTime startTime;
+    private Instant startTime;
 }

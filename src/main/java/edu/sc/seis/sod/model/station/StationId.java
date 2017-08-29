@@ -1,7 +1,7 @@
 
 package edu.sc.seis.sod.model.station;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
 import edu.sc.seis.sod.model.common.MicroSecondDate;
@@ -30,7 +30,7 @@ public class StationId  {
     public
     StationId(String network_id,
               String station_code,
-              ZonedDateTime startTime)
+              Instant startTime)
     {
         this.setNetworkId(network_id);
         this.setStationCode(station_code);
@@ -67,7 +67,7 @@ public class StationId  {
     }
 
 
-    public ZonedDateTime getStartTime() {
+    public Instant getStartTime() {
         return startTime;
     }
 
@@ -76,5 +76,5 @@ public class StationId  {
     private String stationCode;
     public MicroSecondDate begin_time;
     
-    private ZonedDateTime startTime;
+    private Instant startTime;
 }

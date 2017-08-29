@@ -3,8 +3,7 @@ package edu.sc.seis.sod.model.seismogram;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.time.ZonedDateTime;
-import java.time.temporal.TemporalAmount;
+import java.time.Instant;
 
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.QuantityImpl;
@@ -42,7 +41,7 @@ public class SeismogramAttrImpl implements Serializable {
     //
     /***/
 
-    public ZonedDateTime begin_time;
+    public Instant begin_time;
 
     //
     // IDL:iris.edu/Fissures/IfSeismogramDC/SeismogramAttr/num_points:1.0
@@ -111,7 +110,7 @@ public class SeismogramAttrImpl implements Serializable {
     }
 
     public SeismogramAttrImpl(String id,
-                              ZonedDateTime begin_time,
+                              Instant begin_time,
                               int num_points,
                               SamplingImpl sample_info,
                               UnitImpl y_unit,
@@ -145,7 +144,7 @@ public class SeismogramAttrImpl implements Serializable {
      */
     public SeismogramAttrImpl(String id,
                               Property[] properties,
-                              ZonedDateTime begin_time,
+                              Instant begin_time,
                               int num_points,
                               SamplingImpl sample_info,
                               UnitImpl y_unit,
@@ -228,7 +227,7 @@ public class SeismogramAttrImpl implements Serializable {
 
        @throws UnsupportedFormat if the time string is not recognized.
     */
-    public ZonedDateTime getBeginTime() throws UnsupportedFormat {
+    public Instant getBeginTime() throws UnsupportedFormat {
         return begin_time;
     }
 
@@ -245,7 +244,7 @@ public class SeismogramAttrImpl implements Serializable {
     /**
        @return the time of the last sample of this seismogram.
     */
-    public ZonedDateTime getEndTime() {
+    public Instant getEndTime() {
     return getBeginTime().plus(getTimeInterval());
     }
 

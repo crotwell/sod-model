@@ -1,6 +1,6 @@
 package edu.sc.seis.sod.model.common;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 /** Placeholder. */
 public class TimeRange extends MicroSecondTimeRange {
@@ -31,11 +31,7 @@ public class TimeRange extends MicroSecondTimeRange {
         // TODO Auto-generated constructor stub
     }
 
-    public TimeRange(ZonedDateTime time, ZonedDateTime anotherTime) {
+    public TimeRange(Instant time, Instant anotherTime) {
         super(new MicroSecondDate(time), new MicroSecondDate(anotherTime));
-    }
-
-    public TimeRange(ZonedDateTime beginTime, TimeInterval interval) {
-        super(new MicroSecondDate(beginTime), interval);
     }
 }

@@ -1,8 +1,11 @@
 package edu.sc.seis.sod.model.station;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
+import java.time.temporal.ChronoField;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
+
+import com.sun.msv.reader.GrammarReader.ChainPrefixResolver;
 
 import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
 import edu.sc.seis.sod.model.common.ISOTime;
@@ -120,7 +123,7 @@ public class NetworkIdUtil {
     }
 
     public static String getTwoCharYear(Network net) {
-        int yy = net.getStartDateTime().getYear();
+        int yy = net.getStartDateTime().get(ChronoField.YEAR);
         if (yy > 2000) {
             return ""+(yy-2000);
         } else {
@@ -129,7 +132,7 @@ public class NetworkIdUtil {
     }
 
     public static String getYear(Network net) {
-        return ""+net.getStartDateTime().getYear();
+        return ""+net.getStartDateTime().get(ChronoField.YEAR);
     }
 
     public static String getYear(NetworkId id) {
@@ -142,10 +145,10 @@ public class NetworkIdUtil {
     
     public static final String DOT = ".";
 
-    public static String formId(String netCode, ZonedDateTime time) {
+    public static String formId(String netCode, Instant time) {
         String out = netCode;
         if (isTemporary(netCode)) {
-            out += time.getYear();
+            out += time.get(ChronoField.YEAR);
         }
         return out;
     }
@@ -154,7 +157,7 @@ public class NetworkIdUtil {
     public static String formId(String netCode, MicroSecondDate time) {
         String out = netCode;
         if (isTemporary(netCode)) {
-            out += time.toZonedDateTime().getYear();
+            out += time.toInstant().get(ChronoField.YEAR);
         }
         return out;
     }

@@ -3,7 +3,6 @@ package edu.sc.seis.sod.model.common;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
@@ -37,8 +36,8 @@ public class MicroSecondDate extends Date implements Serializable {
         this(d.getTime() * 1000, 0);
     }
     
-    public MicroSecondDate(ZonedDateTime d) {
-    		this(d.toEpochSecond()*1000000+d.getNano()/1000);
+    public MicroSecondDate(Instant d) {
+    		this(d.getEpochSecond()*1000000+d.getNano()/1000);
     }
 
     public MicroSecondDate(MicroSecondDate d) {
@@ -186,9 +185,9 @@ public class MicroSecondDate extends Date implements Serializable {
     public String getISOTime() {
         return getISOString();
     }
-
-    public ZonedDateTime toZonedDateTime() {
-        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(getTime()/1000, getMicroSeconds()*1000), BaseNodeType.TZ_UTC);
+    
+    public Instant toInstant() {
+        return Instant.ofEpochSecond(getTime()/1000, getMicroSeconds()*1000);
     }
     
 }

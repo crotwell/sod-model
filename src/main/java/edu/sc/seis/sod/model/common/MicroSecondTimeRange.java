@@ -1,7 +1,7 @@
 package edu.sc.seis.sod.model.common;
 
 import java.time.Duration;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 import edu.sc.seis.sod.model.seismogram.LocalSeismogramImpl;
 import edu.sc.seis.sod.model.seismogram.RequestFilter;
@@ -173,7 +173,7 @@ public class MicroSecondTimeRange {
 
     private final TimeInterval interval;
 
-    public boolean contains(ZonedDateTime time) {
+    public boolean contains(Instant time) {
         return contains(new MicroSecondDate(time));
     }
 }// MicroSecondTimeRange

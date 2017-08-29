@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -36,7 +36,7 @@ public class ISOTime {
         // check for TIME_UNKNOWN and default DMC 2599 values
         if(s.equals(TIME_UNKNOWN)
                 || s.equals("2599-12-31T23:59:59.0000GMT")) {
-            date = new MicroSecondDate(future.toEpochSecond()*1000000);
+            date = new MicroSecondDate(future.getEpochSecond()*1000000);
         } else {
             String clean = cleanDate(s);
             Date d = null;
@@ -185,7 +185,7 @@ public class ISOTime {
     String microSeconds;
     
     protected MicroSecondDate date;
-    protected ZonedDateTime zdatetime;
+    protected Instant zdatetime;
 
     protected String orig;
 
@@ -259,15 +259,15 @@ public class ISOTime {
 
     public static final String TIME_UNKNOWN = "TIME_UNKNOWN";
 
-    public static final ZonedDateTime wayPast = 
+    public static final Instant wayPast = 
         BaseNodeType.parseISOString("00990101T000000.000000Z");
 
-    public static final ZonedDateTime future = 
+    public static final Instant future = 
         BaseNodeType.parseISOString("24990101T000000.000000Z");
 
     /** future plus one day so that is is after(future)
      */
-    public static final ZonedDateTime futurePlusOne = 
+    public static final Instant futurePlusOne = 
         BaseNodeType.parseISOString("24990102T000000.000000Z");
 
 
