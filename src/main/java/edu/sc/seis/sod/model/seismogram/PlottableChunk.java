@@ -6,6 +6,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,9 +20,9 @@ import java.util.zip.GZIPOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.MicroSecondTimeRange;
 import edu.sc.seis.sod.model.common.TimeInterval;
+import edu.sc.seis.sod.model.common.TimeRange;
 import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.util.LinearInterp;
 
@@ -58,7 +61,7 @@ public class PlottableChunk {
      */
     public PlottableChunk(Plottable data,
                           int startPixel,
-                          MicroSecondDate startDate,
+                          Instant startDate,
                           int pixelsPerDay,
                           String networkCode,
                           String stationCode,
@@ -104,8 +107,8 @@ public class PlottableChunk {
         // here we shall get rid of days of dead space if they exist
         if(startPixel >= pixelsPerDay) {
             int numDaysToAdd = startPixel / pixelsPerDay;
-            MicroSecondDate date = getDate(jday, year);
-            date = date.add(new TimeInterval(new TimeInterval(1.0, UnitImpl.DAY).multiplyBy(numDaysToAdd)));
+            Instant date = getDate(jday, year);
+            date = date.plus(Duration.ofDays(numDaysToAdd));
             jday = getJDay(date);
             year = getYear(date);
             startPixel = startPixel % pixelsPerDay;
@@ -155,11 +158,11 @@ public class PlottableChunk {
         return cal;
     }
 
-    public static MicroSecondDate getDate(int jday, int year) {
-        return new MicroSecondDate(makeCalWithDate(jday, year).getTimeInMillis() * 1000);
+    public static Instant getDate(int jday, int year) {
+        return new Instant(makeCalWithDate(jday, year).getTimeInMillis() * 1000);
     }
 
-    public static MicroSecondDate getTime(int pixel,
+    public static Instant getTime(int pixel,
                                           int jday,
                                           int year,
                                           int pixelsPerDay) {
@@ -170,34 +173,30 @@ public class PlottableChunk {
                                                           MILLIS_IN_DAY,
                                                           pixel);
         sampleMillis = Math.floor(sampleMillis);
-        return new MicroSecondDate((cal.getTimeInMillis() + (long)sampleMillis) * 1000);
+        return new Instant((cal.getTimeInMillis() + (long)sampleMillis) * 1000);
     }
 
-    public static int getJDay(MicroSecondDate time) {
-        Calendar cal = makeCal();
-        cal.setTime(time);
-        return cal.get(Calendar.DAY_OF_YEAR);
+    public static int getJDay(Instant time) {
+        return time.get(ChronoField.DAY_OF_YEAR);
     }
 
-    public static int getYear(MicroSecondDate time) {
-        Calendar cal = makeCal();
-        cal.setTime(time);
-        return cal.get(Calendar.YEAR);
+    public static int getYear(Instant time) {
+        return time.get(ChronoField.YEAR);
     }
 
-    public static MicroSecondDate stripToDay(Date d) {
+    public static Instant stripToDay(Date d) {
         Calendar cal = PlottableChunk.makeCal();
         cal.setTime(d);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        return new MicroSecondDate(cal.getTime());
+        return new Instant(cal.getTime());
     }
     
     private static final int MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 
-    public static final TimeInterval ONE_DAY = new TimeInterval(1, UnitImpl.DAY);
+    public static final Duration ONE_DAY = Duration.ofDays(1);
     
     public static final TimeZone utcTimeZone = TimeZone.getTimeZone("UTC");
 
@@ -227,20 +226,20 @@ public class PlottableChunk {
         return getNumDataPoints() / 2;
     }
 
-    public MicroSecondDate getTime(int pixel) {
+    public Instant getTime(int pixel) {
         return getTime(pixel, getJDay(), getYear(), getPixelsPerDay());
     }
 
-    public MicroSecondDate getBeginTime() {
+    public Instant getBeginTime() {
         return getTime(beginPixel);
     }
 
-    public MicroSecondDate getEndTime() {
+    public Instant getEndTime() {
         return getTime(getBeginPixel() + getNumPixels());
     }
 
-    public MicroSecondTimeRange getTimeRange() {
-        return new MicroSecondTimeRange(getBeginTime(), getEndTime());
+    public TimeRange getTimeRange() {
+        return new TimeRange(getBeginTime(), getEndTime());
     }
 
     public int getJDay() {
@@ -273,7 +272,7 @@ public class PlottableChunk {
         int numDays = (int)Math.ceil((beginPixel + getNumPixels())
                 / (double)getPixelsPerDay());
         List<PlottableChunk> dayChunks = new ArrayList<PlottableChunk>();
-        MicroSecondDate time = getBeginTime();
+        Instant time = getBeginTime();
         for(int i = 0; i < numDays; i++) {
             int firstDayPixels = pixelsPerDay - getBeginPixel();
             int startPixel = (i - 1) * pixelsPerDay + firstDayPixels;
@@ -299,7 +298,7 @@ public class PlottableChunk {
                                              getStationCode(),
                                              getSiteCode(),
                                              getChannelCode()));
-            time = time.add(ONE_DAY);
+            time = time.plus(ONE_DAY);
         }
         return dayChunks;
     }
@@ -335,19 +334,17 @@ public class PlottableChunk {
     }
     
     protected Timestamp getBeginTimestamp() {
-        return getBeginTime().getTimestamp();
+        return Timestamp.from(getBeginTime());
     }
     
     protected void setBeginTimestamp(Timestamp begin) {
-        MicroSecondDate msd = new MicroSecondDate(begin);
-        Calendar cal = Calendar.getInstance(utcTimeZone);
-        cal.setTime(msd);
-        year = cal.get(Calendar.YEAR);
-        jday = cal.get(Calendar.DAY_OF_YEAR);
+        Instant msd = begin.toInstant();
+        year = msd.get(ChronoField.YEAR);
+        jday = msd.get(ChronoField.DAY_OF_YEAR);
     }
     
     protected Timestamp getEndTimestamp() {
-        return getEndTime().getTimestamp();
+        return Timestamp.from(getEndTime());
     }
     
     protected void setEndTimestamp(Timestamp begin) {

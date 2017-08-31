@@ -14,6 +14,9 @@
 
 package edu.sc.seis.sod.model.seismogram;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import edu.sc.seis.seisFile.ChannelTimeWindow;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
 import edu.sc.seis.sod.model.common.MicroSecondDate;
@@ -24,36 +27,27 @@ import edu.sc.seis.sod.model.station.ChannelId;
 //
 /***/
 
-final public class RequestFilter implements org.omg.CORBA.portable.IDLEntity
-{
+final public class RequestFilter {
     
     RequestFilter()
     {
     }
     
     public static RequestFilter of(LocalSeismogramImpl seismogram) {
-        return new RequestFilter(seismogram.getChannelID(),
-                          new MicroSecondDate(seismogram.begin_time),
-                          new MicroSecondDate(seismogram.getEndTime()));
+        RequestFilter out = new RequestFilter();
+        out.channel_id = seismogram.getChannelID();
+        out.start_time = seismogram.begin_time;
+        out.end_time = seismogram.getEndTime();
+        return out;
     }
 
 
     public
     RequestFilter(Channel channel,
-                  MicroSecondDate start_time,
-                  MicroSecondDate end_time)
+                  Instant start_time,
+                  Instant end_time)
     {
         this.channel_id = new ChannelId(channel);
-        this.start_time = start_time;
-        this.end_time = end_time;
-    }
-
-    public
-    RequestFilter(ChannelId channel_id,
-                  MicroSecondDate start_time,
-                  MicroSecondDate end_time)
-    {
-        this.channel_id = channel_id;
         this.start_time = start_time;
         this.end_time = end_time;
     }
@@ -66,8 +60,12 @@ final public class RequestFilter implements org.omg.CORBA.portable.IDLEntity
                                      start_time,
                                      end_time);
     }
+    
+    public Duration getDuration() {
+        return Duration.between(start_time, end_time);
+    }
 
     public ChannelId channel_id;
-    public MicroSecondDate start_time;
-    public MicroSecondDate end_time;
+    public Instant start_time;
+    public Instant end_time;
 }

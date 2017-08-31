@@ -4,7 +4,6 @@ package edu.sc.seis.sod.model.station;
 import java.time.Instant;
 
 import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
-import edu.sc.seis.sod.model.common.MicroSecondDate;
 
 /** Identifies a station. The additional begin_time is needed as station
  *  codes can be reused if, for example the station moves only a short 
@@ -41,7 +40,7 @@ public class StationId  {
     public
     StationId(NetworkId network_id,
               String station_code,
-              MicroSecondDate begin_time)
+              Instant begin_time)
     {
         this.setNetworkId(network_id.toString());
         this.setStationCode(station_code);
@@ -74,7 +73,7 @@ public class StationId  {
 
     private String networkId;
     private String stationCode;
-    public MicroSecondDate begin_time;
+    public Instant begin_time;
     
     private Instant startTime;
 }

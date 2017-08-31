@@ -4,6 +4,7 @@ package edu.sc.seis.sod.model.common;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.Duration;
 
 
 /**
@@ -37,6 +38,10 @@ public class QuantityImpl implements Serializable {
         }
         return new QuantityImpl(q.value,
                                 UnitImpl.createUnitImpl(q.the_units));
+    }
+    
+    public static QuantityImpl of(Duration duration) {
+        return new QuantityImpl(duration.toNanos(), UnitImpl.NANOSECOND);
     }
     
     @Deprecated
@@ -159,12 +164,12 @@ public class QuantityImpl implements Serializable {
                                 UnitImpl.divide(getUnit(), q.getUnit()));
     }
 
-    public QuantityImpl multiplyBy(double f) {
+    public QuantityImpl multipliedBy(double f) {
         return new QuantityImpl(getValue() * f,
                                 getUnit());
     }
 
-    public QuantityImpl divideBy(double f) {
+    public QuantityImpl dividedBy(double f) {
         return new QuantityImpl(getValue() / f,
                                 getUnit());
     }
@@ -185,6 +190,10 @@ public class QuantityImpl implements Serializable {
         } else {
             return format.format(getValue())+" "+getUnit();
         }
+    }
+    
+    public Duration toDuration() {
+        return Duration.ofNanos(Math.round(getValue(UnitImpl.NANOSECOND)));
     }
 
     public boolean greaterThan(QuantityImpl q) {

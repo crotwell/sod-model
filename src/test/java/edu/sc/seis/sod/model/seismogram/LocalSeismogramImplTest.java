@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.Duration;
 import java.time.Instant;
 
 import org.junit.Before;
@@ -64,10 +65,8 @@ public class LocalSeismogramImplTest
         Instant time =
         BaseNodeType.parseISOString("19991231T235959.000Z");
         String id = "Nowhere: "+name;
-    TimeInterval timeInterval = new TimeInterval(1, UnitImpl.SECOND);
         SamplingImpl sampling =
-            new SamplingImpl(20,
-                 timeInterval);
+            SamplingImpl.ofSamplesSeconds(20, 1.0);
         ChannelId channelID = new ChannelId("XX",
                         "FAKE",
                         "00",
@@ -77,8 +76,6 @@ public class LocalSeismogramImplTest
 
         Property[] props = new Property[1];
         props[0] = new Property("Name", name);
-    TimeInterval[] time_corr = new TimeInterval[1];
-    time_corr[0] = new TimeInterval(.123, UnitImpl.SECOND);
         LocalSeismogramImpl seis =
         new LocalSeismogramImpl(id,
                     props,
@@ -88,7 +85,7 @@ public class LocalSeismogramImplTest
                     UnitImpl.COUNT,
                     channelID,
                     new ParameterRef[0],
-                    time_corr,
+                    new Duration[0],
                     new SamplingImpl[0],
                     bits);
         return seis;

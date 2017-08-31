@@ -19,8 +19,6 @@ import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
  * @author Philip Crotwell
  */
 public class ISOTime {
-    
-	public static final int NANOS_PER_SECOND = 1000000000;
 	
     /**
      * parses a ISO8601 string into its component parts. Currently we only
@@ -36,23 +34,10 @@ public class ISOTime {
         // check for TIME_UNKNOWN and default DMC 2599 values
         if(s.equals(TIME_UNKNOWN)
                 || s.equals("2599-12-31T23:59:59.0000GMT")) {
-            date = new MicroSecondDate(future.getEpochSecond()*1000000);
+            zdatetime = future;
         } else {
             String clean = cleanDate(s);
-            Date d = null;
-            for(int i = 0; i < dateFormats.length; i++) {
-                synchronized(dateFormats[i]) {
-                    d = dateFormats[i].parse(clean, new ParsePosition(0));
-                }
-                if(d != null) {
-                    break;
-                }
-            }
-            if(d == null) {
-                // no patterns worked
-                throw new UnsupportedFormat(s);
-            }
-            date = new MicroSecondDate(d.getTime() * 1000 + Integer.parseInt(getMicroseconds()));
+            zdatetime = BaseNodeType.parseISOString(clean);
         } // end of else
     }
 
@@ -184,7 +169,6 @@ public class ISOTime {
 
     String microSeconds;
     
-    protected MicroSecondDate date;
     protected Instant zdatetime;
 
     protected String orig;
@@ -208,43 +192,7 @@ public class ISOTime {
         return cal;
     }
 
-    public MicroSecondDate getDate() {
-        return date;
-    }
 
-    public static String getISOString(MicroSecondDate ms) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-        df.setTimeZone(UTC);
-        String s = df.format(ms);
-        long micros = ms.getMicroSeconds();
-        if(micros == 0) {
-            // nothing
-        } else if(micros < 10) {
-            s += "00" + micros;
-        } else if(micros < 100) {
-            if(micros % 10 == 0) {
-                s += "0" + (micros / 10);
-            } else {
-                s += "0" + micros;
-            }
-        } else {
-            if(micros % 100 == 0) {
-                s += micros / 100;
-            } else if(micros % 10 == 0) {
-                s += micros / 10;
-            } else {
-                s += micros;
-            }
-        }
-        return s + "Z";
-    }
-
-    public static String getISOString(Date ms) {
-        if(ms instanceof MicroSecondDate) { return getISOString((MicroSecondDate)ms); }
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
-        df.setTimeZone(UTC);
-        return df.format(ms);
-    }
 
     public String toString() {
         java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance(java.text.DateFormat.FULL,

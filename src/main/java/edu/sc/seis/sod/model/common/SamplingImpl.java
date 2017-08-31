@@ -17,43 +17,34 @@ import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
  * @version
  */
 
-@Deprecated
 public class SamplingImpl implements Serializable {
     
     public int numPoints;
 
-    public QuantityImpl interval;
+    public Duration interval;
     
     protected SamplingImpl() {}
 
     public static Serializable createEmpty() { return new SamplingImpl(); }
 
-    public SamplingImpl(int numPoints, Duration interval) {
-        this(numPoints, new TimeInterval(interval.toNanos(), UnitImpl.NANOSECOND));
-    }
-
     public static SamplingImpl of(Channel chan) {
-        return new SamplingImpl(1, new TimeInterval(1/chan.getSampleRate().getValue(), UnitImpl.SECOND));
+        return new SamplingImpl(1, Duration.ofNanos((long) (1000000/chan.getSampleRate().getValue())));
     }
     
-    @Deprecated
-    public SamplingImpl(int numPoints, TimeInterval interval) {
-        if (interval.getValue() == Double.POSITIVE_INFINITY && numPoints == 1) {
+    public static SamplingImpl ofSamplesSeconds(int numPoints, double seconds) {
+        return new SamplingImpl(numPoints, Duration.ofNanos(Math.round(seconds*TimeRange.NANOS_IN_SEC)));
+    }
+    
+    public SamplingImpl(int numPoints, Duration interval) {
+        if (interval.getNano() == Long.MAX_VALUE && numPoints == 1) {
             // in this case, the DMC database likely had 0 sps, and converted
             // it to 1 sample in inifinity seconds. So we change to
             // 0 samples in 1 second, which is probably more correct
-            interval = new TimeInterval(1, UnitImpl.SECOND);
+            interval = Duration.ofSeconds(1);
             numPoints = 0;
         }
         this.interval = interval;
         this.numPoints = numPoints;
-    }
-
-    public static SamplingImpl createSamplingImpl(SamplingImpl samp) {
-        if (samp instanceof SamplingImpl)  return (SamplingImpl)samp;
-
-        return new SamplingImpl(samp.numPoints,
-                                TimeInterval.createTimeInterval(samp.interval));
     }
 
 
@@ -61,8 +52,8 @@ public class SamplingImpl implements Serializable {
      Units of time, usually seconds.
      @return the sample period in units of time
      */
-    public TimeInterval getPeriod() {
-        return (TimeInterval)(getTimeInterval().divideBy(numPoints));
+    public Duration getPeriod() {
+        return getTimeInterval().dividedBy(numPoints);
     }
 
     /** Gets the sample frequency. Returns a Quantity object that has
@@ -70,7 +61,7 @@ public class SamplingImpl implements Serializable {
      @return the sample frequency.
      */
     public QuantityImpl getFrequency() {
-        return getTimeInterval().inverse().multiplyBy(numPoints);
+        return QuantityImpl.of(getTimeInterval()).inverse().multipliedBy(numPoints);
     }
 
     public int getNumPoints() { return numPoints; }
@@ -79,10 +70,10 @@ public class SamplingImpl implements Serializable {
         this.numPoints = n;
     }
 
-    public TimeInterval getTimeInterval() { return TimeInterval.createTimeInterval(interval); }
+    public Duration getTimeInterval() { return interval; }
 
     protected void setTimeInterval(QuantityImpl i) {
-        this.interval = i;
+        this.interval = Duration.ofNanos(Math.round(i.getValue(UnitImpl.NANOSECOND)));
     }
     
     public String toString() { return numPoints +" in "+interval; }

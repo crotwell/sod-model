@@ -25,11 +25,11 @@ public class SamplingTest   {
     }
     
     protected Object createInstance(){
-        return new SamplingImpl(20, new TimeInterval(1, UnitImpl.SECOND));
+        return SamplingImpl.ofSamplesSeconds(20, 1.0);
     }
     
     protected Object createNotEqualInstance(){
-        return new SamplingImpl(30, new TimeInterval(1, UnitImpl.SECOND));
+        return SamplingImpl.ofSamplesSeconds(30, 1.0);
     }
 
     SamplingImpl sampling;

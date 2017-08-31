@@ -5,11 +5,9 @@ import java.time.temporal.ChronoField;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
-import com.sun.msv.reader.GrammarReader.ChainPrefixResolver;
-
+import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
 import edu.sc.seis.sod.model.common.ISOTime;
-import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.TimeFormatter;
 
 /**
@@ -87,7 +85,7 @@ public class NetworkIdUtil {
     public static NetworkId fromString(String s) {
         StringTokenizer st = new StringTokenizer(s, DOT);
         return new NetworkId(st.nextToken(),
-                             new ISOTime(st.nextToken()).getDate());
+                             BaseNodeType.parseISOString(st.nextToken()));
     }
 
     public static StringTokenizer getTokenizerAfterNetworkId(String s) {
@@ -153,13 +151,5 @@ public class NetworkIdUtil {
         return out;
     }
 
-    @Deprecated
-    public static String formId(String netCode, MicroSecondDate time) {
-        String out = netCode;
-        if (isTemporary(netCode)) {
-            out += time.toInstant().get(ChronoField.YEAR);
-        }
-        return out;
-    }
     
 } // NetworkIdUtil

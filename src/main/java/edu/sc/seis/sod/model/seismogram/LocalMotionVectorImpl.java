@@ -1,5 +1,8 @@
 package edu.sc.seis.sod.model.seismogram;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.SamplingImpl;
@@ -26,13 +29,13 @@ public class LocalMotionVectorImpl extends MotionVectorAttrImpl {
 
     public LocalMotionVectorImpl(String id,
 				 Property[] properties,
-				 MicroSecondDate begin_time,
+				 Instant begin_time,
 				 int num_points,
 				 SamplingImpl sampling_info,
 				 UnitImpl y_unit,
 				 ChannelId[] channel_group,
 				 ParameterRef[] parm_ids,
-				 TimeInterval[] time_corrections,
+				 Duration[] time_corrections,
 				 SamplingImpl[] sample_rate_history,
 				 VectorComponent[] data) {
 	super(id,

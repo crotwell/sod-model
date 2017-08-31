@@ -14,7 +14,7 @@
 
 package edu.sc.seis.sod.model.station;
 
-import edu.sc.seis.sod.model.common.MicroSecondDate;
+import java.time.Instant;
 
 //
 // IDL:iris.edu/Fissures/IfNetwork/SiteId:1.0
@@ -39,7 +39,7 @@ final public class SiteId implements org.omg.CORBA.portable.IDLEntity
     SiteId(NetworkId network_id,
            String station_code,
            String site_code,
-           MicroSecondDate begin_time)
+           Instant begin_time)
     {
         this.network_id = network_id;
         this.station_code = station_code;
@@ -50,5 +50,5 @@ final public class SiteId implements org.omg.CORBA.portable.IDLEntity
     public NetworkId network_id;
     public String station_code;
     public String site_code;
-    public MicroSecondDate begin_time;
+    public Instant begin_time;
 }

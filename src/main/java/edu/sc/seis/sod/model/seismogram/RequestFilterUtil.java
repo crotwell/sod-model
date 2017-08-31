@@ -1,5 +1,6 @@
 package edu.sc.seis.sod.model.seismogram;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -76,12 +77,10 @@ public class RequestFilterUtil {
                 + rf.start_time.getISOString() + " to " + rf.end_time.getISOString();
     }
 
-    public static RequestFilter[] removeSmallRequests(RequestFilter[] rf, TimeInterval minSize) {
+    public static RequestFilter[] removeSmallRequests(RequestFilter[] rf, Duration minSize) {
         List<RequestFilter> out = new ArrayList<RequestFilter>();
         for (int i = 0; i < rf.length; i++) {
-            MicroSecondDate b = new MicroSecondDate(rf[i].start_time);
-            MicroSecondDate e = new MicroSecondDate(rf[i].end_time);
-            if (e.subtract(b).greaterThan(minSize)) {
+            if (rf[i].getDuration().compareTo(minSize) > 0) {
                 out.add(rf[i]);
             }
         }

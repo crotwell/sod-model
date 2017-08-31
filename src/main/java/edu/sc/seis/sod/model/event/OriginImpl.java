@@ -12,6 +12,7 @@
 // Version: 4.0.3
 package edu.sc.seis.sod.model.event;
 
+import java.time.Instant;
 //
 // IDL:iris.edu/Fissures/IfEvent/Origin:1.0
 //
@@ -21,7 +22,6 @@ import java.util.List;
 
 import edu.sc.seis.sod.model.common.Location;
 import edu.sc.seis.sod.model.common.LocationUtil;
-import edu.sc.seis.sod.model.common.MicroSecondDate;
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.ParameterRefUtil;
 import edu.sc.seis.sod.model.common.UnitImpl;
@@ -54,7 +54,7 @@ public class OriginImpl  {
     //
     /** The estimate of when the event happened. */
 
-    protected MicroSecondDate origin_time;
+    protected Instant origin_time;
 
     //
     // IDL:iris.edu/Fissures/IfEvent/Origin/my_location:1.0
@@ -100,7 +100,7 @@ public class OriginImpl  {
     }
 
     public OriginImpl(String id, String catalog, String contributor,
-                      MicroSecondDate origin_time, Location my_location, Magnitude[] magnitudes,
+                      Instant origin_time, Location my_location, Magnitude[] magnitudes,
             ParameterRef[] parm_ids) {
         this.id = id;
         this.setCatalog(catalog);
@@ -140,9 +140,9 @@ public class OriginImpl  {
         if(oOrigin == this) {
             return true;
         } else if(equalsExceptTime(oOrigin)) {
-            MicroSecondDate myOTime = new MicroSecondDate(getOriginTime());
-            MicroSecondDate eventOTime = new MicroSecondDate(oOrigin.getOriginTime());
-            if(myOTime.subtract(eventOTime).convertTo(UnitImpl.MICROSECOND).getValue() < 1000) { return true; }
+            Instant myOTime = getOriginTime();
+            Instant eventOTime = oOrigin.getOriginTime();
+            if(myOTime.minus(eventOTime).convertTo(UnitImpl.MICROSECOND).getValue() < 1000) { return true; }
             return true;
         }
         return false;
@@ -160,18 +160,18 @@ public class OriginImpl  {
     }
 
     @Deprecated
-    public MicroSecondDate getFissuresTime() {
+    public Instant getFissuresTime() {
         return getOriginTime();
     }
 
-    public MicroSecondDate getTime() {
+    public Instant getTime() {
         if(time == null) {
-            time = new MicroSecondDate(getOriginTime());
+            time = new Instant(getOriginTime());
         }
         return time;
     }
 
-    private MicroSecondDate time;
+    private Instant time;
     
     // for hibernate
     private int dbid;
@@ -221,11 +221,11 @@ public class OriginImpl  {
         return contributor;
     }
 
-    public void setOriginTime(MicroSecondDate origin_time) {
+    public void setOriginTime(Instant origin_time) {
         this.origin_time = origin_time;
     }
 
-    public MicroSecondDate getOriginTime() {
+    public Instant getOriginTime() {
         return origin_time;
     }
 

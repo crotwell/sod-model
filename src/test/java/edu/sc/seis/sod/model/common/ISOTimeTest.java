@@ -7,10 +7,13 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
 
 public class ISOTimeTest {
 
@@ -81,7 +84,7 @@ public class ISOTimeTest {
                 micros = micros.substring(0, 3);
             }
             String testS = s + micros + "Z";
-            MicroSecondDate d = new MicroSecondDate(testS);
+            Instant d = BaseNodeType.parseISOString(testS);
             assertEquals(i%10, d.getMicroSeconds()/100);
             assertEquals(testS, d.getISOString());
         }
