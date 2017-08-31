@@ -234,10 +234,7 @@ public class SeismogramAttrImpl implements Serializable {
     /**@return the amount of time that this seismogram covers.
      */
     public Duration getTimeInterval() {
-        QuantityImpl q = getSampling().getPeriod().convertTo(UnitImpl.NANOSECOND);
-
-        return Duration.ofNanos(((long)q.getValue()) *
-                                (num_points -1));
+        return getSampling().getPeriod().multipliedBy(num_points-1);
     }
 
 

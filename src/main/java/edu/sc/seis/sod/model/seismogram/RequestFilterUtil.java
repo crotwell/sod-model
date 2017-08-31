@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.sc.seis.sod.model.common.MicroSecondDate;
-import edu.sc.seis.sod.model.common.TimeInterval;
 import edu.sc.seis.sod.model.station.ChannelIdUtil;
 
 /**
@@ -74,7 +72,7 @@ public class RequestFilterUtil {
 
     public static String toString(RequestFilter rf) {
         return ChannelIdUtil.toStringNoDates(rf.channel_id) + " from "
-                + rf.start_time.getISOString() + " to " + rf.end_time.getISOString();
+                + rf.start_time + " to " + rf.end_time;
     }
 
     public static RequestFilter[] removeSmallRequests(RequestFilter[] rf, Duration minSize) {

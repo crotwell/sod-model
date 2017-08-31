@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,10 +21,8 @@ import java.util.zip.GZIPOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.sc.seis.sod.model.common.MicroSecondTimeRange;
-import edu.sc.seis.sod.model.common.TimeInterval;
+import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
 import edu.sc.seis.sod.model.common.TimeRange;
-import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.util.LinearInterp;
 
 /**
@@ -159,21 +158,21 @@ public class PlottableChunk {
     }
 
     public static Instant getDate(int jday, int year) {
-        return new Instant(makeCalWithDate(jday, year).getTimeInMillis() * 1000);
+        return ZonedDateTime.of(year, 1, 1, 0, 0, 0, 0, BaseNodeType.TZ_UTC).plusDays(jday-1).toInstant();
     }
 
     public static Instant getTime(int pixel,
                                           int jday,
                                           int year,
                                           int pixelsPerDay) {
-        Calendar cal = makeCalWithDate(jday, year);
+        Instant dayBegin = getDate(jday, year);
         double sampleMillis = LinearInterp.linearInterp(0,
                                                           0,
                                                           pixelsPerDay,
                                                           MILLIS_IN_DAY,
                                                           pixel);
         sampleMillis = Math.floor(sampleMillis);
-        return new Instant((cal.getTimeInMillis() + (long)sampleMillis) * 1000);
+        return dayBegin.plusMillis(Math.round(sampleMillis));
     }
 
     public static int getJDay(Instant time) {
