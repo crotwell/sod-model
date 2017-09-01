@@ -18,7 +18,7 @@ import java.time.Instant;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
+import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.sod.model.common.FissuresException;
 import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.SamplingImpl;
@@ -62,7 +62,7 @@ public class LocalSeismogramImplTest
 
 
         Instant time =
-        BaseNodeType.parseISOString("19991231T235959.000Z");
+        TimeUtils.parseISOString("19991231T235959.000Z");
         String id = "Nowhere: "+name;
         SamplingImpl sampling =
             SamplingImpl.ofSamplesSeconds(20, 1.0);

@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
+import edu.sc.seis.seisFile.TimeUtils;
 
 /**
  * ISOTime.java Created: Fri Jul 9 13:45:39 1999
@@ -34,10 +34,10 @@ public class ISOTime {
         // check for TIME_UNKNOWN and default DMC 2599 values
         if(s.equals(TIME_UNKNOWN)
                 || s.equals("2599-12-31T23:59:59.0000GMT")) {
-            zdatetime = future;
+            zdatetime = TimeUtils.future;
         } else {
             String clean = cleanDate(s);
-            zdatetime = BaseNodeType.parseISOString(clean);
+            zdatetime = TimeUtils.parseISOString(clean);
         } // end of else
     }
 
@@ -206,18 +206,6 @@ public class ISOTime {
 
 
     public static final String TIME_UNKNOWN = "TIME_UNKNOWN";
-
-    public static final Instant wayPast = 
-        BaseNodeType.parseISOString("00990101T000000.000000Z");
-
-    public static final Instant future = 
-        BaseNodeType.parseISOString("24990101T000000.000000Z");
-
-    /** future plus one day so that is is after(future)
-     */
-    public static final Instant futurePlusOne = 
-        BaseNodeType.parseISOString("24990102T000000.000000Z");
-
 
     /**
      * just for testing, parses and outputs a few ISO8601 strings.

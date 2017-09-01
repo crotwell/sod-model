@@ -13,7 +13,7 @@ import java.util.Date;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
+import edu.sc.seis.seisFile.TimeUtils;
 
 public class ISOTimeTest {
 
@@ -84,7 +84,7 @@ public class ISOTimeTest {
                 micros = micros.substring(0, 3);
             }
             String testS = s + micros + "Z";
-            Instant d = BaseNodeType.parseISOString(testS);
+            Instant d = TimeUtils.parseISOString(testS);
             assertEquals(i%10, d.getMicroSeconds()/100);
             assertEquals(testS, d.getISOString());
         }

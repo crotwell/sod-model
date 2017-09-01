@@ -10,6 +10,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +23,7 @@ import java.util.zip.GZIPOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
+import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.sod.model.common.TimeRange;
 import edu.sc.seis.sod.model.util.LinearInterp;
 
@@ -158,7 +160,7 @@ public class PlottableChunk {
     }
 
     public static Instant getDate(int jday, int year) {
-        return ZonedDateTime.of(year, 1, 1, 0, 0, 0, 0, BaseNodeType.TZ_UTC).plusDays(jday-1).toInstant();
+        return ZonedDateTime.of(year, 1, 1, 0, 0, 0, 0, TimeUtils.TZ_UTC).plusDays(jday-1).toInstant();
     }
 
     public static Instant getTime(int pixel,
@@ -183,14 +185,8 @@ public class PlottableChunk {
         return time.get(ChronoField.YEAR);
     }
 
-    public static Instant stripToDay(Date d) {
-        Calendar cal = PlottableChunk.makeCal();
-        cal.setTime(d);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return new Instant(cal.getTime());
+    public static Instant stripToDay(Instant d) {
+        return d.truncatedTo(ChronoUnit.DAYS);
     }
     
     private static final int MILLIS_IN_DAY = 24 * 60 * 60 * 1000;

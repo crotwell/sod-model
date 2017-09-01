@@ -4,6 +4,7 @@ package edu.sc.seis.sod.model.common;
 import java.io.Serializable;
 import java.time.Duration;
 
+import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
 
 
@@ -32,7 +33,7 @@ public class SamplingImpl implements Serializable {
     }
     
     public static SamplingImpl ofSamplesSeconds(int numPoints, double seconds) {
-        return new SamplingImpl(numPoints, Duration.ofNanos(Math.round(seconds*TimeRange.NANOS_IN_SEC)));
+        return new SamplingImpl(numPoints, Duration.ofNanos(Math.round(seconds*TimeUtils.NANOS_IN_SEC)));
     }
     
     public SamplingImpl(int numPoints, Duration interval) {

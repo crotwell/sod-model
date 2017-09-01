@@ -166,6 +166,4 @@ public class TimeRange {
     private final Instant endTime;
 
     private final Duration interval;
-
-    public static final double NANOS_IN_SEC = 1000000000;
 }

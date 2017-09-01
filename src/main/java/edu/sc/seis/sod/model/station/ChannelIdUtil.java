@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import edu.sc.seis.seisFile.SeisFileException;
-import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
+import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
 import edu.sc.seis.sod.model.common.ISOTime;
 import edu.sc.seis.sod.model.common.TimeFormatter;
@@ -82,7 +82,7 @@ public class ChannelIdUtil {
                              matcher.group(2),
                              matcher.group(3),
                              matcher.group(4),
-                             BaseNodeType.parseISOString( matcher.group(5)));
+                             TimeUtils.parseISOString( matcher.group(5)));
         }
         throw new RuntimeException("Doesn't match a channel id pattern: ");
     }
