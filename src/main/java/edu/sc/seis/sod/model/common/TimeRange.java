@@ -3,12 +3,17 @@ package edu.sc.seis.sod.model.common;
 import java.time.Duration;
 import java.time.Instant;
 
+import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
+import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
 import edu.sc.seis.sod.model.seismogram.LocalSeismogramImpl;
 import edu.sc.seis.sod.model.seismogram.RequestFilter;
 
 /** Placeholder. */
 public class TimeRange {
     
+    public TimeRange(BaseNodeType node) {
+        this(node.getStartDateTime(), node.getEndDateTime());
+    }
 
     public TimeRange(LocalSeismogramImpl ls) {
         this(ls.getBeginTime(), ls.getEndTime());
