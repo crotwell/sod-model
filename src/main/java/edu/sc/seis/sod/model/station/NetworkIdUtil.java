@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
-import edu.sc.seis.sod.model.common.ISOTime;
 import edu.sc.seis.sod.model.common.TimeFormatter;
 
 /**
