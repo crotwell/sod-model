@@ -11,10 +11,7 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.zip.GZIPInputStream;
@@ -142,21 +139,6 @@ public class PlottableChunk {
             }
         }
         return false;
-    }
-
-    public static Calendar makeCal() {
-        return Calendar.getInstance(utcTimeZone);
-    }
-
-    public static Calendar makeCalWithDate(int jday, int year) {
-        Calendar cal = makeCal();
-        cal.set(Calendar.DAY_OF_YEAR, jday);
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal;
     }
 
     public static Instant getDate(int jday, int year) {
