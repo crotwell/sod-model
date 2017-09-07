@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.time.Duration;
 import java.time.Instant;
 
 import org.junit.Before;
@@ -20,7 +19,6 @@ import org.junit.Test;
 
 import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.sod.model.common.FissuresException;
-import edu.sc.seis.sod.model.common.ParameterRef;
 import edu.sc.seis.sod.model.common.SamplingImpl;
 import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.station.ChannelId;
@@ -77,16 +75,13 @@ public class LocalSeismogramImplTest
         props[0] = new Property("Name", name);
         LocalSeismogramImpl seis =
         new LocalSeismogramImpl(id,
-                    props,
                     time,
                     dataBits.length / bytesPerSample,
                     sampling,
                     UnitImpl.COUNT,
                     channelID,
-                    new ParameterRef[0],
-                    new Duration[0],
-                    new SamplingImpl[0],
                     bits);
+        seis.setProperties(props);
         return seis;
     }
 
