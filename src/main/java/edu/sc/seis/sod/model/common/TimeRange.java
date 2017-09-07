@@ -3,8 +3,8 @@ package edu.sc.seis.sod.model.common;
 import java.time.Duration;
 import java.time.Instant;
 
+import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.seisFile.fdsnws.stationxml.BaseNodeType;
-import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
 import edu.sc.seis.sod.model.seismogram.LocalSeismogramImpl;
 import edu.sc.seis.sod.model.seismogram.RequestFilter;
 
@@ -85,7 +85,7 @@ public class TimeRange {
         if(shift == 0 && scale == 1) {
             return this;
         }
-        Duration timeShift = interval.multipliedBy(Math.abs(shift));
+        Duration timeShift = TimeUtils.multiply(interval, Math.abs(shift));
         Instant newBeginTime;
         if(shift < 0) {
             newBeginTime = beginTime.minus(timeShift);
@@ -93,7 +93,7 @@ public class TimeRange {
             newBeginTime = beginTime.plus(timeShift);
         }
         return new TimeRange(newBeginTime,
-                             interval.multipliedBy(scale));
+                             TimeUtils.multiply(interval, scale));
     }
 
     public TimeRange shift(Duration shift) {
@@ -105,7 +105,7 @@ public class TimeRange {
         if(percentage == 0) {
             return this;
         }
-        Duration shift = interval.multipliedBy(Math.abs(percentage));
+        Duration shift = TimeUtils.multiply(interval, Math.abs(percentage));
         if(percentage < 0) {
             return new TimeRange(beginTime.minus(shift),
                                             endTime.minus(shift));
