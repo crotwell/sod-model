@@ -69,75 +69,8 @@ public class NetworkIdUtil {
                 || a.getStartDateTime().equals(b.getStartDateTime());
     }
 
-    @Deprecated
-    public static String toString(Network net) {
-        return net.getNetworkId();
-    }
-
-    public static String toString(NetworkId id) {
-        return id.networkCode
-                + DOT
-                + id.begin_time.getISOString();
-    }
-
-    @Deprecated
-    public static NetworkId fromString(String s) {
-        StringTokenizer st = new StringTokenizer(s, DOT);
-        return new NetworkId(st.nextToken(),
-                             TimeUtils.parseISOString(st.nextToken()));
-    }
-
-    public static StringTokenizer getTokenizerAfterNetworkId(String s) {
-        StringTokenizer st = new StringTokenizer(s, DOT);
-        st.nextToken();
-        st.nextToken();
-        return st;
-    }
-
-    public static String toStringFormatDates(Network net) {
-        return net.getNetworkId();
-    }
-
-    public static String toStringFormatDates(NetworkId id) {
-        return id.networkCode + DOT + TimeFormatter.format(id.begin_time);
-    }
-
-    public static String toStringNoDates(Network net) {
-        return net.getNetworkId();
-    }
-
-    public static String toStringNoDates(NetworkId id) {
-        // passcal networks need year
-        if(id.networkCode.startsWith("X") || id.networkCode.startsWith("Y")
-                || id.networkCode.startsWith("Z")) {
-            return id.networkCode + getTwoCharYear(id);
-        }
-        return id.networkCode;
-    }
-
     public static String getTwoCharYear(NetworkId id) {
         return id.begin_time.getISOString().substring(2, 4);
-    }
-
-    public static String getTwoCharYear(Network net) {
-        int yy = net.getStartDateTime().get(ChronoField.YEAR);
-        if (yy > 2000) {
-            return ""+(yy-2000);
-        } else {
-            return ""+(yy-1900);
-        }
-    }
-
-    public static String getYear(Network net) {
-        return ""+net.getStartDateTime().get(ChronoField.YEAR);
-    }
-
-    public static String getYear(NetworkId id) {
-        return id.begin_time.getISOString().substring(0, 4);
-    }
-
-    public static int hashCode(NetworkId id) {
-        return 57 + toString(id).hashCode();
     }
     
     public static final String DOT = ".";

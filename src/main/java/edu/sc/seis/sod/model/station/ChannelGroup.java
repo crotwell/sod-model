@@ -133,7 +133,9 @@ public class ChannelGroup {
                 return channels[i];
             }
         }
-        if(SiteIdUtil.areSameSite(chanId, new ChannelId(channels[0]))
+        if (chanId.getNetworkId().equals(channels[0])
+                && chanId.getStationCode().equals(channels[0].getStationCode())
+                && chanId.getNetworkId().equals(channels[0].getNetworkId())
                 && chanId.getChannelCode().substring(0, 2)
                         .equals(channels[0].getCode().substring(0, 2))) {
             if(chanId.getChannelCode().endsWith("R")) {
