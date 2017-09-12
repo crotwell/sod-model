@@ -16,16 +16,16 @@ public class RequestFilterUtil {
 
     public static boolean areEqual(RequestFilter one, RequestFilter two) {
         if(one == two) { return true; }
-        return ChannelIdUtil.areEqual(one.channel_id, two.channel_id)
-                && one.start_time.equals(two.start_time)
-                && one.end_time.equals(two.end_time);
+        return ChannelIdUtil.areEqual(one.channelId, two.channelId)
+                && one.startTime.equals(two.startTime)
+                && one.endTime.equals(two.endTime);
     }
 
     public static boolean containsWildcard(RequestFilter rf) {
-        return rf.channel_id.getNetworkId().equals("*") ||
-        rf.channel_id.getStationCode().equals("*") ||
-        rf.channel_id.getLocCode().equals("*") ||
-        rf.channel_id.getChannelCode().equals("*");
+        return rf.channelId.getNetworkId().equals("*") ||
+        rf.channelId.getStationCode().equals("*") ||
+        rf.channelId.getLocCode().equals("*") ||
+        rf.channelId.getChannelCode().equals("*");
     }
 
     public static boolean containsWildcard(List<RequestFilter> rfList) {
@@ -38,7 +38,7 @@ public class RequestFilterUtil {
     public static Map<String, List<RequestFilter>> splitByChannel(List<RequestFilter> rf) {
         HashMap<String, List<RequestFilter>> out = new HashMap<String, List<RequestFilter>>();
         for (RequestFilter requestFilter : rf) {
-            String key = ChannelIdUtil.toStringNoDates(requestFilter.channel_id);
+            String key = ChannelIdUtil.toStringNoDates(requestFilter.channelId);
             if (!out.containsKey(key)) {
                 out.put(key, new ArrayList<RequestFilter>());
             }
@@ -71,8 +71,8 @@ public class RequestFilterUtil {
     }
 
     public static String toString(RequestFilter rf) {
-        return ChannelIdUtil.toStringNoDates(rf.channel_id) + " from "
-                + rf.start_time + " to " + rf.end_time;
+        return ChannelIdUtil.toStringNoDates(rf.channelId) + " from "
+                + rf.startTime + " to " + rf.endTime;
     }
 
     public static RequestFilter[] removeSmallRequests(RequestFilter[] rf, Duration minSize) {

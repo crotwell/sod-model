@@ -18,9 +18,9 @@ final public class RequestFilter {
     
     public static RequestFilter of(LocalSeismogramImpl seismogram) {
         RequestFilter out = new RequestFilter();
-        out.channel_id = seismogram.getChannelID();
-        out.start_time = seismogram.begin_time;
-        out.end_time = seismogram.getEndTime();
+        out.channelId = seismogram.getChannelID();
+        out.startTime = seismogram.begin_time;
+        out.endTime = seismogram.getEndTime();
         return out;
     }
 
@@ -30,9 +30,9 @@ final public class RequestFilter {
                   Instant start_time,
                   Instant end_time)
     {
-        this.channel_id = channel;
-        this.start_time = start_time;
-        this.end_time = end_time;
+        this.channelId = channel;
+        this.startTime = start_time;
+        this.endTime = end_time;
     }
 
     public
@@ -40,25 +40,37 @@ final public class RequestFilter {
                   Instant start_time,
                   Instant end_time)
     {
-        this.channel_id = new ChannelId(channel);
-        this.start_time = start_time;
-        this.end_time = end_time;
+        this.channelId = new ChannelId(channel);
+        this.startTime = start_time;
+        this.endTime = end_time;
     }
     
     public ChannelTimeWindow asChannelTimeWindow() {
-        return new ChannelTimeWindow(channel_id.getNetworkId(),
-                                     channel_id.getStationCode(),
-                                     channel_id.getLocCode(),
-                                     channel_id.getChannelCode(),
-                                     start_time,
-                                     end_time);
+        return new ChannelTimeWindow(channelId.getNetworkId(),
+                                     channelId.getStationCode(),
+                                     channelId.getLocCode(),
+                                     channelId.getChannelCode(),
+                                     startTime,
+                                     endTime);
     }
     
     public Duration getDuration() {
-        return Duration.between(start_time, end_time);
+        return Duration.between(startTime, endTime);
     }
 
-    public ChannelId channel_id;
-    public Instant start_time;
-    public Instant end_time;
+    public ChannelId getChannelId() {
+        return channelId;
+    }
+
+    public Instant getStartTime() {
+        return startTime;
+    }
+
+    public Instant getEndTime() {
+        return endTime;
+    }
+
+    public ChannelId channelId;
+    public Instant startTime;
+    public Instant endTime;
 }

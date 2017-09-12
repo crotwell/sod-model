@@ -20,7 +20,7 @@ public class TimeRange {
     }
 
     public TimeRange(RequestFilter rf) {
-        this(rf.start_time, rf.end_time);
+        this(rf.startTime, rf.endTime);
     }
 
     public TimeRange(TimeRange timeRange) {
