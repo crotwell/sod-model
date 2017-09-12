@@ -16,6 +16,10 @@ import edu.sc.seis.sod.model.common.TimeFormatter;
  */
 public class ChannelIdUtil {
 
+    public static boolean areEqual(ChannelId a, Channel b) {
+        return areEqual(a, ChannelId.of(b));
+    }
+    
     public static boolean areEqual(ChannelId a, ChannelId b) {
         return a.getStationCode().equals(b.getStationCode())
                 && a.getLocCode().equals(b.getLocCode())
