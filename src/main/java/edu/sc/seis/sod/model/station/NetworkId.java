@@ -35,6 +35,14 @@ public class NetworkId
     public String networkCode;
     
     Integer startYear = null; // only temp networks need
+
+    public String getNetworkCode() {
+        return networkCode;
+    }
+
+    public Integer getStartYear() {
+        return startYear;
+    }
     
     
 }

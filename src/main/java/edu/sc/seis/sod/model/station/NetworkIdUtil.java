@@ -2,12 +2,9 @@ package edu.sc.seis.sod.model.station;
 
 import java.time.Instant;
 import java.time.temporal.ChronoField;
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
-import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
-import edu.sc.seis.sod.model.common.TimeFormatter;
 
 /**
  * NetworkIdUtil.java Created: Wed Jan 31 13:07:45 2001
@@ -52,7 +49,7 @@ public class NetworkIdUtil {
         // only compare dates if temp network, ie network code starts with X, Y,
         // Z or number
         return !isTemporary(a)
-                || a.begin_time.equals(b.begin_time);
+                || a.getStartYear() == b.getStartYear();
     }
     
 
@@ -67,10 +64,6 @@ public class NetworkIdUtil {
         // Z or number
         return !isTemporary(a.getNetworkCode())
                 || a.getStartDateTime().equals(b.getStartDateTime());
-    }
-
-    public static String getTwoCharYear(NetworkId id) {
-        return id.begin_time.getISOString().substring(2, 4);
     }
     
     public static final String DOT = ".";

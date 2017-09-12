@@ -1,5 +1,6 @@
 package edu.sc.seis.sod.model.seismogram;
 
+import java.time.Duration;
 import java.time.Instant;
 
 import edu.sc.seis.sod.model.common.ParameterRef;
@@ -79,7 +80,7 @@ public class MotionVectorAttrImpl implements java.io.Serializable {
     /** These last two items deal with time corrections.<br>
      *the time adjustments that have been applied to the begin time. */
 
-    public QuantityImpl[] time_corrections;
+    public Duration[] time_corrections;
 
     //
     // IDL:iris.edu/Fissures/IfSeismogramDC/MotionVectorAttr/sample_rate_history:1.0

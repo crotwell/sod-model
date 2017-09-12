@@ -12,6 +12,7 @@
 // Version: 4.0.3
 package edu.sc.seis.sod.model.event;
 
+import java.time.Duration;
 import java.time.Instant;
 //
 // IDL:iris.edu/Fissures/IfEvent/Origin:1.0
@@ -20,6 +21,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.sod.model.common.Location;
 import edu.sc.seis.sod.model.common.LocationUtil;
 import edu.sc.seis.sod.model.common.ParameterRef;
@@ -116,7 +118,7 @@ public class OriginImpl  {
             return true;
         } else if(o instanceof OriginImpl) {
             OriginImpl oOrigin = (OriginImpl)o;
-            if(equalsExceptTime(oOrigin) && oOrigin.getTime().equals(getTime())) { return true; }
+            if(equalsExceptTime(oOrigin) && oOrigin.getOriginTime().equals(getOriginTime())) { return true; }
         }
         return false;
     }
@@ -142,7 +144,7 @@ public class OriginImpl  {
         } else if(equalsExceptTime(oOrigin)) {
             Instant myOTime = getOriginTime();
             Instant eventOTime = oOrigin.getOriginTime();
-            if(myOTime.minus(eventOTime).convertTo(UnitImpl.MICROSECOND).getValue() < 1000) { return true; }
+            if(TimeUtils.durationToDoubleSeconds(Duration.between(eventOTime, myOTime)) < 0.0001) { return true; }
             return true;
         }
         return false;
@@ -151,7 +153,7 @@ public class OriginImpl  {
     public int hashCode() {
         int result = 29;
         result += 89 * result + LocationUtil.hash(getLocation());
-        result += 89 * result + getTime().hashCode();
+        result += 89 * result + getOriginTime().hashCode();
         result += 89 * result + getContributor().hashCode();
         result += 89 * result + getCatalog().hashCode();
         result += 89 * result + ParameterRefUtil.hash(getParmIds());
@@ -163,15 +165,6 @@ public class OriginImpl  {
     public Instant getFissuresTime() {
         return getOriginTime();
     }
-
-    public Instant getTime() {
-        if(time == null) {
-            time = new Instant(getOriginTime());
-        }
-        return time;
-    }
-
-    private Instant time;
     
     // for hibernate
     private int dbid;
