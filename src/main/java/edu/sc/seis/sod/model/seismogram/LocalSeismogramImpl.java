@@ -86,8 +86,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              y_unit,
              channel_id,
              new ParameterRef[0],
-             new QuantityImpl[0],
-             new SamplingImpl[0],
              data);
     }
 
@@ -124,8 +122,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              y_unit,
              channel_id,
              new ParameterRef[0],
-             new QuantityImpl[0],
-             new SamplingImpl[0],
              new TimeSeriesDataSel());
         this.data.int_values(data);
     }
@@ -163,8 +159,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              y_unit,
              channel_id,
              new ParameterRef[0],
-             new QuantityImpl[0],
-             new SamplingImpl[0],
              new TimeSeriesDataSel());
         this.data.flt_values(data);
     }
@@ -202,8 +196,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              y_unit,
              channel_id,
              new ParameterRef[0],
-             new QuantityImpl[0],
-             new SamplingImpl[0],
              new TimeSeriesDataSel());
         this.data.dbl_values(data);
     }
@@ -241,8 +233,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              y_unit,
              channel_id,
              new ParameterRef[0],
-             new QuantityImpl[0],
-             new SamplingImpl[0],
              new TimeSeriesDataSel());
         this.data.sht_values(data);
     }
@@ -284,8 +274,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
                                UnitImpl y_unit,
                                ChannelId channel_id,
                                ParameterRef[] parm_ids,
-                               QuantityImpl[] time_corrections,
-                               SamplingImpl[] sample_rate_history,
                                TimeSeriesDataSel data) {
         super(id,
               properties,
@@ -294,9 +282,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
               sampling,
               y_unit,
               channel_id,
-              parm_ids,
-              time_corrections,
-              sample_rate_history);
+              parm_ids);
         if (data == null) {
             this.num_points = 0;
         }
@@ -342,8 +328,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
                                UnitImpl y_unit,
                                ChannelId channel_id,
                                ParameterRef[] parm_ids,
-                               QuantityImpl[] time_corrections,
-                               SamplingImpl[] sample_rate_history,
                                short[] data) {
         this(id,
              properties,
@@ -353,8 +337,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              y_unit,
              channel_id,
              parm_ids,
-             time_corrections,
-             sample_rate_history,
              new TimeSeriesDataSel());
         this.data.sht_values(data);
     }
@@ -395,8 +377,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
                                UnitImpl y_unit,
                                ChannelId channel_id,
                                ParameterRef[] parm_ids,
-                               QuantityImpl[] time_corrections,
-                               SamplingImpl[] sample_rate_history,
                                int[] data) {
         this(id,
              properties,
@@ -406,8 +386,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              y_unit,
              channel_id,
              parm_ids,
-             time_corrections,
-             sample_rate_history,
              new TimeSeriesDataSel());
         this.data.int_values(data);
     }
@@ -448,8 +426,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
                                UnitImpl y_unit,
                                ChannelId channel_id,
                                ParameterRef[] parm_ids,
-                               QuantityImpl[] time_corrections,
-                               SamplingImpl[] sample_rate_history,
                                float[] data) {
         this(id,
              properties,
@@ -459,8 +435,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              y_unit,
              channel_id,
              parm_ids,
-             time_corrections,
-             sample_rate_history,
              new TimeSeriesDataSel());
         this.data.flt_values(data);
     }
@@ -501,8 +475,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
                                UnitImpl y_unit,
                                ChannelId channel_id,
                                ParameterRef[] parm_ids,
-                               QuantityImpl[] time_corrections,
-                               SamplingImpl[] sample_rate_history,
                                double[] data) {
         this(id,
              properties,
@@ -512,8 +484,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              y_unit,
              channel_id,
              parm_ids,
-             time_corrections,
-             sample_rate_history,
              new TimeSeriesDataSel());
         this.data.dbl_values(data);
     }
@@ -563,8 +533,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
              attr.y_unit,
              attr.channel_id,
              attr.parm_ids,
-             attr.time_corrections,
-             attr.sample_rate_history,
              data);
     }
 
@@ -577,8 +545,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
         this.y_unit = attr.y_unit;
         this.channel_id = attr.channel_id;
         this.parm_ids = attr.parm_ids;
-        this.time_corrections = attr.time_corrections;
-        this.sample_rate_history = attr.sample_rate_history;
         setProperties(attr.properties);
     }
 

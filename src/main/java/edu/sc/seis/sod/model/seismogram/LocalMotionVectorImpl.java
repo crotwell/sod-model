@@ -33,8 +33,6 @@ public class LocalMotionVectorImpl extends MotionVectorAttrImpl {
 				 UnitImpl y_unit,
 				 ChannelId[] channel_group,
 				 ParameterRef[] parm_ids,
-				 Duration[] time_corrections,
-				 SamplingImpl[] sample_rate_history,
 				 VectorComponent[] data) {
 	super(id,
 	      properties,
@@ -43,9 +41,7 @@ public class LocalMotionVectorImpl extends MotionVectorAttrImpl {
 	      sampling_info,
 	      y_unit,
 	      channel_group,
-	      parm_ids,
-	      time_corrections,
-	      sample_rate_history);
+	      parm_ids);
 	this.data = data;
     }
 

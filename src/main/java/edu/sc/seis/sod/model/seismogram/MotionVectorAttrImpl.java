@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.Instant;
 
 import edu.sc.seis.sod.model.common.ParameterRef;
-import edu.sc.seis.sod.model.common.QuantityImpl;
 import edu.sc.seis.sod.model.common.SamplingImpl;
 import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.station.ChannelId;
@@ -74,21 +73,6 @@ public class MotionVectorAttrImpl implements java.io.Serializable {
 
     public ParameterRef[] parm_ids;
 
-    //
-    // IDL:iris.edu/Fissures/IfSeismogramDC/MotionVectorAttr/time_corrections:1.0
-    //
-    /** These last two items deal with time corrections.<br>
-     *the time adjustments that have been applied to the begin time. */
-
-    public Duration[] time_corrections;
-
-    //
-    // IDL:iris.edu/Fissures/IfSeismogramDC/MotionVectorAttr/sample_rate_history:1.0
-    //
-    /** Sampling rate changed that have been applied */
-
-    public SamplingImpl[] sample_rate_history;
-
 
     
     protected MotionVectorAttrImpl() {
@@ -101,9 +85,7 @@ public class MotionVectorAttrImpl implements java.io.Serializable {
 			    SamplingImpl sampling_info,
 			    UnitImpl y_unit,
 			    ChannelId[] channel_group,
-			    ParameterRef[] parm_ids,
-			    Duration[] time_corrections,
-			    SamplingImpl[] sample_rate_history) {
+			    ParameterRef[] parm_ids) {
 	this.id = id;
 	this.properties = properties;
 	this.begin_time = begin_time;
@@ -112,8 +94,6 @@ public class MotionVectorAttrImpl implements java.io.Serializable {
 	this.y_unit = y_unit;
 	this.channel_group = channel_group;
 	this.parm_ids = parm_ids;
-	this.time_corrections = time_corrections;
-	this.sample_rate_history = sample_rate_history;
     }
 
     /** A factory method to create an empty LocalDataSetImpl. 

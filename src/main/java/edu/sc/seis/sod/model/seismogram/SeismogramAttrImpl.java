@@ -6,7 +6,6 @@ import java.time.Duration;
 import java.time.Instant;
 
 import edu.sc.seis.sod.model.common.ParameterRef;
-import edu.sc.seis.sod.model.common.QuantityImpl;
 import edu.sc.seis.sod.model.common.SamplingImpl;
 import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.common.UnsupportedFormat;
@@ -78,20 +77,6 @@ public class SeismogramAttrImpl implements Serializable {
 
     public ParameterRef[] parm_ids;
 
-    //
-    // IDL:iris.edu/Fissures/IfSeismogramDC/SeismogramAttr/time_corrections:1.0
-    //
-    /** These last two items deal with time corrections.<br>
-     *the time adjustments that have been applied to the begin time. */
-
-    public QuantityImpl[] time_corrections;
-
-    //
-    // IDL:iris.edu/Fissures/IfSeismogramDC/SeismogramAttr/sample_rate_history:1.0
-    //
-    /** Sampling rate changed that have been applied */
-
-    public SamplingImpl[] sample_rate_history;
     
     /** A protected constructor that creates an empty SeismogramAttrImpl
      *  instance. This is to be used only by the ORB for unmarshelling
@@ -115,7 +100,7 @@ public class SeismogramAttrImpl implements Serializable {
                               SamplingImpl sample_info,
                               UnitImpl y_unit,
                               ChannelId channel_id) {
-        this(id, new Property[0], begin_time, num_points, sample_info, y_unit, channel_id, new ParameterRef[0], new QuantityImpl[0], new SamplingImpl[0]);
+        this(id, new Property[0], begin_time, num_points, sample_info, y_unit, channel_id, new ParameterRef[0]);
     }
     
     /** creates a new SeismogramAttrImpl.
@@ -149,19 +134,15 @@ public class SeismogramAttrImpl implements Serializable {
                               SamplingImpl sample_info,
                               UnitImpl y_unit,
                               ChannelId channel_id,
-                  ParameterRef[] parm_ids,
-                              QuantityImpl[] time_corrections,
-                  SamplingImpl[] sample_rate_history) {
+                              ParameterRef[] parm_ids) {
         this.id = id;
         this.begin_time = begin_time;
         this.num_points = num_points;
         this.sampling_info = sample_info;
         this.y_unit = y_unit;
         this.channel_id = channel_id;
-        this.time_corrections = time_corrections;
-        this.sample_rate_history = sample_rate_history;
         setProperties(properties);
-    setParameterRefs(parm_ids);
+        setParameterRefs(parm_ids);
     }
 
     /** @return the id of this seismogram. Should be unique.
