@@ -26,7 +26,7 @@ public class StationIdUtil {
 
     public static String toString(StationId id) {
         return id.getNetworkId() + NetworkIdUtil.DOT + id.getStationCode()
-                + NetworkIdUtil.DOT + id.begin_time.getISOString();
+                + NetworkIdUtil.DOT + id.begin_time.toString();
     }
 
     public static String toStringFormatDates(Station sta) {
