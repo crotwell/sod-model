@@ -16,6 +16,9 @@ import edu.sc.seis.sod.model.common.TimeFormatter;
  */
 public class ChannelIdUtil {
 
+    public static boolean areEqual(Channel a, ChannelId b) {
+        return areEqual(b, a);
+    }
     public static boolean areEqual(ChannelId a, Channel b) {
         return areEqual(a, ChannelId.of(b));
     }
@@ -26,6 +29,10 @@ public class ChannelIdUtil {
                 && a.getChannelCode().equals(b.getChannelCode())
                 && a.getNetworkId().equals(b.getNetworkId())
                 && a.getStartTime().equals(b.getStartTime());
+    }
+    
+    public static boolean areEqualExceptForBeginTime(ChannelId a, Channel b) {
+        return areEqualExceptForBeginTime(a, ChannelId.of(b));
     }
     
     public static boolean areEqualExceptForBeginTime(ChannelId a, ChannelId b) {
