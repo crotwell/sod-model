@@ -188,8 +188,7 @@ public class SeismogramAttrImpl implements Serializable {
     }
     Property[] props  = new Property[this.properties.length + 1];
     System.arraycopy(this.properties, 0, props, 0, this.properties.length);
-    props[this.properties.length].name = name;
-    props[this.properties.length].value = value;
+    props[this.properties.length] = new Property(name, value);
     setProperties(props);
     }
 
