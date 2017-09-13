@@ -29,7 +29,7 @@ public class SamplingImpl implements Serializable {
     public static Serializable createEmpty() { return new SamplingImpl(); }
 
     public static SamplingImpl of(Channel chan) {
-        return new SamplingImpl(1, Duration.ofNanos((long) (1000000/chan.getSampleRate().getValue())));
+        return new SamplingImpl(1, Duration.ofNanos((long) (TimeUtils.NANOS_IN_SEC/chan.getSampleRate().getValue())));
     }
     
     public static SamplingImpl ofSamplesSeconds(int numPoints, double seconds) {
