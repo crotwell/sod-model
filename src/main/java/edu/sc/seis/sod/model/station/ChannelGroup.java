@@ -5,13 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.sc.seis.seisFile.fdsnws.stationxml.Channel;
-import edu.sc.seis.seisFile.fdsnws.stationxml.FloatType;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Station;
 import edu.sc.seis.sod.model.common.DistAz;
 import edu.sc.seis.sod.model.common.Location;
-import edu.sc.seis.sod.model.common.Orientation;
-import edu.sc.seis.sod.model.common.UnitImpl;
 import edu.sc.seis.sod.model.event.CacheEvent;
 
 public class ChannelGroup {
@@ -182,7 +179,7 @@ public class ChannelGroup {
         Channel out = new Channel(orig.getStation(),
         		orig.getLocCode(), 
         		replaceChannelOrientationCode(orig.getChannelCode(), orientationCode));
-        out.setAzimuth(new FloatType(azimuth, UnitImpl.DEGREE.toString()));
+        out.setAzimuth(azimuth);
         out.setDepth(orig.getDepth());
         out.setDescription(orig.getDescription());
         out.setDip(orig.getDip());
