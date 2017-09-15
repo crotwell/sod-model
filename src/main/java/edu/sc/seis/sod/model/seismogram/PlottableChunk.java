@@ -118,7 +118,7 @@ public class PlottableChunk {
         this.year = year;
         this.networkCode = networkCode;
         this.stationCode = stationCode;
-        this.siteCode = siteCode;
+        this.locCode = siteCode;
         this.channelCode = channelCode;
     }
 
@@ -129,7 +129,7 @@ public class PlottableChunk {
             PlottableChunk oChunk = (PlottableChunk)o;
             if(networkCode.equals(oChunk.networkCode) &&
                     stationCode.equals(oChunk.stationCode) &&
-                    siteCode.equals(oChunk.siteCode) &&
+                    locCode.equals(oChunk.locCode) &&
                     channelCode.equals(oChunk.channelCode) &&
                     pixelsPerDay == oChunk.pixelsPerDay &&
                     jday == oChunk.jday &&
@@ -230,7 +230,7 @@ public class PlottableChunk {
     public int hashCode() {
         int hashCode = 81 + networkCode.hashCode();
         hashCode = 37 * hashCode + stationCode.hashCode();
-        hashCode = 37 * hashCode + siteCode.hashCode();
+        hashCode = 37 * hashCode + locCode.hashCode();
         hashCode = 37 * hashCode + channelCode.hashCode();
         hashCode = 37 * hashCode + pixelsPerDay;
         hashCode = 37 * hashCode + jday;
@@ -241,7 +241,7 @@ public class PlottableChunk {
     public String toString() {
         return getNumPixels() + " pixel chunk from "
                 + networkCode + "."
-                + stationCode + "." + siteCode + "." + channelCode + " at "
+                + stationCode + "." + locCode + "." + channelCode + " at "
                 + pixelsPerDay + " ppd from " + getTimeRange();
     }
 
@@ -333,7 +333,7 @@ public class PlottableChunk {
 
     private String networkCode;
     private String stationCode;
-    private String siteCode;
+    private String locCode;
     private String channelCode;
 
     private byte[] yBytes;
@@ -368,12 +368,12 @@ public class PlottableChunk {
 
     
     public String getSiteCode() {
-        return siteCode;
+        return locCode;
     }
 
     
     public void setSiteCode(String siteCode) {
-        this.siteCode = siteCode;
+        this.locCode = siteCode;
     }
 
     
