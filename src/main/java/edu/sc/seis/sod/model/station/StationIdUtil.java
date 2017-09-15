@@ -17,7 +17,7 @@ public class StationIdUtil {
         }
         return a.getStationCode().equals(b.getStationCode())
                 && a.getNetworkId().equals(b.getNetworkId())
-                && a.begin_time.equals(b.begin_time);
+                && a.getStartTime().equals(b.getStartTime());
     }
 
     public static String toString(Station sta) {
@@ -25,8 +25,9 @@ public class StationIdUtil {
     }
 
     public static String toString(StationId id) {
+        if (id == null) { throw new IllegalArgumentException("id is NULL");}
         return id.getNetworkId() + NetworkIdUtil.DOT + id.getStationCode()
-                + NetworkIdUtil.DOT + id.begin_time.toString();
+                + NetworkIdUtil.DOT + id.getStartTime().toString();
     }
 
     public static String toStringFormatDates(Station sta) {
@@ -35,7 +36,7 @@ public class StationIdUtil {
 
     public static String toStringFormatDates(StationId id) {
         return id.getNetworkId() + NetworkIdUtil.DOT
-                + id.getStationCode() + NetworkIdUtil.DOT + TimeFormatter.format(id.begin_time);
+                + id.getStationCode() + NetworkIdUtil.DOT + TimeFormatter.format(id.getStartTime());
     }
 
     public static String toStringNoDates(Station sta) {

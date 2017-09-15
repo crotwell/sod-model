@@ -40,11 +40,11 @@ public class StationId  {
     public
     StationId(NetworkId network_id,
               String station_code,
-              Instant begin_time)
+              Instant startTime)
     {
         this.setNetworkId(network_id.toString());
         this.setStationCode(station_code);
-        this.begin_time = begin_time;
+        this.startTime = startTime;
     }
 
     
@@ -73,7 +73,6 @@ public class StationId  {
 
     private String networkId;
     private String stationCode;
-    public Instant begin_time;
     
     private Instant startTime;
 }
