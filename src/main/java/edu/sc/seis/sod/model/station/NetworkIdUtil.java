@@ -1,9 +1,11 @@
 package edu.sc.seis.sod.model.station;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 import java.util.regex.Pattern;
 
+import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.seisFile.fdsnws.stationxml.Network;
 
 /**
@@ -71,7 +73,8 @@ public class NetworkIdUtil {
     public static String formId(String netCode, Instant time) {
         String out = netCode;
         if (isTemporary(netCode)) {
-            out += time.get(ChronoField.YEAR);
+            ZonedDateTime zdt = ZonedDateTime.ofInstant(time, TimeUtils.TZ_UTC);
+            out += zdt.getYear();
         }
         return out;
     }
