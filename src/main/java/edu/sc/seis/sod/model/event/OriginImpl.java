@@ -56,7 +56,7 @@ public class OriginImpl  {
     //
     /** The estimate of when the event happened. */
 
-    protected Instant origin_time;
+    protected Instant originTime;
 
     //
     // IDL:iris.edu/Fissures/IfEvent/Origin/my_location:1.0
@@ -215,11 +215,11 @@ public class OriginImpl  {
     }
 
     public void setOriginTime(Instant origin_time) {
-        this.origin_time = origin_time;
+        this.originTime = origin_time;
     }
 
     public Instant getOriginTime() {
-        return origin_time;
+        return originTime;
     }
 
     public void setLocation(Location my_location) {
