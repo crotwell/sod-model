@@ -162,4 +162,12 @@ public class CacheEvent  {
     public OriginImpl getOrigin() {
         return extractOrigin();
     }
+    
+    public String toString() {
+        try {
+            return getPreferred().getOriginTime()+" "+getPreferred().getMagnitudeList().get(0);
+        } catch (NoPreferredOrigin e) {
+            return "Event "+getAttributes().getName()+" no pref origin";
+        }
+    }
 } // CacheEvent
