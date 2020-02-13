@@ -1,11 +1,14 @@
 package edu.sc.seis.sod.model.common;
 
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+
 /**
  * QuantityTest.java
  *
@@ -22,7 +25,7 @@ public class UnitRangeImplTest {
      *
      * Called before every test case method.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         q = new UnitRangeImpl(-.005, .00000005, UnitImpl.MICROSECOND.inverse());
         tenMM = new UnitRangeImpl(-10, 10, UnitImpl.MILLIMETER);
@@ -34,7 +37,7 @@ public class UnitRangeImplTest {
      *
      * Called after every test case method.
      */
-    @After
+    @AfterEach
     public void tearDown() {
         q = null;
     }

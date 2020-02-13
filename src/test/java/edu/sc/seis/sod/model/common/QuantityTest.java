@@ -1,13 +1,15 @@
 package edu.sc.seis.sod.model.common;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 public class QuantityTest  {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         q = (QuantityImpl)createInstance();
         tenMM = (QuantityImpl)createNotEqualInstance();
@@ -19,13 +21,13 @@ public class QuantityTest  {
         QuantityImpl out = q.convertTo(UnitImpl.HERTZ);
         assertEquals(out.getValue(), q.getValue() * 1000000, 0.001);
         out = tenMM.convertTo(UnitImpl.METER);
-        assertEquals("meter", out.getValue(), tenMM.getValue() / 1000, 0.001);
+        assertEquals( out.getValue(), tenMM.getValue() / 1000, 0.001, "meter");
         out = out.convertTo(UnitImpl.MILLIMETER);
-        assertEquals("millimeter", out.getValue(), tenMM.getValue(), 0.001);
+        assertEquals( out.getValue(), tenMM.getValue(), 0.001, "millimeter");
         out = tenMM_per_Sec.convertTo(UnitImpl.METER_PER_SECOND);
-        assertEquals("m/s", out.getValue(), tenMM_per_Sec.getValue() / 1000, 0.001);
+        assertEquals( out.getValue(), tenMM_per_Sec.getValue() / 1000, 0.001, "m/s");
         out = out.convertTo(UnitImpl.MILLIMETER_PER_SECOND);
-        assertEquals("mm/s", out.getValue(), tenMM_per_Sec.getValue(), 0.001);
+        assertEquals( out.getValue(), tenMM_per_Sec.getValue(), 0.001, "mm/s");
     }
 
     @Test
@@ -40,13 +42,13 @@ public class QuantityTest  {
         QuantityImpl one = new QuantityImpl(378.0, UnitImpl.KILOMETER);
         QuantityImpl two;
         two = new QuantityImpl(378.0, UnitImpl.KILOMETER);
-        assertTrue("equals with unit object equals", one.equals(two));
+        assertTrue( one.equals(two), "equals with unit object equals");
         two = new QuantityImpl(378.0, fakeKM);
-        assertTrue("equals with non-object equals", one.equals(two));
+        assertTrue( one.equals(two), "equals with non-object equals");
         UnitImpl[] sub = new UnitImpl[1];
         sub[0] = fakeKM;
         two = new QuantityImpl(378.0, new UnitImpl(sub, 0, "", 1, 1));
-        assertTrue("equals with array subunit " + two, one.equals(two));
+        assertTrue( one.equals(two), "equals with array subunit " + two);
     }
 
     @Test

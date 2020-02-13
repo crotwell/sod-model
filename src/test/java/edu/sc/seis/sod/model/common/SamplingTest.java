@@ -1,13 +1,16 @@
 package edu.sc.seis.sod.model.common;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 public class SamplingTest   {
     
-    @Before
+    @BeforeEach
     public void setUp() {
         sampling = (SamplingImpl)createInstance();
     }
@@ -20,8 +23,8 @@ public class SamplingTest   {
     
     @Test
     public void testEqualsHash() {
-        assertTrue("equal", createInstance().equals(createInstance()));
-        assertFalse("not equal", createInstance().equals(createNotEqualInstance()));
+        assertTrue( createInstance().equals(createInstance()));
+        assertFalse( createInstance().equals(createNotEqualInstance()));
     }
     
     protected Object createInstance(){

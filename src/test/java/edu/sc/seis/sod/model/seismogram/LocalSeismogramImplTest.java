@@ -1,9 +1,14 @@
 package edu.sc.seis.sod.model.seismogram;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -14,8 +19,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.Instant;
 
-import org.junit.Before;
-import org.junit.Test;
 
 import edu.sc.seis.seisFile.TimeUtils;
 import edu.sc.seis.sod.model.common.FissuresException;
@@ -85,7 +88,7 @@ public class LocalSeismogramImplTest
         return seis;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
     localseismogramimpl = createInstance();
     }
@@ -157,45 +160,45 @@ public class LocalSeismogramImplTest
     @Test
     public void testGet_as_longs() throws Exception {
     int[] out = localseismogramimpl.get_as_longs();
-    assertNotNull("get as longs returned null", out);
-    assertEquals("length of get_as_longs and getNumPoints not the same."
-             +out.length+" "+localseismogramimpl.getNumPoints(),
-             out.length,
-             localseismogramimpl.getNumPoints());
+    assertNotNull( out, "get as longs returned null");
+    assertEquals(out.length,
+             	localseismogramimpl.getNumPoints(),
+             	"length of get_as_longs and getNumPoints not the same."
+                     +out.length+" "+localseismogramimpl.getNumPoints());
     }
 
     @Test
     public void testGet_as_shorts() throws Exception {
-        try {
-    short[] out = localseismogramimpl.get_as_shorts();
-            assertTrue("want the exception to throw, so should never get here",false);
-        } catch(FissuresException e) {}
+    	Exception exception = assertThrows(FissuresException.class, () -> {
+    	  short[] out = localseismogramimpl.get_as_shorts();
+    	});
     }
 
     @Test
     public void testGet_as_floats() throws Exception {
     float[] out = localseismogramimpl.get_as_floats();
-    assertNotNull("get as floats returned null", out);
-    assertEquals("length of get_as_floats and getNumPoints not the same."
-             +out.length+" "+localseismogramimpl.getNumPoints(),
+    assertNotNull(out, "get as floats returned null");
+    assertEquals(
              out.length,
-             localseismogramimpl.getNumPoints());
+             localseismogramimpl.getNumPoints(),
+             "length of get_as_floats and getNumPoints not the same."
+                     +out.length+" "+localseismogramimpl.getNumPoints());
     }
 
     @Test
     public void testGet_as_doubles() throws Exception {
     double[] out = localseismogramimpl.get_as_doubles();
-    assertNotNull("get as doubles returned null", out);
-    assertEquals("length of get_as_doubles and getNumPoints not the same."
-             +out.length+" "+localseismogramimpl.getNumPoints(),
-             out.length,
-             localseismogramimpl.getNumPoints());
+    assertNotNull(out, "get as doubles returned null");
+    assertEquals(out.length,
+             localseismogramimpl.getNumPoints(),
+             "length of get_as_doubles and getNumPoints not the same."
+                     +out.length+" "+localseismogramimpl.getNumPoints());
     }
 
     @Test
     public void testGet_as_encoded() throws Exception {
     EncodedData[] out = localseismogramimpl.get_as_encoded();
-    assertNotNull("encoded", out);
+    assertNotNull(out, "encoded");
     }
 
 

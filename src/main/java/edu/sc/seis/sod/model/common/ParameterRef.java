@@ -19,12 +19,8 @@ package edu.sc.seis.sod.model.common;
 //
 /***/
 
-final public class ParameterRef implements org.omg.CORBA.portable.IDLEntity
+final public class ParameterRef 
 {
-    public
-    ParameterRef()
-    {
-    }
 
     public
     ParameterRef(String a_id,

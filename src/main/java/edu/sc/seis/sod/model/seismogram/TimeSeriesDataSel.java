@@ -19,7 +19,7 @@ package edu.sc.seis.sod.model.seismogram;
 //
 /***/
 
-final public class TimeSeriesDataSel implements org.omg.CORBA.portable.IDLEntity
+final public class TimeSeriesDataSel 
 {
     java.lang.Object _ob_v_;
     boolean _ob_i_;
@@ -41,7 +41,7 @@ final public class TimeSeriesDataSel implements org.omg.CORBA.portable.IDLEntity
     discriminator()
     {
         if(!_ob_i_)
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         return TimeSeriesType.from_int(_ob_d_);
     }
@@ -50,10 +50,10 @@ final public class TimeSeriesDataSel implements org.omg.CORBA.portable.IDLEntity
     sht_values()
     {
         if(!_ob_i_)
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         if(!_OB_check(_ob_d_, TimeSeriesType._TYPE_SHORT))
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         return (short[])_ob_v_;
     }
@@ -70,10 +70,10 @@ final public class TimeSeriesDataSel implements org.omg.CORBA.portable.IDLEntity
     int_values()
     {
         if(!_ob_i_)
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         if(!_OB_check(_ob_d_, TimeSeriesType._TYPE_LONG))
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         return (int[])_ob_v_;
     }
@@ -90,10 +90,10 @@ final public class TimeSeriesDataSel implements org.omg.CORBA.portable.IDLEntity
     flt_values()
     {
         if(!_ob_i_)
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         if(!_OB_check(_ob_d_, TimeSeriesType._TYPE_FLOAT))
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         return (float[])_ob_v_;
     }
@@ -110,10 +110,10 @@ final public class TimeSeriesDataSel implements org.omg.CORBA.portable.IDLEntity
     dbl_values()
     {
         if(!_ob_i_)
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         if(!_OB_check(_ob_d_, TimeSeriesType._TYPE_DOUBLE))
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         return (double[])_ob_v_;
     }
@@ -130,10 +130,10 @@ final public class TimeSeriesDataSel implements org.omg.CORBA.portable.IDLEntity
     encoded_values()
     {
         if(!_ob_i_)
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         if(!_OB_check(_ob_d_, TimeSeriesType._TYPE_ENCODED))
-            throw new org.omg.CORBA.BAD_OPERATION();
+            throw new RuntimeException();
 
         return (EncodedData[])_ob_v_;
     }
@@ -145,4 +145,7 @@ final public class TimeSeriesDataSel implements org.omg.CORBA.portable.IDLEntity
         _ob_d_ = TimeSeriesType._TYPE_ENCODED;
         _ob_v_ = val;
     }
+    
 }
+
+

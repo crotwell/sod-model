@@ -21,7 +21,7 @@ import edu.sc.seis.sod.model.station.ChannelId;
 //
 /***/
 
-final public class VectorComponent implements org.omg.CORBA.portable.IDLEntity
+final public class VectorComponent 
 {
     public
     VectorComponent()

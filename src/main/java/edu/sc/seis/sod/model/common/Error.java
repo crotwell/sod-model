@@ -19,7 +19,7 @@ package edu.sc.seis.sod.model.common;
 //
 /***/
 
-final public class Error implements org.omg.CORBA.portable.IDLEntity
+final public class Error 
 {
     public
     Error()
