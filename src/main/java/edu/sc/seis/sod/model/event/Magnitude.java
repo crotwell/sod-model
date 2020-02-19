@@ -33,6 +33,11 @@ final public class Magnitude
         this.value = value;
         this.contributor = contributor;
     }
+    
+    /**
+     * For hibernate
+     */
+    Magnitude() {}
 
     public String type;
     public float value;
