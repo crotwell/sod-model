@@ -31,19 +31,6 @@ final public class FissuresException extends Exception
         super(reason);
     }
     
-    public
-    FissuresException(Error the_error)
-    {
-        this.the_error = the_error;
-    }
 
-    public
-    FissuresException(String reason,
-                      Error the_error)
-    {
-        super(reason);
-        this.the_error = the_error;
-    }
 
-    public Error the_error;
 }

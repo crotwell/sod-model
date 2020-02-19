@@ -1003,10 +1003,7 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
     }
 
     protected FissuresException makeFissuresException(String e) {
-        edu.sc.seis.sod.model.common.Error error = new edu.sc.seis.sod.model.common.Error();
-        error.error_code = 0;
-        error.error_description = e;
-        return new FissuresException(e, error);
+        return new FissuresException(e);
     }
 
     public int[] get_as_longs() throws FissuresException {
