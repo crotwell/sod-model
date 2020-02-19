@@ -33,14 +33,13 @@ public class TimeRange {
      */
     public TimeRange(Instant time,
                      Instant anotherTime) {
-        if(time.isBefore(anotherTime)) {
+        if(anotherTime == null || time.isBefore(anotherTime)) {
             this.beginTime = time;
             this.endTime = anotherTime;
         } else {
             this.beginTime = anotherTime;
             this.endTime = time;
         }
-        this.interval = Duration.between(beginTime, endTime);
     }
 
     public TimeRange(Instant beginTime, Duration interval) {
@@ -64,19 +63,22 @@ public class TimeRange {
 
 
     public boolean contains(Instant newTime) {
+    	Instant tmpEndTime = endTime != null ? endTime : Instant.now();
         return (beginTime.isBefore(newTime) || beginTime.equals(newTime))
-                && (endTime.isAfter(newTime) || endTime.equals(newTime));
+                && (tmpEndTime.isAfter(newTime) || tmpEndTime.equals(newTime));
     }
 
     public boolean intersects(TimeRange time) {
-        return endTime.isAfter(time.getBeginTime())
+    	Instant tmpEndTime = endTime != null ? endTime : Instant.now();
+        return tmpEndTime.isAfter(time.getBeginTime())
                 && beginTime.isBefore(time.getEndTime());
     }
     
     public TimeRange intersection(TimeRange time) {
         if (intersects(time)) {
-            return new TimeRange(beginTime.isAfter(time.getBeginTime())?beginTime:time.getBeginTime(),
-                    endTime.isBefore(time.getEndTime())?endTime:time.getEndTime());
+        	Instant tmpEndTime = endTime != null ? endTime : Instant.now();
+            return new TimeRange(beginTime.isAfter(time.getBeginTime()) ? beginTime : time.getBeginTime(),
+            		tmpEndTime.isBefore(time.getEndTime()) ? tmpEndTime : time.getEndTime());
         }
         return null;
     }
@@ -85,7 +87,7 @@ public class TimeRange {
         if(shift == 0 && scale == 1) {
             return this;
         }
-        Duration timeShift = TimeUtils.multiply(interval, Math.abs(shift));
+        Duration timeShift = TimeUtils.multiply(getInterval(), Math.abs(shift));
         Instant newBeginTime;
         if(shift < 0) {
             newBeginTime = beginTime.minus(timeShift);
@@ -93,25 +95,25 @@ public class TimeRange {
             newBeginTime = beginTime.plus(timeShift);
         }
         return new TimeRange(newBeginTime,
-                             TimeUtils.multiply(interval, scale));
+                             TimeUtils.multiply(getInterval(), scale));
     }
 
     public TimeRange shift(Duration shift) {
         return new TimeRange(beginTime.plus(shift),
-                                        endTime.plus(shift));
+                                        endTime!= null ? endTime.plus(shift) : null);
     }
 
     public TimeRange shift(double percentage) {
         if(percentage == 0) {
             return this;
         }
-        Duration shift = TimeUtils.multiply(interval, Math.abs(percentage));
+        Duration shift = TimeUtils.multiply(getInterval(), Math.abs(percentage));
         if(percentage < 0) {
             return new TimeRange(beginTime.minus(shift),
-                                            endTime.minus(shift));
+                                            endTime != null ? endTime.minus(shift) : null);
         }
         return new TimeRange(beginTime.plus(shift),
-                                        endTime.plus(shift));
+                                        endTime != null ? endTime.plus(shift) : null);
     }
 
     /**
@@ -132,12 +134,14 @@ public class TimeRange {
      * Returns the interval that this range comprises
      */
     public Duration getInterval() {
-        return interval;
+    	Instant tmpEndTime = endTime != null ? endTime : Instant.now();
+    	return Duration.between(beginTime, tmpEndTime);
     }
 
     public UnitRangeImpl getMillis() {
+    	Instant tmpEndTime = endTime != null ? endTime : Instant.now();
         return new UnitRangeImpl(beginTime.toEpochMilli(),
-                                 endTime.toEpochMilli(),
+                                 tmpEndTime.toEpochMilli(),
                                  UnitImpl.MILLISECOND);
     }
 
@@ -148,7 +152,7 @@ public class TimeRange {
             return false;
         TimeRange mstrTime = (TimeRange)other;
         if(beginTime.equals(mstrTime.getBeginTime())
-                && endTime.equals(mstrTime.getEndTime())) {
+                && ((endTime == null && mstrTime.getEndTime() == null) || endTime.equals(mstrTime.getEndTime()))) {
             return true;
         }
         return false;
@@ -157,12 +161,12 @@ public class TimeRange {
     public int hashCode() {
         int result = 17;
         result = 37 * result + beginTime.hashCode();
-        result = 37 * result + endTime.hashCode();
+        result = 37 * result + ( endTime != null ? endTime.hashCode() : 19 );
         return result;
     }
 
     public String toString() {
-        return beginTime + " to " + endTime;
+        return beginTime + " to " + ( endTime != null ? endTime : "now");
     }
     
 
@@ -170,5 +174,4 @@ public class TimeRange {
 
     private final Instant endTime;
 
-    private final Duration interval;
 }
