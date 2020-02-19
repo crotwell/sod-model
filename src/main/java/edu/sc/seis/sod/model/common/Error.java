@@ -30,6 +30,7 @@ final public class Error
     Error(int error_code,
           String error_description)
     {
+        super(error_description);
         this.error_code = error_code;
         this.error_description = error_description;
     }

@@ -12,7 +12,7 @@ import edu.sc.seis.sod.model.seismogram.RequestFilter;
 public class TimeRange {
     
     public TimeRange(BaseNodeType node) {
-        this(node.getStartDateTime(), node.getEndDateTime());
+        this(node.getStartDateTime(), node.getEndDateTime() != null ? node.getEndDateTime() : TimeUtils.future);
     }
 
     public TimeRange(LocalSeismogramImpl ls) {
