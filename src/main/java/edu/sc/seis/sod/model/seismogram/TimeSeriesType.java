@@ -19,7 +19,7 @@ package edu.sc.seis.sod.model.seismogram;
 //
 /***/
 
-final public class TimeSeriesType implements org.omg.CORBA.portable.IDLEntity
+final public class TimeSeriesType 
 {
     private static TimeSeriesType [] values_ = new TimeSeriesType[5];
     private int value_;

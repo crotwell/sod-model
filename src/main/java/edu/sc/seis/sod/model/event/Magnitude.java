@@ -21,12 +21,8 @@ package edu.sc.seis.sod.model.event;
  * Holds a Magnitude estimate for an origin
  **/
 
-final public class Magnitude implements org.omg.CORBA.portable.IDLEntity
+final public class Magnitude 
 {
-    public
-    Magnitude()
-    {
-    }
 
     public
     Magnitude(String type,
@@ -37,6 +33,11 @@ final public class Magnitude implements org.omg.CORBA.portable.IDLEntity
         this.value = value;
         this.contributor = contributor;
     }
+    
+    /**
+     * For hibernate
+     */
+    Magnitude() {}
 
     public String type;
     public float value;
