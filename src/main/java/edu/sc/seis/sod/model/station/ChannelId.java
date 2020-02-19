@@ -57,6 +57,14 @@ public class ChannelId {
     public void setNetworkId(String networkId) {
         this.networkId = networkId;
     }
+    
+    public String getNetworkCode() {
+        if (networkId.length() > 2) {
+            // assume temp net with year appended
+            return networkId.substring(0, 2);
+        }
+        return networkId;
+    }
 
     public String getStationCode() {
         return stationCode;
