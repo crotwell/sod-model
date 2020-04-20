@@ -7,6 +7,16 @@ plugins {
     `java-library`
     eclipse
 }
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    withJavadocJar()
+    withSourcesJar()
+}
+
+
 dependencies {
   implementation("org.slf4j:slf4j-api:1.7.30")
   implementation("edu.sc.seis:seedCodec:1.0.11")
