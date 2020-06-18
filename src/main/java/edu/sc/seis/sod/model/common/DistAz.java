@@ -237,12 +237,14 @@ public class DistAz {
     private double stalat, stalon, evtlat, evtlon;
     private int hash;
     private boolean hashSet = false;
+    
+    public static final double kmPerDegree = 111.19;
 
     public static double degreesToKilometers(double degrees) {
-        return degrees * 111.19;
+        return degrees * kmPerDegree;
     }
     public static double kilometersToDegrees(double kilometers) {
-        return kilometers / 111.19;
+        return kilometers / kmPerDegree;
     }
 
     public static void main(String[] args) {

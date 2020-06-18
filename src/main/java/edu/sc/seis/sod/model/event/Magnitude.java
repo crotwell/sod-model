@@ -42,4 +42,8 @@ final public class Magnitude
     public String type;
     public float value;
     public String contributor;
+    
+    public String toString() {
+    	return value+" "+type;
+    }
 }
