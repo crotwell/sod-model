@@ -134,7 +134,7 @@ public class ChannelIdUtil {
     /**
      * Calculates a default azimuth based on the orientation code,
      * 0 for Z and N, 90 for E, -1 otherwise
-     * @param orientationCode
+     * @param chanCode
      * @return
      */
     public static int getDefaultAzimuth(String chanCode) {
@@ -149,7 +149,7 @@ public class ChannelIdUtil {
     /**
      * Calculates a default dip based on the orientation code,
      * -90 for Z, 0 for N and E, -1 otherwise
-     * @param orientationCode
+     * @param chanCode
      * @return
      */
     public static int getDefaultDip(String chanCode) {

@@ -257,11 +257,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *
      * @param channel_id The id of the channel that recorded the seismogram.
      *
-     * @param time_corrections The time corrections that have
-     *     been applied to the begin time of the seismogram.
-     *
-     * @param sample_rate_history The history of sampling corrections that have
-     *     been applied to the sampling of the seismogram.
      *
      * @param data The SeismogramData obect that contains the actual timeseries
      *     data.
@@ -311,11 +306,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *
      * @param channel_id The id of the channel that recorded the seismogram.
      *
-     * @param time_corrections The time corrections that have
-     *     been applied to the begin time of the seismogram.
-     *
-     * @param sample_rate_history The history of sampling corrections that have
-     *     been applied to the sampling of the seismogram.
      *
      * @param data The SeismogramData obect that contains the actual timeseries
      *     data.
@@ -360,11 +350,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *
      * @param channel_id The id of the channel that recorded the seismogram.
      *
-     * @param time_corrections The time corrections that have
-     *     been applied to the begin time of the seismogram.
-     *
-     * @param sample_rate_history The history of sampling corrections that have
-     *     been applied to the sampling of the seismogram.
      *
      * @param data The SeismogramData obect that contains the actual timeseries
      *     data.
@@ -409,11 +394,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      *
      * @param channel_id The id of the channel that recorded the seismogram.
      *
-     * @param time_corrections The time corrections that have
-     *     been applied to the begin time of the seismogram.
-     *
-     * @param sample_rate_history The history of sampling corrections that have
-     *     been applied to the sampling of the seismogram.
      *
      * @param data The SeismogramData obect that contains the actual timeseries
      *     data.
@@ -457,12 +437,6 @@ public class LocalSeismogramImpl extends SeismogramAttrImpl {
      * @param y_unit The amplitude units of the seismogram.
      *
      * @param channel_id The id of the channel that recorded the seismogram.
-     *
-     * @param time_corrections The time corrections that have
-     *     been applied to the begin time of the seismogram.
-     *
-     * @param sample_rate_history The history of sampling corrections that have
-     *     been applied to the sampling of the seismogram.
      *
      * @param data The SeismogramData obect that contains the actual timeseries
      *     data.

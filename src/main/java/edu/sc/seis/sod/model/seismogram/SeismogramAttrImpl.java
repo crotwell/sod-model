@@ -122,10 +122,6 @@ public class SeismogramAttrImpl implements Serializable {
      *
      * @param channel_id The id of the channel that recorded the seismogram.
      *
-     * @param time_corrections The time corrections that
-     *            have been applied to the begin time. Must be of type
-     *            time intervals (ie convertable to seconds) even though
-     *            the signature is Quantity.
      */
     public SeismogramAttrImpl(String id,
                               Property[] properties,

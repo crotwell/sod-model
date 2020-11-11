@@ -89,7 +89,7 @@ public class ChannelGroup {
 
     /**
      * Gets the horizontals as X and Y, so that the first channel's azimuth is equal to
-     * the seconds + 90 degrees, ie x -> east (90) and y -> north (0). If this is not possible, within 2 degrees,
+     * the seconds + 90 degrees, ie x -&gt; east (90) and y -&gt; north (0). If this is not possible, within 2 degrees,
      *  then a zero length array is returned.
      */
     public Channel[] getHorizontalXY() {
@@ -98,7 +98,7 @@ public class ChannelGroup {
 
     /**
      * Gets the horizontals as X and Y, so that the first channel's azimuth is equal to
-     * the seconds + 90 degrees, ie x -> east (90) and y -> north (0). 
+     * the seconds + 90 degrees, ie x -&gt; east (90) and y -&gt; north (0). 
      * If this is not possible, within tolerance degrees,
      *  then a zero length array is returned.
      */

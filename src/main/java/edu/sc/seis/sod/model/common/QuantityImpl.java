@@ -83,7 +83,7 @@ public class QuantityImpl implements Serializable {
     
     /** replaces current unit with new one that should be equals(). Used to 
      * prevent many copies of effectively the same units from wasting memory. 
-     * Should be called like:<br/>
+     * Should be called like:
         QuantityImpl.internUnit(q, intern(q.getUnit()));
      * @param q
      * @param internedUnit
