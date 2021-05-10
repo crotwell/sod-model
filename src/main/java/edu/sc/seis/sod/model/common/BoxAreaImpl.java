@@ -18,7 +18,7 @@ import java.io.Serializable;
 // IDL:iris.edu/Fissures/BoxArea:1.0
 //
 /***/
-public class BoxAreaImpl extends Area {
+public class BoxAreaImpl implements Area {
 
     public BoxAreaImpl(float min_latitude,
                        float max_latitude,

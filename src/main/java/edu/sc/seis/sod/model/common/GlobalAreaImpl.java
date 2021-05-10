@@ -10,7 +10,7 @@ package edu.sc.seis.sod.model.common;
  * @version
  */
 
-public class GlobalAreaImpl extends Area {
+public class GlobalAreaImpl implements Area {
     public GlobalAreaImpl (){
 	
     }

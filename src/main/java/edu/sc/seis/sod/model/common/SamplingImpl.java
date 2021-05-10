@@ -62,7 +62,7 @@ public class SamplingImpl implements Serializable {
      @return the sample frequency.
      */
     public QuantityImpl getFrequency() {
-        return QuantityImpl.of(getTimeInterval()).inverse().multipliedBy(numPoints);
+        return QuantityImpl.of(getTimeInterval()).inverse().multipliedByDbl(numPoints);
     }
 
     public int getNumPoints() { return numPoints; }

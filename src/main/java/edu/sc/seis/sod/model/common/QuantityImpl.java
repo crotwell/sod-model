@@ -164,12 +164,12 @@ public class QuantityImpl implements Serializable {
                                 UnitImpl.divide(getUnit(), q.getUnit()));
     }
 
-    public QuantityImpl multipliedBy(double f) {
+    public QuantityImpl multipliedByDbl(double f) {
         return new QuantityImpl(getValue() * f,
                                 getUnit());
     }
 
-    public QuantityImpl dividedBy(double f) {
+    public QuantityImpl dividedByDbl(double f) {
         return new QuantityImpl(getValue() / f,
                                 getUnit());
     }

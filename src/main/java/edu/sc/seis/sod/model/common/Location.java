@@ -30,6 +30,14 @@ public class Location
     {
     }
     
+    public static Location of(Origin origin) {
+    	return new Location(origin.getLatitude().getValue(),
+             origin.getLongitude().getValue(),
+             new QuantityImpl(0, UnitImpl.METER),
+             new QuantityImpl(origin.getDepth().getValue(), UnitImpl.METER));
+    }
+    
+    @Deprecated
     public Location(Origin origin) {
         this(origin.getLatitude().getValue(),
              origin.getLongitude().getValue(),
@@ -50,30 +58,8 @@ public class Location
              new QuantityImpl(channel.getDepth().getValue(), UnitImpl.METER));
     }
 
-    @Deprecated
-    public Location(Channel channel) {
-        this(channel.getLatitude().getValue(),
-             channel.getLongitude().getValue(),
-             new QuantityImpl(channel.getElevation().getValue(), UnitImpl.METER),
-             new QuantityImpl(channel.getDepth().getValue(), UnitImpl.METER));
-        if( ! channel.getElevation().getUnit().equalsIgnoreCase("meter")) {
-            throw new IllegalArgumentException("Units of elevation should be meter");
-        }
-        if( ! channel.getDepth().getUnit().equalsIgnoreCase("meter")) {
-            throw new IllegalArgumentException("Units of depth should be meter");
-        }
-    }
-
     public static Location of(Station sta) {
         return new Location(sta.getLatitude().getValue(),
-             sta.getLongitude().getValue(),
-             new QuantityImpl(sta.getElevation().getValue(), UnitImpl.METER),
-             new QuantityImpl(0, UnitImpl.METER));
-    }
-
-    @Deprecated
-    public Location(Station sta) {
-        this(sta.getLatitude().getValue(),
              sta.getLongitude().getValue(),
              new QuantityImpl(sta.getElevation().getValue(), UnitImpl.METER),
              new QuantityImpl(0, UnitImpl.METER));

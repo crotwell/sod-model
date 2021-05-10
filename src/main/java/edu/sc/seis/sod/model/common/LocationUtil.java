@@ -24,7 +24,7 @@ public class LocationUtil {
     }
     
     public static boolean areSameLocation(Channel channel, Location loc) {
-        return areEqual(new Location(channel), loc);
+        return areEqual(Location.of(channel), loc);
     }
 
     public static boolean areEqual(Location a, Location b) {

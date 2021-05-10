@@ -16,13 +16,18 @@ package edu.sc.seis.sod.model.common;
 
 import java.io.Serializable;
 
+import edu.sc.seis.seisFile.DonutArea;
+
 //
 // IDL:iris.edu/Fissures/PointDistanceArea:1.0
 //
 /***/
 
-public class PointDistanceAreaImpl extends Area
+public class PointDistanceAreaImpl extends DonutArea implements Area
 {
+
+    public QuantityImpl min_distance;
+    public QuantityImpl max_distance;
 
     public PointDistanceAreaImpl(float latitude,
                  float longitude,
@@ -32,6 +37,8 @@ public class PointDistanceAreaImpl extends Area
     this.longitude = longitude;
     this.min_distance = min_distance;
     this.max_distance = max_distance;
+    this.minradius = (float) min_distance.getValue(UnitImpl.DEGREE);// wrong if in km
+    this.maxradius = (float) max_distance.getValue(UnitImpl.DEGREE);
     }
 
     protected PointDistanceAreaImpl() {
@@ -43,31 +50,8 @@ public class PointDistanceAreaImpl extends Area
     }
 
     public String toString() {
-        return "PointDistance ("+latitude+","+longitude+") from "+min_distance+" to "+max_distance;
+        return "PointDistance ("+latitude+","+longitude+") from "+minradius+" to "+maxradius;
     }
     
-    public float latitude;
-
-    //
-    // IDL:iris.edu/Fissures/PointDistanceArea/longitude:1.0
-    //
-    /***/
-
-    public float longitude;
-
-    //
-    // IDL:iris.edu/Fissures/PointDistanceArea/min_distance:1.0
-    //
-    /** must be either angular or length */
-
-    public QuantityImpl min_distance;
-
-    //
-    // IDL:iris.edu/Fissures/PointDistanceArea/max_distance:1.0
-    //
-    /** must be either angular or length */
-
-    public QuantityImpl max_distance;
-
 
 }
